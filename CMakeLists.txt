@@ -6,7 +6,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.21.1)
 # ------------------------------------------------------------------------------
 # Start CwAPI3D Project
 # ------------------------------------------------------------------------------
-PROJECT(CwAPI3D VERSION 30.10.1 LANGUAGES CXX)
+PROJECT(CwAPI3D VERSION 30.10.1 LANGUAGES CXX C)
 
 # ------------------------------------------------------------------------------
 #
@@ -25,7 +25,7 @@ ADD_LIBRARY(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 # Specify Include Directories
 # ------------------------------------------------------------------------------
 TARGET_INCLUDE_DIRECTORIES(${PROJECT_NAME} INTERFACE
-                           $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include >
+                           $<BUILD_INTERFACE: "${CMAKE_CURRENT_LIST_DIR}/include" >
                            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 INCLUDE(CMakePackageConfigHelpers)
