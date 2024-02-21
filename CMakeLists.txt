@@ -15,8 +15,6 @@ ENDIF()
 
 INCLUDE(GNUInstallDirs)
 
-SET(CWAPI3D_INCLUDE_BUILD_DIR "${PROJECT_SOURCE_DIR}/include/")
-
 # ------------------------------------------------------------------------------
 # Create Interface Library
 # ------------------------------------------------------------------------------
@@ -27,7 +25,7 @@ ADD_LIBRARY(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 # Specify Include Directories
 # ------------------------------------------------------------------------------
 TARGET_INCLUDE_DIRECTORIES(${PROJECT_NAME} INTERFACE
-                           $<BUILD_INTERFACE:${CWAPI3D_INCLUDE_BUILD_DIR}>
+                           $<BUILD_INTERFACE: "${PROJECT_SOURCE_DIR}/include/" >
                            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 INCLUDE(CMakePackageConfigHelpers)
