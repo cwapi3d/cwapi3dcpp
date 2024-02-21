@@ -15,6 +15,16 @@ SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
 INCLUDE(GNUInstallDirs)
 
+SET(CWAPI3D_CONFIG_INSTALL_DIR "${CMAKE_INSTALL_DATADIR}/cmake/${PROJECT_NAME}" CACHE INTERNAL "")
+SET(CWAPI3D_INCLUDE_INSTALL_DIR "${CMAKE_INSTALL_INCLUDEDIR}")
+SET(CWAPI3D_TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
+SET(CWAPI3D_CMAKE_CONFIG_TEMPLATE "cmake/config.cmake.in")
+SET(CWAPI3D_CMAKE_CONFIG_DIR "${CMAKE_CURRENT_BINARY_DIR}")
+SET(CWAPI3D_CMAKE_VERSION_CONFIG_FILE "${CWAPI3D_CMAKE_CONFIG_DIR}/${PROJECT_NAME}ConfigVersion.cmake")
+SET(CWAPI3D_CMAKE_PROJECT_CONFIG_FILE "${CWAPI3D_CMAKE_CONFIG_DIR}/${PROJECT_NAME}Config.cmake")
+SET(CWAPI3D_CMAKE_PROJECT_TARGETS_FILE "${CWAPI3D_CMAKE_CONFIG_DIR}/${PROJECT_NAME}Targets.cmake")
+SET(CWAPI3D_INCLUDE_BUILD_DIR "${PROJECT_SOURCE_DIR}/include/")
+
 # ------------------------------------------------------------------------------
 # Create Interface Library
 # ------------------------------------------------------------------------------
@@ -25,8 +35,8 @@ ADD_LIBRARY(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 # Specify Include Directories
 # ------------------------------------------------------------------------------
 TARGET_INCLUDE_DIRECTORIES(${PROJECT_NAME} INTERFACE
-                           $<BUILD_INTERFACE: "${CMAKE_CURRENT_LIST_DIR}/include" >
-                           $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+                           $<BUILD_INTERFACE:${CWAPI3D_INCLUDE_BUILD_DIR}>
+                           $<INSTALL_INTERFACE:${CWAPI3D_INCLUDE_INSTALL_DIR}>)
 
 INCLUDE(CMakePackageConfigHelpers)
 
