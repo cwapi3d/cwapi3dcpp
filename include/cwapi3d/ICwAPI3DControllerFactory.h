@@ -194,6 +194,16 @@ namespace CwAPI3D
        * \return 
        */
       virtual ICwAPI3DImport3dcOptions* createImport3dcOptions() = 0;
+      /**
+       * \brief Creates an empty endtypeID list   
+       * \return endtypeID list 
+       */
+      virtual ICwAPI3DEndtypeIDList* createEmptyEndtypeIDList() = 0;
+      /**
+       * \brief Creates a none elementType   
+       * \return element type
+       */
+      virtual ICwAPI3DElementType* createElementType() = 0;
     };
   }
 }

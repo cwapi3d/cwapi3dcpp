@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "CwAPI3DVersion.h"
 #include "CwAPI3DTypes.h"
 #include "ICwAPI3DControllerFactory.h"
 

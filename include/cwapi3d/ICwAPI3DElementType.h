@@ -191,15 +191,208 @@ namespace CwAPI3D
        * \return is the element type section trace
        */
       virtual bool isSectionTrace() = 0; // ??
+      /**
+       * \brief Tests if the element type is framed wall
+       * \return is the element type framed wall
+       */
       virtual bool isFramedWall() = 0;
+      /**
+       * \brief Tests if the element type is solid wall
+       * \return is the element type solid wall
+       */
       virtual bool isSolidWoodWall() = 0;
+      /**
+       * \brief Tests if the element type is log wall
+       * \return is the element type log wall
+       */
       virtual bool isLogWall() = 0;
+      /**
+       * \brief Tests if the element type is framed floor
+       * \return is the element type framed floor
+       */
       virtual bool isFramedFloor() = 0;
+      /**
+       * \brief Tests if the element type is solid floor
+       * \return is the element type solid floor
+       */
       virtual bool isSolidWoodFloor() = 0;
+      /**
+       * \brief Tests if the element type is framed roof
+       * \return is the element type framed roof
+       */
       virtual bool isFramedRoof() = 0;
+      /**
+       * \brief Tests if the element type is solid roof
+       * \return is the element type solid roof
+       */
       virtual bool isSolidWoodRoof() = 0;
+      /**
+       * \brief Tests if the element type is circular MEP
+       * \return is the element type circular MEP
+       */
       virtual bool isCircularMEP() = 0;
+      /**
+       * \brief Tests if the element type is rectangular MEP
+       * \return is the element type rectangular MEP
+       */
       virtual bool isRectangularMEP() = 0;
+
+      /**
+       * \brief Sets the element type to none
+       */
+      virtual void setNone() = 0;
+      /**
+       * \brief Sets the element type to normal node
+       */
+      virtual void setNormalNode() = 0;
+      /**
+       * \brief Sets the element type to connector node
+       */
+      virtual void setConnectorNode() = 0;
+      /**
+       * \brief Sets the element type to wire axis
+       */
+      virtual void setWireAxis() = 0; // ??
+      /**
+       * \brief Sets the element type to eave axis
+       */
+      virtual void setEaveAxis() = 0;
+      /**
+       * \brief Sets the element type to rectangular axis
+       */
+      virtual void setRectangularAxis() = 0;
+      /**
+       * \brief Sets the element type to circular axis
+       */
+      virtual void setCircularAxis() = 0;
+      /**
+       * \brief Sets the element type to drilling axis
+       */
+      virtual void setDrillingAxis() = 0;
+      /**
+       * \brief Sets the element type to connector axis
+       */
+      virtual void setConnectorAxis() = 0;
+      /**
+       * \brief Sets the element type to line
+       */
+      virtual void setLine() = 0;
+      /**
+       * \brief Sets the element type to surface
+       */
+      virtual void setSurface() = 0;
+      /**
+       * \brief Sets the element type to Cadwork
+       */
+      virtual void setCadwork() = 0;
+      /**
+       * \brief Sets the element type to global cut
+       */
+      virtual void setGlobalCut() = 0;
+      /**
+       * \brief Sets if the element type opening
+       */
+      virtual void setOpening() = 0;
+      /**
+       * \brief Sets the element type to container
+       */
+      virtual void setContainer() = 0;
+      /**
+       * \brief Sets the element type to export solid
+       */
+      virtual void setExportSolid() = 0;
+      /**
+       * \brief Sets the element type to auxiliary
+       */
+      virtual void setAuxiliary() = 0;
+      /**
+       * \brief Sets the element type to nesting parent
+       */
+      virtual void setNestingParent() = 0;
+      /**
+       * \brief Sets the element type to rectangular beam
+       */
+      virtual void setRectangularBeam() = 0;
+      /**
+       * \brief Sets the element type to circular beam
+       */
+      virtual void setCircularBeam() = 0;
+      /**
+       * \brief Sets the element type to steel shape
+       */
+      virtual void setSteelShape() = 0;
+      /**
+       * \brief Sets the element type to panel
+       */
+      virtual void setPanel() = 0;
+      /**
+       * \brief Sets the element type to rotation element
+       */
+      virtual void setRotationElement() = 0;
+      /**
+       * \brief Sets the element type to additional element
+       */
+      virtual void setAdditionalElement() = 0;
+      /**
+       * \brief Sets the element type to none
+       */
+      virtual void setRoom() = 0;
+      /**
+       * \brief Sets the element type to graphical object
+       */
+      virtual void setGraphicalObject() = 0;
+      /**
+       * \brief Sets the element type to dimension
+       */
+      virtual void setDimension() = 0; // ??
+      /**
+       * \brief Sets the element type to text document
+       */
+      virtual void setTextDocument() = 0; // ??
+      /**
+       * \brief Sets the element type to export solid scene
+       */
+      virtual void setExportSolidScene() = 0; // ??
+      /**
+       * \brief Sets the element type to section trace
+       */
+      virtual void setSectionTrace() = 0; // ??
+      /**
+       * \brief Sets the element type to framed wall
+       */
+      virtual void setFramedWall() = 0;
+      /**
+       * \brief Sets the element type to solid wall
+       */
+      virtual void setSolidWoodWall() = 0;
+      /**
+       * \brief Sets the element type to log wall
+       */
+      virtual void setLogWall() = 0;
+      /**
+       * \brief Sets the element type to framed floor
+       */
+      virtual void setFramedFloor() = 0;
+      /**
+       * \brief Sets the element type to solid floor
+       */
+      virtual void setSolidWoodFloor() = 0;
+      /**
+       * \brief Sets the element type to framed roof
+       */
+      virtual void setFramedRoof() = 0;
+      /**
+       * \brief Sets the element type to solid roof
+       */
+      virtual void setSolidWoodRoof() = 0;
+      /**
+       * \brief Sets the element type to circular MEP
+       */
+      virtual void setCircularMEP() = 0;
+      /**
+       * \brief Sets the element type to rectangula MEP
+       */
+      virtual void setRectangularMEP() = 0;
     };
   }
 }

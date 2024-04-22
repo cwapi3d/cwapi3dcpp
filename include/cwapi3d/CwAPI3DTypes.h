@@ -5,9 +5,6 @@
 
 namespace CwAPI3D
 {
-  const uint32_t versionMajor = 30; // PQ: Do not increment this number without consulting me.
-  const uint32_t versionMinor = 10;
-
   using elementID = uint64_t;
   using materialID = uint64_t;
   using colorID = uint32_t;
@@ -51,6 +48,27 @@ namespace CwAPI3D
      * \brief Blue Value
      */
     uint32_t mB;
+  };
+
+  /// @brief Holds the geometry of the 3d main window
+  struct windowGeometry
+  {
+    /// @brief A point is specified by a x coordinate and an y coordinate
+    struct point
+    {
+      /// @brief x coordinate of this point
+      int mX{0};
+      /// @brief y coordinate of this point
+      int mY{0};
+    };
+    /// @brief position of the rectangle's bottom-left corner
+    point mBottomLeft;
+    /// @brief position of the rectangle's bottom-right corner
+    point mBottomRight;
+    /// @brief position of the rectangle's top-left corner
+    point mTopLeft;
+    /// @brief position of the rectangle's top-right corner
+    point mTopRight;
   };
 
   using character = wchar_t;
@@ -189,7 +207,8 @@ namespace CwAPI3D
   {
     line = 0,
     surface = 1,
-    volume = 2
+    volume = 2,
+    raster = 3,
   };
 
   enum multiLayerType
@@ -200,5 +219,15 @@ namespace CwAPI3D
     Lathing = 3,
     Air = 4,
     Covering = 5,
+  };
+
+  enum standardElementType
+  {
+    beam = 0,
+    panel,
+    vba,
+    exportSolid,
+    container,
+    metal
   };
 }
