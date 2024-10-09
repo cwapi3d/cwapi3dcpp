@@ -1,12 +1,4 @@
-/// @file
-/// Copyright (C) 2016 cadwork informatik AG
-///
-/// This file is part of the CwAPI3D module for cadwork 3d.
-///
-/// @ingroup       CwAPI3D
-/// @since         24.0
-/// @author        Paquet
-/// @date          2016-12-15
+// Copyright (C) Cadwork. All rights reserved.
 
 #pragma once
 
@@ -204,7 +196,7 @@ namespace CwAPI3D
       virtual void loadWebGlPresetFile(const character* aFilePath) = 0;
 
       /// @brief Exports a STEP file with extruded drillings
-      /// @param aElementList element ID list
+      /// @param aElements element ID list
       /// @param aFilePath file path
       /// @param aScaleFactor file scale factor
       /// @param aVersion file version

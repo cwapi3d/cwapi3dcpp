@@ -3,3 +3,4 @@ build/
 cmake-*/
 docs/_build/
 docs/venv/
+doxyxml/

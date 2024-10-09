@@ -1,13 +1,4 @@
-/** @file
-* Copyright (C) 2017 cadwork informatik AG
-*
-* This file is part of the CwAPI3D module for cadwork 3d.
-*
-* @ingroup       CwAPI3D
-* @since         25
-* @author        Paquet
-* @date          2028-02-27
-*/
+// Copyright (C) Cadwork. All rights reserved.
 
 #pragma once
 

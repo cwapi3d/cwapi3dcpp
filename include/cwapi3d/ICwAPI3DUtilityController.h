@@ -1,19 +1,11 @@
-/// @file
-/// Copyright (C) 2016 cadwork informatik AG
-///
-/// This file is part of the CwAPI3D module for cadwork 3d.
-///
-/// @ingroup       CwAPI3D
-/// @since         24.0
-/// @author        Paquet
-/// @date          2016-12-15
+// Copyright (C) Cadwork. All rights reserved.
 
 #pragma once
 
 #include "ICwAPI3DElementIDList.h"
 #include "ICwAPI3DString.h"
-#include "ICwAPI3DVertexList.h"
 #include "ICwAPI3DStringList.h"
+#include "ICwAPI3DVertexList.h"
 
 #ifdef _WIN32
 #include <windows.h>

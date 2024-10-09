@@ -1,12 +1,4 @@
-/// @file
-/// Copyright (C) 2019 cadwork informatik AG
-///
-/// This file is part of the CwAPI3D module for cadwork 3d.
-///
-/// @ingroup       CwAPI3D
-/// @since         26.0
-/// @author        Paquet
-/// @date          2019-03-04
+// Copyright (C) Cadwork. All rights reserved.
 
 #pragma once
 
@@ -153,7 +145,7 @@ namespace CwAPI3D
       virtual bool exportIfc2x3SilentlyWithOptions(ICwAPI3DElementIDList* aElementIDs, const character* aFilePath, ICwAPI3DIfcOptions* aOptions) = 0;
 
       /// @brief Get elementID from an IFC base64 Guid
-      /// @param a base64 IFC Guid ("28kif20KPEuBjk2m1N3ep$")
+      /// @param aGuid base64 IFC Guid ("28kif20KPEuBjk2m1N3ep$")
       /// @return element ID
       virtual elementID getElementIdFromIfcBase64Guid(const character* aGuid) = 0;
 

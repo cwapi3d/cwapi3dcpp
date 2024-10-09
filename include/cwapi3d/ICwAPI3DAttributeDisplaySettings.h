@@ -1,13 +1,5 @@
-/** @file
-* Copyright (C) 2020 cadwork informatik AG
-*
-* This file is part of the CwAPI3D module for cadwork 3d.
-*
-* @ingroup       CwAPI3D
-* @since         27.0
-* @author        Paquet
-* @date          2020-08-19
-*/
+// Copyright (C) Cadwork. All rights reserved.
+
 #pragma once
 
 #include "CwAPI3DTypes.h"

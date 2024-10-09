@@ -1,17 +1,9 @@
-/** @file
-* Copyright (C) 2017 cadwork informatik AG
-*
-* This file is part of the CwAPI3D module for cadwork 3d.
-*
-* @ingroup       CwAPI3D
-* @since         24.0
-* @author        Paquet
-* @date          2017-06-22
-*/
+// Copyright (C) Cadwork. All rights reserved.
 
 #pragma once
 
 #include "CwAPI3DTypes.h"
+
 namespace CwAPI3D
 {
   namespace Interfaces

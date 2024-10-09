@@ -1,12 +1,4 @@
-/// @file
-/// Copyright (C) 2023 cadwork informatik AG
-///
-/// This file is part of the CwAPI3D module for cadwork 3d.
-///
-/// @ingroup       CwAPI3D
-/// @since         30.0
-/// @author        Paquet
-/// @date          2023-05-15
+// Copyright (C) Cadwork. All rights reserved.
 
 #pragma once
 
@@ -47,47 +39,47 @@ namespace CwAPI3D
       virtual void addSegment(elementID aElement, vector3D aSegment) = 0;
 
       /// @brief sets the precision/decimal places of a dimension element
-      /// @param aElement
+      /// @param aElements
       /// @param aPrecision
       virtual void setPrecision(ICwAPI3DElementIDList* aElements, uint32_t aPrecision) = 0;
 
       /// @brief sets the text size a dimension element
-      /// @param aElement
+      /// @param aElements
       /// @param aTextSize
       virtual void setTextSize(ICwAPI3DElementIDList* aElements, double aTextSize) = 0;
 
       /// @brief sets the line thickness a dimension element
-      /// @param aElement
+      /// @param aElements
       /// @param aThickness
       virtual void setLineThickness(ICwAPI3DElementIDList* aElements, double aThickness) = 0;
 
       /// @brief sets if the total dimension is shown in a dimension element
-      /// @param aElement
+      /// @param aElements
       /// @param aTotal
       virtual void setTotalDimension(ICwAPI3DElementIDList* aElements, bool aTotal) = 0;
 
       /// @brief sets the text color a dimension element
-      /// @param aElement
+      /// @param aElements
       /// @param aColorID
       virtual void setTextColor(ICwAPI3DElementIDList* aElements, colorID aColorID) = 0;
 
       /// @brief sets the line color a dimension element
-      /// @param aElement
+      /// @param aElements
       /// @param aColorID
       virtual void setLineColor(ICwAPI3DElementIDList* aElements, colorID aColorID) = 0;
 
       /// @brief sets the default anchor length a dimension element
-      /// @param aElement
+      /// @param aElements
       /// @param aLength
       virtual void setDefaultAnchorLength(ICwAPI3DElementIDList* aElements, double aLength) = 0;
 
       /// @brief sets the distance vector between the points and the line
-      /// @param aElement
+      /// @param aElements
       /// @param aDistance
       virtual void setDistance(ICwAPI3DElementIDList* aElements, vector3D aDistance) = 0;
 
       /// @brief sets if distance and texts are shifted
-      /// @param aElement
+      /// @param aElements
       /// @param aShifted
       virtual void shiftDistanceAndTexts(ICwAPI3DElementIDList* aElements, bool aShifted) = 0;
 

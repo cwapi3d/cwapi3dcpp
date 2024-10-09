@@ -1,12 +1,4 @@
-/// @file
-/// Copyright (C) 2019 cadwork informatik AG
-///
-/// This file is part of the CwAPI3D module for cadwork 3d.
-///
-/// @ingroup       CwAPI3D
-/// @since         26.0
-/// @author        Paquet
-/// @date          2019-10-02
+// Copyright (C) Cadwork. All rights reserved.
 
 #pragma once
 
@@ -1032,13 +1024,12 @@ namespace CwAPI3D
       /// @param aDrillingTolerance
       virtual void cutScarfStraight(ICwAPI3DElementIDList* aElements, double aLength, double aDepth, double aClearanceLength, double aClearanceDepth, double aClearanceHook, uint64_t aDrillingCount, double aDrillingDiameter, double aDrillingTolerance) = 0;
 
-      /// @brief cuts a diagonal scarf length joint with specific parameters
+      /// @brief
       /// @param aElements
       /// @param aLength
       /// @param aDepth
       /// @param aClearanceLength
       /// @param aClearanceDepth
-      /// @param aClearanceHook
       /// @param aDrillingCount
       /// @param aDrillingDiameter
       /// @param aDrillingTolerance

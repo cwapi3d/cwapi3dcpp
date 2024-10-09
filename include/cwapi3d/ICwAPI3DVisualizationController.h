@@ -1,12 +1,4 @@
-/// @file
-/// Copyright (C) 2016 cadwork informatik AG
-///
-/// This file is part of the CwAPI3D module for cadwork 3d.
-///
-/// @ingroup       CwAPI3D
-/// @since         24.0
-/// @author        Paquet
-/// @date          2016-12-15
+// Copyright (C) Cadwork. All rights reserved.
 
 #pragma once
 
@@ -345,7 +337,7 @@ namespace CwAPI3D
 
       ///
       /// @brief Set the camera data - this will override the current camera data
-      /// @param camera data
+      /// @param aCameraData data
       ///
       virtual void setCameraData(ICwAPI3DCameraData* aCameraData) = 0;
 

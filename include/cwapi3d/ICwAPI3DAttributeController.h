@@ -1,12 +1,4 @@
-/// @file
-/// Copyright (C) 2016 cadwork informatik AG
-///
-/// This file is part of the CwAPI3D module for cadwork 3d.
-///
-/// @ingroup       CwAPI3D
-/// @since         24.0
-/// @author        Paquet
-/// @date          2016-12-15
+// Copyright (C) Cadwork. All rights reserved.
 
 #pragma once
 
@@ -837,7 +829,6 @@ namespace CwAPI3D
       virtual bool isHundeggerProcessingGroup(elementID aID) = 0;
 
       /// @brief Get the element grouping type (group, subgroup)
-      /// @param
       /// @return element grouping type
       virtual elementGroupingType getElementGroupingType() = 0;
 

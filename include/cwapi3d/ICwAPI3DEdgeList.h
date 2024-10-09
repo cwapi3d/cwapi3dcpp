@@ -1,13 +1,5 @@
-/** @file
-* Copyright (C) 2020 cadwork informatik AG
-*
-* This file is part of the CwAPI3D module for cadwork 3d.
-*
-* @ingroup       CwAPI3D
-* @since         27.0
-* @author        Paquet
-* @date          2020-08-19
-*/
+// Copyright (C) Cadwork. All rights reserved.
+
 #pragma once
 
 #include "CwAPI3DTypes.h"
@@ -17,27 +9,18 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /**
-    * @interface ICwAPI3DEdgeList
-    * \brief
-    */
+    /// @brief
     class ICwAPI3DEdgeList
     {
     public:
-      /**
-       * \brief Destroys itself
-       */
+      /// @brief
       virtual void destroy() = 0;
-      /**
-       * \brief Returns the number of elements in the list
-       * \return number of elements in list
-       */
+      /// @brief
+      /// @return
       virtual uint32_t count() = 0;
-      /**
-       * \brief Returns the element at index
-       * \param aIndex element index
-       * \return element at index
-       */
+       /// @brief
+       /// @param aIndex
+       /// @return
       virtual ICwAPI3DVertexList* at(uint32_t aIndex) = 0;
     };
   }

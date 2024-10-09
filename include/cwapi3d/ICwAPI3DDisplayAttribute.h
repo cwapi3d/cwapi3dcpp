@@ -1,3 +1,5 @@
+// Copyright (C) Cadwork. All rights reserved.
+
 #pragma once
 
 namespace CwAPI3D

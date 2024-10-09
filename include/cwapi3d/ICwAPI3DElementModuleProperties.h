@@ -1,3 +1,5 @@
+// Copyright (C) Cadwork. All rights reserved.
+
 #pragma once
 
 #include "CwAPI3DTypes.h"
