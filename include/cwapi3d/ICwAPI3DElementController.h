@@ -1019,6 +1019,7 @@ namespace CwAPI3D
       /// @param aCount The maximal number of elements to select.
       /// @return The list of user element IDs.
       virtual ICwAPI3DElementIDList* getUserElementIDsWithCount(uint64_t aCount) = 0;
+
       /// @brief cuts a straight scarf length joint with specific parameters
       /// @param aElements
       /// @param aLength
@@ -1030,6 +1031,7 @@ namespace CwAPI3D
       /// @param aDrillingDiameter
       /// @param aDrillingTolerance
       virtual void cutScarfStraight(ICwAPI3DElementIDList* aElements, double aLength, double aDepth, double aClearanceLength, double aClearanceDepth, double aClearanceHook, uint64_t aDrillingCount, double aDrillingDiameter, double aDrillingTolerance) = 0;
+
       /// @brief cuts a diagonal scarf length joint with specific parameters
       /// @param aElements
       /// @param aLength
@@ -1041,6 +1043,7 @@ namespace CwAPI3D
       /// @param aDrillingDiameter
       /// @param aDrillingTolerance
       virtual void cutScarfDiagonal(ICwAPI3DElementIDList* aElements, double aLength, double aDepth, double aClearanceLength, double aClearanceDepth, uint64_t aDrillingCount, double aDrillingDiameter, double aDrillingTolerance) = 0;
+
       /// @brief cuts a diagonal scarf with wedge length joint with specific parameters
       /// @param aElements
       /// @param aLength
@@ -1052,12 +1055,63 @@ namespace CwAPI3D
       /// @param aDrillingDiameter
       /// @param aDrillingTolerance
       virtual void cutScarfWithWedge(ICwAPI3DElementIDList* aElements, double aLength, double aDepth, double aClearanceLength, double aClearanceDepth, double aWedgeWidth, uint64_t aDrillingCount, double aDrillingDiameter, double aDrillingTolerance) = 0;
+
       /// @brief adds end profiles to a beam with the given name
       /// @param aElements
       /// @param aProfileName
       /// @param aOnStartFace
       /// @param aOnEndFace
       virtual void cutBeamEndProfile(ICwAPI3DElementIDList* aElements, const character* aProfileName, bool aOnStartFace, bool aOnEndFace) = 0;
+
+      /// @brief Creates a truncated cone beam using points.
+      /// @param aStartDiameter The starting diameter of the beam.
+      /// @param aEndDiameter The ending diameter of the beam.
+      /// @param aP1 The first point.
+      /// @param aP2 The second point.
+      /// @param aP3 The third point.
+      /// @return The ID of the created beam.
+      virtual elementID createTruncatedConeBeamPoints(double aStartDiameter, double aEndDiameter, vector3D aP1, vector3D aP2, vector3D aP3) = 0;
+
+      /// @brief Creates a truncated cone beam using vectors.
+      /// @param aStartDiameter The starting diameter of the beam.
+      /// @param aEndDiameter The ending diameter of the beam.
+      /// @param aLength The length of the beam.
+      /// @param aP1 The starting point.
+      /// @param aXL The direction of the X-axis.
+      /// @param aZL The direction of the Z-axis.
+      /// @return The ID of the created beam.
+      virtual elementID createTruncatedConeBeamVectors(double aStartDiameter, double aEndDiameter, double aLength, vector3D aP1, vector3D aXL, vector3D aZL) = 0;
+      /// @brief Creates a spline line using a list of points.
+      /// @param aSplinePoints The points of the line.
+      /// @return The ID of the created line.
+      virtual elementID createSplineLine(Interfaces::ICwAPI3DVertexList* aSplinePoints) = 0;
+
+      /// @brief Unjoins the specified elements.
+      /// @param aElementIDList The list of elements to be unjoined.
+      /// @return True if the operation was successful, false if an error occured.
+      virtual bool unjoinElements(ICwAPI3DElementIDList* aElementIDList) = 0;
+
+      /// @brief Unjoins the specified top-level elements.
+      /// @param aElementIDList The list of top-level elements to be unjoined.
+      /// @return True if the operation was successful, false if an error occured.
+      virtual bool unjoinTopLevelElements(ICwAPI3DElementIDList* aElementIDList) = 0;
+
+      /// @brief Switches the current element group selection mode so that single elements of a group are selectable.
+      virtual void setElementGroupSingleSelectMode() = 0;
+
+      /// @brief Switches the current element group selection mode so that all elements of a group are selected when selecting one of it.
+      virtual void setElementGroupMultiSelectMode() = 0;
+
+      /// @brief Retrieves a list of elements in collision with a specific element.
+      /// @param aElement The ID of the element to check for collision.
+      /// @return The list of elements in collision with the specified element.
+      virtual ICwAPI3DElementIDList* getElementsInCollision(elementID aElement) = 0;
+
+
+      /// @brief Retrieve the data of a text object, e.g. font, text content, etc.
+      /// @param aElement The ID of a Text Object
+      /// @return TextObjectOptions
+      virtual ICwAPI3DTextObjectOptions* getTextObjectOptions(elementID aElement) = 0;
     };
   }
 }

@@ -126,6 +126,12 @@ namespace CwAPI3D
       /// @param aSegmentIndex
       /// @return distance
       virtual double getSegmentDistance(elementID aElement, int aSegmentIndex) = 0;
+
+      /// @brief Get the normalized direction from the anchor point to the point on the dimension
+      /// @param aElement
+      /// @param aSegmentIndex
+      /// @return normalized vector
+      virtual vector3D getSegmentDirection(elementID aElement, int aSegmentIndex) = 0;
     };
   }
 }

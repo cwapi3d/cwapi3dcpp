@@ -360,6 +360,11 @@ namespace CwAPI3D
       /// @return window is in dark mode
       ///
       virtual bool isCadworkWindowInDarkMode() = 0;
+
+      /// @brief Enter 2d working plane
+      /// @param aPlaneNormal a normalized plane vector
+      /// @param aPlaneOrigin a plane origin
+      virtual void enterWorkingPlane(vector3D aPlaneNormal, vector3D aPlaneOrigin) = 0;
     };
   }
 }

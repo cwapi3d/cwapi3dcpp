@@ -211,6 +211,19 @@ namespace CwAPI3D
       /// @param aTextMode use text mode
       /// @param aImperialUnits use imperial units
       virtual void exportStepFileExtrudeDrillings(ICwAPI3DElementIDList* aElements, const character* aFilePath, double aScaleFactor, int32_t aVersion, bool aTextMode, bool aImperialUnits) = 0;
+
+      /// @brief exports a SAT File with extruded drillings (cut drilling holes into bodies)
+      /// @param aElements element ID list
+      /// @param aFilePath file path of the out file
+      /// @param aScaleFactor file scale factor
+      /// @param aBinary whether to write the SAT file in binary or a human readable format
+      /// @param aVersion which ACIS version to use
+      virtual void exportSATFileCutDrillings(ICwAPI3DElementIDList* aElements, const character* aFilePath, double aScaleFactor, bool aBinary, int32_t aVersion) = 0;
+
+      /// @brief exports the elements to BIMteam and creates a share link
+      /// @param aElements element ID list
+      /// @return a result object with a result code and a share link. If the code is not ok (0), the share link string is empty
+      virtual bimTeamUploadResult uploadToBimTeamAndCreateShareLink(Interfaces::ICwAPI3DElementIDList* aElements) = 0;
     };
   }
 }

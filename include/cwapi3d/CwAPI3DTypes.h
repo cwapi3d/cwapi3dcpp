@@ -230,4 +230,24 @@ namespace CwAPI3D
     container,
     metal
   };
+
+  /// @brief Result code of a BIMteam upload operation
+  enum bimTeamUploadResultCode
+  {
+    Ok = 0,
+    ErrorGeneralError,
+    ErrorTooManyModels,
+    ErrorInsufficientStorage,
+    ErrorInvalidProjectId,
+    ErrorAuthenticationFailed,
+  };
+
+  /// @brief Result object of a BIMteam upload operation
+  struct bimTeamUploadResult
+  {
+    /// @brief Result code from a BIMteam upload operation
+    bimTeamUploadResultCode mUploadResultCode;
+    /// @brief Link to the uploaded file. Is empty when mUploadResultCode is not Ok.
+    narrowString mShareLink;
+  };
 }

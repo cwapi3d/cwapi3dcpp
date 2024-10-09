@@ -49,6 +49,21 @@ namespace CwAPI3D
        * \param aElementIDs list to append
        */
       virtual void appendList(ICwAPI3DElementIDList* aElementIDs) = 0;
+      /**
+       * \brief Queries whether the container is empty
+       * \return true if there are no elements in the container, false otherwise
+       */
+      virtual bool empty() = 0;
+      /**
+       * \brief Gets a pointer to the first element. Note that the pointer is invalid if the container is destroyed.
+       * \return pointer to first element, returns nullptr if the container is empty.
+       */
+      virtual elementID* front() = 0;
+      /**
+       * \brief Gets a pointer to the last element. Note that the pointer is invalid if the container is destroyed.
+       * \return pointer to the last element, returns nullptr if the container is empty.
+       */
+      virtual elementID* back() = 0;
     };
   }
 }

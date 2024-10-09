@@ -12,6 +12,7 @@
 #pragma once
 
 #include "CwAPI3DTypes.h"
+#include "ICwAPI3DStringList.h"
 
 namespace CwAPI3D
 {
@@ -38,6 +39,10 @@ namespace CwAPI3D
        * \brief Adds a blank menu item
        */
       virtual void addBlankMenuItem() = 0;
+
+      /// @brief Gets menu items
+      /// @return menu items
+      virtual ICwAPI3DStringList* getMenuItems() = 0;
     };
   }
 }

@@ -82,6 +82,8 @@ namespace CwAPI3D
       virtual void setIfcDiscreteAccessory() = 0;
       virtual void setIfcFastener() = 0;
       virtual void setIfcMechanicalFastener() = 0;
+      virtual bool isIfcElementAssembly() = 0;
+      virtual void setIfcElementAssembly() = 0;
     };
   }
 }
