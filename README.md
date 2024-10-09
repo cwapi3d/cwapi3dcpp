@@ -1,6 +1,7 @@
 # Cadwork C++ Interface
 
 ![Vcpkg Version](https://img.shields.io/vcpkg/v/cwapi3d)
+[![RTD](https://img.shields.io/readthedocs/cwapi3dcpp)](https://docs.cadwork.com/projects/cwapi3dcpp/en/latest/)
 [![Issues](https://img.shields.io/github/issues/cwapi3d/cwapi3dcpp)](https://github.com/cwapi3d/cwapi3dcpp/issues)
 [![Pulls](https://img.shields.io/github/issues-pr/cwapi3d/cwapi3dcpp)](https://github.com/cwapi3d/cwapi3dcpp/pulls)
 [![GitHub](https://img.shields.io/github/license/cwapi3d/cwapi3dcpp)](https://choosealicense.com/licenses/mit/)
