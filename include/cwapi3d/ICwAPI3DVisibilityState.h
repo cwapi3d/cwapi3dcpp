@@ -7,7 +7,6 @@ namespace CwAPI3D
   namespace Interfaces
   {
     /**
-    * @interface ICwAPI3DVisibilityState
     * \brief
     */
     class ICwAPI3DVisibilityState

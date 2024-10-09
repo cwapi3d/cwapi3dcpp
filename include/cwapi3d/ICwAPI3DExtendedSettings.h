@@ -7,7 +7,6 @@ namespace CwAPI3D
   namespace Interfaces
   {
     /**
-    * @interface ICwAPI3DExtendedSettings
     * \brief
     */
     class ICwAPI3DExtendedSettings

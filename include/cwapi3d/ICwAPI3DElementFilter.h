@@ -9,7 +9,6 @@ namespace CwAPI3D
   namespace Interfaces
   {
     /**
-    * @interface ICwAPI3DElementFilter
     * \brief
     */
     class ICwAPI3DElementFilter

@@ -11,7 +11,6 @@ namespace CwAPI3D
   namespace Interfaces
   {
     /**
-    * @interface ICwAPI3DElementIDListMap
     * \brief
     */
     class ICwAPI3DElementIDListMap

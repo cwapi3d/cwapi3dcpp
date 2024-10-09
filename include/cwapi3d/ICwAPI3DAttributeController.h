@@ -859,7 +859,6 @@ namespace CwAPI3D
       /// @return A list of names for elements of the specified type.
       virtual ICwAPI3DStringList* getNameListItemsByElementType(ICwAPI3DElementType* aType) = 0;
 
-
       /// @brief Check if the user-attribute is visible in the modify window.
       /// @param aNumber
       /// @return visibility of Attribute in modify window

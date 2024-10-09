@@ -517,12 +517,12 @@ namespace CwAPI3D
       /// @param aGlobalOrigin global origin
       virtual void setGlobalOrigin(CwAPI3D::vector3D aGlobalOrigin) = 0;
 
-//      /// @brief get snapshot from screen
-//      /// @param aFormat file format png or jpeg
-//      /// @param aQuality quality factor must be in the range 0 to 100 or -1
-//      /// @param aWhiteBackground set background color either to white or black
-//      /// @return snapshot
-//      virtual ICwAPI3DString* createSnapshot(const character* aFormat = L"PNG", int aQuality = -1, bool aWhiteBackground = true) = 0;
+      //      /// @brief get snapshot from screen
+      //      /// @param aFormat file format png or jpeg
+      //      /// @param aQuality quality factor must be in the range 0 to 100 or -1
+      //      /// @param aWhiteBackground set background color either to white or black
+      //      /// @return snapshot
+      virtual ICwAPI3DString* createSnapshot(const character* aFormat = L"PNG", int aQuality = -1, bool aWhiteBackground = true) = 0;
 
       /// @brief Runs a 3D external program from a custom file path
       /// @param aFilePath external program file path

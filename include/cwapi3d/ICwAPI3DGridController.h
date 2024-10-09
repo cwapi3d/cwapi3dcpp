@@ -8,7 +8,7 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /// \brief 
+    /// \brief
     class ICwAPI3DGridController
     {
     public:

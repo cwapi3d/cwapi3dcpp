@@ -10,7 +10,6 @@ namespace CwAPI3D
   namespace Interfaces
   {
     /**
-    * @interface ICwAPI3DMenu
     * \brief
     */
     class ICwAPI3DMenu

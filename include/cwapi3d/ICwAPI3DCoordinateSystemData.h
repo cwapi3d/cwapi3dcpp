@@ -8,31 +8,23 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /**
-   *@interface ICwAPI3DCoordinateSystemData
-   * \brief Cadwork element coordinate-System 
-   */
+    /// @brief
     class ICwAPI3DCoordinateSystemData
     {
     public:
+      /// @brief
       virtual ~ICwAPI3DCoordinateSystemData() = default;
 
-      /**
-     * \brief Get element start point
-     * \return start point
-     */
+      /// @brief
+      /// @return
       virtual vector3D getP1() const = 0;
 
-      /**
-     * \brief Get element end point
-     * \return end point
-     */
+      /// @brief
+      /// @return
       virtual vector3D getP2() const = 0;
 
-      /**
-     * \brief Get element height orientation point
-     * \return height orientation point
-     */
+      /// @brief
+      /// @return
       virtual vector3D getP3() const = 0;
     };
   }

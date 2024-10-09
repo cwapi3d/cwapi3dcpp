@@ -7,7 +7,6 @@ namespace CwAPI3D
   namespace Interfaces
   {
     /**
-    * @interface ICwAPI3DElementType
     * \brief
     */
     class ICwAPI3DElementType

@@ -33,3 +33,7 @@ breathe_default_project = "CwAPI3D"
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+html_title = "CwAPI3D Documentation"
+html_theme_options = {
+    'navigation_depth': 2,
+}

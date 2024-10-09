@@ -18,9 +18,9 @@ namespace CwAPI3D
       /// @brief
       /// @return
       virtual uint32_t count() = 0;
-       /// @brief
-       /// @param aIndex
-       /// @return
+      /// @brief
+      /// @param aIndex
+      /// @return
       virtual ICwAPI3DVertexList* at(uint32_t aIndex) = 0;
     };
   }

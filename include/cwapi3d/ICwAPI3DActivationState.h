@@ -8,16 +8,11 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /**
-    * @interface ICwAPI3DActivationState
-    * \brief
-    */
+    /// @brief
     class ICwAPI3DActivationState
     {
     public:
-      /**
-       * \brief Destroys itself
-       */
+      /// @brief
       virtual void destroy() = 0;
     };
   }

@@ -9,7 +9,6 @@ namespace CwAPI3D
   namespace Interfaces
   {
     /**
-    * @interface ICwAPI3DVertexList
     * \brief
     */
     class ICwAPI3DVertexList
