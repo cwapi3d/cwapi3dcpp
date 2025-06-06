@@ -1,4 +1,12 @@
-// Copyright (C) Cadwork. All rights reserved.
+/// @file
+/// Copyright (C) 2023 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         30.0
+/// @author        Paquet
+/// @date          2023-05-15
 
 #pragma once
 
@@ -8,7 +16,7 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /// \brief
+    /// \brief 
     class ICwAPI3DGridController
     {
     public:

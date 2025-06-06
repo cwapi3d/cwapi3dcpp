@@ -1,4 +1,12 @@
-// Copyright (C) Cadwork. All rights reserved.
+/// @file
+/// Copyright (C) 2023 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         30.0
+/// @author        Paquet
+/// @date          2023-05-15
 
 #pragma once
 
@@ -39,47 +47,47 @@ namespace CwAPI3D
       virtual void addSegment(elementID aElement, vector3D aSegment) = 0;
 
       /// @brief sets the precision/decimal places of a dimension element
-      /// @param aElements
+      /// @param aElement
       /// @param aPrecision
       virtual void setPrecision(ICwAPI3DElementIDList* aElements, uint32_t aPrecision) = 0;
 
       /// @brief sets the text size a dimension element
-      /// @param aElements
+      /// @param aElement
       /// @param aTextSize
       virtual void setTextSize(ICwAPI3DElementIDList* aElements, double aTextSize) = 0;
 
       /// @brief sets the line thickness a dimension element
-      /// @param aElements
+      /// @param aElement
       /// @param aThickness
       virtual void setLineThickness(ICwAPI3DElementIDList* aElements, double aThickness) = 0;
 
       /// @brief sets if the total dimension is shown in a dimension element
-      /// @param aElements
+      /// @param aElement
       /// @param aTotal
       virtual void setTotalDimension(ICwAPI3DElementIDList* aElements, bool aTotal) = 0;
 
       /// @brief sets the text color a dimension element
-      /// @param aElements
+      /// @param aElement
       /// @param aColorID
       virtual void setTextColor(ICwAPI3DElementIDList* aElements, colorID aColorID) = 0;
 
       /// @brief sets the line color a dimension element
-      /// @param aElements
+      /// @param aElement
       /// @param aColorID
       virtual void setLineColor(ICwAPI3DElementIDList* aElements, colorID aColorID) = 0;
 
       /// @brief sets the default anchor length a dimension element
-      /// @param aElements
+      /// @param aElement
       /// @param aLength
       virtual void setDefaultAnchorLength(ICwAPI3DElementIDList* aElements, double aLength) = 0;
 
       /// @brief sets the distance vector between the points and the line
-      /// @param aElements
+      /// @param aElement
       /// @param aDistance
       virtual void setDistance(ICwAPI3DElementIDList* aElements, vector3D aDistance) = 0;
 
       /// @brief sets if distance and texts are shifted
-      /// @param aElements
+      /// @param aElement
       /// @param aShifted
       virtual void shiftDistanceAndTexts(ICwAPI3DElementIDList* aElements, bool aShifted) = 0;
 
@@ -124,6 +132,17 @@ namespace CwAPI3D
       /// @param aSegmentIndex
       /// @return normalized vector
       virtual vector3D getSegmentDirection(elementID aElement, int aSegmentIndex) = 0;
+
+      /// @brief Query whether the visualisation of the overall dimension is set for a dimension element
+      /// @param aElement ID of dimension element
+      /// @return result - For elements that are not of type dimension, the return value is per default false
+      virtual bool getTotalDimension(elementID aElement) = 0;
+
+      /// @brief Gets the base format of a Dimension Element
+      /// @param aElement ID of dimension element
+      /// @return the format used for the dimension. Enum value `None` may indicate that something went during
+      /// while retrieving the value due to e.g. the element not being a valid dimension.
+      virtual CwAPI3D::DimensionBaseFormat getDimensionBaseFormat(const CwAPI3D::elementID aElement) = 0;
     };
   }
 }

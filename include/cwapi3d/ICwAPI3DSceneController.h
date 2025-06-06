@@ -1,4 +1,12 @@
-// Copyright (C) Cadwork. All rights reserved.
+/// @file
+/// Copyright (C) 2017 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         24.0
+/// @author        Paquet
+/// @date          2017-07-05
 
 #pragma once
 
@@ -70,7 +78,7 @@ namespace CwAPI3D
       virtual uint64_t groupScenes(ICwAPI3DStringList* aSceneNames) = 0;
 
       /// @brief Deletes the Group of scenes
-      /// @param aGroupIndex of group
+      /// @param index of group
       virtual void ungroupScenes(uint64_t aGroupIndex) = 0;
 
       /// @brief Checks if a scene is present.

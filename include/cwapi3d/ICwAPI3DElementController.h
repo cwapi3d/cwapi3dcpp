@@ -1,4 +1,12 @@
-// Copyright (C) Cadwork. All rights reserved.
+/// @file
+/// Copyright (C) 2019 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         26.0
+/// @author        Paquet
+/// @date          2019-10-02
 
 #pragma once
 
@@ -10,10 +18,12 @@
 #include "ICwAPI3DElementMapQuery.h"
 #include "ICwAPI3DElementModuleProperties.h"
 #include "ICwAPI3DFacetList.h"
+#include "ICwAPI3DHitResult.h"
 #include "ICwAPI3DString.h"
 #include "ICwAPI3DStringList.h"
 #include "ICwAPI3DTextObjectOptions.h"
 #include "ICwAPI3DVertexList.h"
+#include "ICwAPI3DShoulderOptions.h"
 
 namespace CwAPI3D
 {
@@ -543,7 +553,7 @@ namespace CwAPI3D
       /// @param aP1 The first point.
       /// @param aP2 The second point.
       /// @return The ID of the created circular axis.
-      virtual elementID createCircularAxisPoints(double aDiameter, CwAPI3D::vector3D aP1, CwAPI3D::vector3D aP2) = 0;
+      virtual elementID createCircularAxisPoints(double aDiameter, vector3D aP1, vector3D aP2) = 0;
 
       /// @brief Creates a circular axis using vectors.
       /// @param aDiameter The diameter of the circular axis.
@@ -551,7 +561,7 @@ namespace CwAPI3D
       /// @param aP1 The starting point.
       /// @param aXL The direction of the X-axis.
       /// @return The ID of the created circular axis.
-      virtual elementID createCircularAxisVector(double aDiameter, double aLength, CwAPI3D::vector3D aP1, CwAPI3D::vector3D aXL) = 0;
+      virtual elementID createCircularAxisVector(double aDiameter, double aLength, vector3D aP1, vector3D aXL) = 0;
 
       /// @brief Converts elements to auxiliary elements.
       /// @param aElements The list of elements to be converted.
@@ -616,7 +626,7 @@ namespace CwAPI3D
       /// @param aP2 The second point.
       /// @param aP3 The third point.
       /// @return The ID of the created standard beam.
-      virtual elementID createStandardBeamPoints(const character* aStandardElementName, CwAPI3D::vector3D aP1, CwAPI3D::vector3D aP2, CwAPI3D::vector3D aP3) = 0;
+      virtual elementID createStandardBeamPoints(const character* aStandardElementName, vector3D aP1, vector3D aP2, vector3D aP3) = 0;
 
       /// @brief Creates a standard beam using vectors.
       /// @param aStandardElementName The name of the standard beam.
@@ -625,7 +635,7 @@ namespace CwAPI3D
       /// @param aXL The direction of the X-axis.
       /// @param aZL The direction of the Z-axis.
       /// @return The ID of the created standard beam.
-      virtual elementID createStandardBeamVectors(const character* aStandardElementName, double aLength, CwAPI3D::vector3D aP1, CwAPI3D::vector3D aXL, CwAPI3D::vector3D aZL) = 0;
+      virtual elementID createStandardBeamVectors(const character* aStandardElementName, double aLength, vector3D aP1, vector3D aXL, vector3D aZL) = 0;
 
       /// @brief Creates a standard panel using points.
       /// @param aStandardElementName The name of the standard panel.
@@ -633,7 +643,7 @@ namespace CwAPI3D
       /// @param aP2 The second point.
       /// @param aP3 The third point.
       /// @return The ID of the created standard panel.
-      virtual elementID createStandardPanelPoints(const character* aStandardElementName, CwAPI3D::vector3D aP1, CwAPI3D::vector3D aP2, CwAPI3D::vector3D aP3) = 0;
+      virtual elementID createStandardPanelPoints(const character* aStandardElementName, vector3D aP1, vector3D aP2, vector3D aP3) = 0;
 
       /// @brief Creates a standard panel using vectors.
       /// @param aStandardElementName The name of the standard panel.
@@ -642,7 +652,7 @@ namespace CwAPI3D
       /// @param aXL The direction of the X-axis.
       /// @param aZL The direction of the Z-axis.
       /// @return The ID of the created standard panel.
-      virtual elementID createStandardPanelVectors(const character* aStandardElementName, double aLength, CwAPI3D::vector3D aP1, CwAPI3D::vector3D aXL, CwAPI3D::vector3D aZL) = 0;
+      virtual elementID createStandardPanelVectors(const character* aStandardElementName, double aLength, vector3D aP1, vector3D aXL, vector3D aZL) = 0;
 
       /// @brief Creates a standard steel element using points.
       /// @param aStandardElementName The name of the standard steel element.
@@ -650,7 +660,7 @@ namespace CwAPI3D
       /// @param aP2 The second point.
       /// @param aP3 The third point.
       /// @return The ID of the created standard steel element.
-      virtual elementID createStandardSteelPoints(const character* aStandardElementName, CwAPI3D::vector3D aP1, CwAPI3D::vector3D aP2, CwAPI3D::vector3D aP3) = 0;
+      virtual elementID createStandardSteelPoints(const character* aStandardElementName, vector3D aP1, vector3D aP2, vector3D aP3) = 0;
 
       /// @brief Creates a standard steel element using vectors.
       /// @param aStandardElementName The name of the standard steel element.
@@ -659,7 +669,7 @@ namespace CwAPI3D
       /// @param aXL The direction of the X-axis.
       /// @param aZL The direction of the Z-axis.
       /// @return The ID of the created standard steel element.
-      virtual elementID createStandardSteelVectors(const character* aStandardElementName, double aLength, CwAPI3D::vector3D aP1, CwAPI3D::vector3D aXL, CwAPI3D::vector3D aZL) = 0;
+      virtual elementID createStandardSteelVectors(const character* aStandardElementName, double aLength, vector3D aP1, vector3D aXL, vector3D aZL) = 0;
 
       /// @brief Moves an element with undo functionality.
       /// @param aElementIDList The list of elements to move.
@@ -686,14 +696,14 @@ namespace CwAPI3D
       /// @param aP1 The first point.
       /// @param aP2 The second point.
       /// @return The ID of the created normal axis.
-      virtual elementID createNormalAxisPoints(CwAPI3D::vector3D aP1, CwAPI3D::vector3D aP2) = 0;
+      virtual elementID createNormalAxisPoints(vector3D aP1, vector3D aP2) = 0;
 
       /// @brief Creates a normal axis using vectors.
       /// @param aLength The length of the axis.
       /// @param aP1 The starting point of the axis.
       /// @param aXL The direction of the axis.
       /// @return The ID of the created normal axis.
-      virtual elementID createNormalAxisVectors(double aLength, CwAPI3D::vector3D aP1, CwAPI3D::vector3D aXL) = 0;
+      virtual elementID createNormalAxisVectors(double aLength, vector3D aP1, vector3D aXL) = 0;
 
       /// @brief Converts bolts to standard connectors.
       /// @param aElements The list of bolts to be converted.
@@ -845,7 +855,7 @@ namespace CwAPI3D
       /// @param aZl The Z-axis direction of the text object.
       /// @param aTextOptions The options for the text object.
       /// @return The ID of the created text object.
-      virtual elementID createTextObjectWithOptions(vector3D aPosition, vector3D aXl, vector3D aZl, Interfaces::ICwAPI3DTextObjectOptions* aTextOptions) = 0;
+      virtual elementID createTextObjectWithOptions(vector3D aPosition, vector3D aXl, vector3D aZl, ICwAPI3DTextObjectOptions* aTextOptions) = 0;
 
       /// @brief Creates a standard element from GUID points.
       /// @param aGuid The GUID of the standard element.
@@ -945,7 +955,7 @@ namespace CwAPI3D
       /// @param aNestingParentId
       /// @param aNestingChildId
       /// @return A global element coordinate-system of the nested child element consisting of a Point1, a Point2 and a Point3. You can get the local placement by subtracting the parent coordinate - system with child coordinate - system
-      virtual ICwAPI3DCoordinateSystemData* getCoordinateSystemDataNestingChild(CwAPI3D::elementID aNestingParentId, CwAPI3D::elementID aNestingChildId) = 0;
+      virtual ICwAPI3DCoordinateSystemData* getCoordinateSystemDataNestingChild(elementID aNestingParentId, elementID aNestingChildId) = 0;
 
       /// @brief cuts a half lap joint with specific parameters
       /// @param aElements
@@ -1024,12 +1034,13 @@ namespace CwAPI3D
       /// @param aDrillingTolerance
       virtual void cutScarfStraight(ICwAPI3DElementIDList* aElements, double aLength, double aDepth, double aClearanceLength, double aClearanceDepth, double aClearanceHook, uint64_t aDrillingCount, double aDrillingDiameter, double aDrillingTolerance) = 0;
 
-      /// @brief
+      /// @brief cuts a diagonal scarf length joint with specific parameters
       /// @param aElements
       /// @param aLength
       /// @param aDepth
       /// @param aClearanceLength
       /// @param aClearanceDepth
+      /// @param aClearanceHook
       /// @param aDrillingCount
       /// @param aDrillingDiameter
       /// @param aDrillingTolerance
@@ -1075,7 +1086,7 @@ namespace CwAPI3D
       /// @brief Creates a spline line using a list of points.
       /// @param aSplinePoints The points of the line.
       /// @return The ID of the created line.
-      virtual elementID createSplineLine(Interfaces::ICwAPI3DVertexList* aSplinePoints) = 0;
+      virtual elementID createSplineLine(ICwAPI3DVertexList* aSplinePoints) = 0;
 
       /// @brief Unjoins the specified elements.
       /// @param aElementIDList The list of elements to be unjoined.
@@ -1103,6 +1114,83 @@ namespace CwAPI3D
       /// @param aElement The ID of a Text Object
       /// @return TextObjectOptions
       virtual ICwAPI3DTextObjectOptions* getTextObjectOptions(elementID aElement) = 0;
+
+      /// @brief Gets whether the current element group selection mode is setup to select single elements
+      virtual bool getIsElementGroupSingleSelectMode() = 0;
+
+      /// @brief Gets whether the current element group selection mode is setup to select groups when a grouped element is selected
+      virtual bool getIsElementGroupMultiSelectMode() = 0;
+
+      /// @brief Applies an image texture to a specified surface element.
+      /// This function allows you to set an image as a texture on a given surface element.
+      /// The image is mapped to the surface between two specified points that define the alignment and scaling.
+      ///
+      /// @param aElement Surface element
+      /// @param aImageFilePath The file path to the image to be applied.
+      /// Supported formats include `.jpg`, `.png`, `.bmp`, and `.tif`.
+      /// Path example:
+      /// `LR"(C:/path/to/Image.png)"`.
+      /// @param aP1 The starting alignment point for mapping the image on the surface.
+      /// @param aP2 The ending alignment point for mapping the image on the surface.
+      /// @return Returns `true` if the image was successfully applied to the surface;
+      /// otherwise, returns `false` in case of failure. Failures can occur due to invalid file paths,
+      /// unsupported formats, or issues with the surface element.
+      ///
+      /// @note Ensure that the file path is valid and accessible, and that the surface element exists
+      /// Proper error handling for invalid inputs is recommended.
+      virtual bool applyImageToSurface(elementID aElement, const character* aImageFilePath, vector3D aP1, vector3D aP2) = 0;
+
+      /// @brief Sets shoulder cut options.
+      /// @param aOptions
+      virtual void setShoulderOptions(ICwAPI3DShoulderOptions* aOptions) = 0;
+
+      /// @brief Sets heel shoulder cut options.
+      /// @param aOptions
+      virtual void setHeelShoulderOptions(ICwAPI3DHeelShoulderOptions* aOptions) = 0;
+
+      /// @brief Sets double shoulder cut options.
+      /// @param aOptions
+      virtual void setDoubleShoulderOptions(ICwAPI3DDoubleShoulderOptions* aOptions) = 0;
+
+      /// @brief Cuts shoulder with current 3D options.
+      /// @param aElementIDList
+      /// @param aConnectingElementIDList
+      virtual void cutShoulder(ICwAPI3DElementIDList* aElementIDList, ICwAPI3DElementIDList* aConnectingElementIDList) = 0;
+
+      /// @brief Cuts heel shoulder with current 3D options.
+      /// @param aElementIDList
+      /// @param aConnectingElementIDList
+      virtual void cutHeelShoulder(ICwAPI3DElementIDList* aElementIDList, ICwAPI3DElementIDList* aConnectingElementIDList) = 0;
+
+      /// @brief Cuts double shoulder with current 3D options.
+      /// @param aElementIDList
+      /// @param aConnectingElementIDList
+      virtual void cutDoubleShoulder(ICwAPI3DElementIDList* aElementIDList, ICwAPI3DElementIDList* aConnectingElementIDList) = 0;
+
+      /// @brief Casts a ray through the 3D model and calculates all intersection points between the ray and specified elements.
+      /// This function performs ray casting against each specified element to find intersection points.
+      /// For each element hit by the ray, it returns the element ID and all points where the ray intersects with that element.
+      /// The ray is defined by a start point, end point, and radius.
+      /// @param aElementIDList List of element IDs to test against the ray
+      /// @param aRayStartPosition 3D start point of the ray
+      /// @param aRayEndPosition 3D end point of the ray
+      /// @param aRadius Radius of the ray cylinder (allows testing against a volume rather than just a line)
+      /// @return Contains list of elements that were hit by the ray and list of vertices that are queried via ElementID
+      ///
+      /// @note The ray direction is calculated as the normalized vector from aRayStart to aRayEnd.
+      virtual ICwAPI3DHitResult* castRayAndGetElementIntersections(ICwAPI3DElementIDList* aElementIDList, vector3D aRayStartPosition, vector3D aRayEndPosition, double aRadius) = 0;
+
+      /// @brief Gets shoulder cut options.
+      /// @return Shoulder options
+      virtual ICwAPI3DShoulderOptions* getShoulderOptions() = 0;
+
+      /// @brief Gets heel shoulder cut options.
+      /// @return Heel shoulder options
+      virtual ICwAPI3DHeelShoulderOptions* getHeelShoulderOptions() = 0;
+
+      /// @brief Gets double shoulder cut options.
+      /// @return Double shoulder options
+      virtual ICwAPI3DDoubleShoulderOptions* getDoubleShoulderOptions() = 0;
     };
   }
 }

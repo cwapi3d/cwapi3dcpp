@@ -1,4 +1,13 @@
-// Copyright (C) Cadwork. All rights reserved.
+/** @file
+* Copyright (C) 2017 cadwork informatik AG
+*
+* This file is part of the CwAPI3D module for cadwork 3d.
+*
+* @ingroup       CwAPI3D
+* @since         25
+* @author        Paquet
+* @date          2028-02-27
+*/
 
 #pragma once
 
@@ -9,6 +18,7 @@ namespace CwAPI3D
   namespace Interfaces
   {
     /**
+    * @interface ICwAPI3DMaterialIDList
     * \brief
     */
     class ICwAPI3DMaterialIDList

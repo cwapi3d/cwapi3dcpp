@@ -1,4 +1,13 @@
-// Copyright (C) Cadwork. All rights reserved.
+/** @file
+* Copyright (C) 2019 cadwork informatik AG
+*
+* This file is part of the CwAPI3D module for cadwork 3d.
+*
+* @ingroup       CwAPI3D
+* @since         26.0
+* @author        Paquet
+* @date          2019-02-06
+*/
 
 #pragma once
 
@@ -47,11 +56,15 @@
 #include "ICwAPI3DVertexList.h"
 #include "ICwAPI3DVisibilityState.h"
 #include "ICwAPI3DVisualizationController.h"
+#include "ICwAPI3DShoulderOptions.h"
+#include "ICwAPI3DHitResult.h"
 
 namespace CwAPI3D
 {
   namespace Interfaces
   {
+    class ICwAPI3DEventSubscriptionController;
+
     /// \brief
     class ICwAPI3DControllerFactory
     {
@@ -244,6 +257,23 @@ namespace CwAPI3D
       /// @brief Creates an empty VisibilityState
       /// @return visibility state
       virtual ICwAPI3DVisibilityState* createEmptyVisibilityState() = 0;
+
+      /// @brief Creates an empty ShoulderOptions
+      /// @return options
+      virtual ICwAPI3DShoulderOptions* createEmptyShoulderOptions() = 0;
+
+      /// @brief Creates an empty HeelShoulderOptions
+      /// @return options
+      virtual ICwAPI3DHeelShoulderOptions* createEmptyHeelShoulderOptions() = 0;
+
+      /// @brief Creates an empty DoubleShoulderOptions
+      /// @return options
+      virtual ICwAPI3DDoubleShoulderOptions* createEmptyDoubleShoulderOptions() = 0;
+      /// @brief Gets the event-subscription controller
+      /// @return event subscription controller
+      virtual ICwAPI3DEventSubscriptionController* getEventSubscriptionController() = 0;
+
+      virtual ICwAPI3DHitResult* createEmptyHitResult() = 0;
     };
   }
 }

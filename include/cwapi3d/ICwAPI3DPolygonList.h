@@ -1,5 +1,13 @@
-// Copyright (C) Cadwork. All rights reserved.
-
+/** @file
+* Copyright (C) 2020 cadwork informatik AG
+*
+* This file is part of the CwAPI3D module for cadwork 3d.
+*
+* @ingroup       CwAPI3D
+* @since         27.0
+* @author        Paquet
+* @date          2020-08-19
+*/
 #pragma once
 
 #include "CwAPI3DTypes.h"
@@ -10,6 +18,7 @@ namespace CwAPI3D
   namespace Interfaces
   {
     /**
+    * @interface ICwAPI3DPolygonList
     * \brief
     */
     class ICwAPI3DPolygonList

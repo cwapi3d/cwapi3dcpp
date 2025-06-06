@@ -1,8 +1,6 @@
-// Copyright (C) Cadwork. All rights reserved.
-
 #pragma once
 
-#include <cstdint>
+#include <stdint.h>
 #include <string>
 
 namespace CwAPI3D
@@ -205,6 +203,13 @@ namespace CwAPI3D
     element_assembly = 1,
   };
 
+  enum ifcMaterialDefinition
+  {
+    material_layer_set,
+    material_constituent_set,
+    ignore
+  };
+
   enum textElementType
   {
     line = 0,
@@ -251,5 +256,55 @@ namespace CwAPI3D
     bimTeamUploadResultCode mUploadResultCode;
     /// @brief Link to the uploaded file. Is empty when mUploadResultCode is not Ok.
     narrowString mShareLink;
+  };
+
+  enum ShoulderDrillingOrientation
+  {
+    DrillingPerpendicularToBisector = 0,
+    DrillingPerpendicularToCounterPart = 1,
+    DrillingPerpendicularToStrut = 2,
+    DrillingPerpendicularToContactSurface = 3,
+  };
+
+  enum ShoulderBeamGeometry
+  {
+    Bisector = 0,
+    PerpendicularToStrut = 1,
+    PerpendicularToCounterPart = 2,
+    Birdsmouth = 3,
+  };
+
+  enum HeelShoulderBeamGeometry
+  {
+    Normal = 0,
+    Straight = 1,
+  };
+
+  /// @brief Format of how values are displayed for Dimensions
+  enum class DimensionBaseFormat : int32_t
+  {
+    None = 0,       ///< Invalid Dimension Format.
+    DistanceOnly,   ///< Displays only the distance.
+    SumOnly,        ///< Displays only the summed distances.
+    DistanceAndSum, ///< Displays both the distance and the sums.
+    SumMoved,       ///< Displays the sums with a moved position to prevent overlaps.
+  };
+
+  /// @brief The Formats of how to organize layers
+  enum class DxfLayerFormatType : int32_t
+  {
+    AllInNo1 = 0, ///< Put everything in LAYER_NO1
+    Color,        ///< Organize layers by color.
+    Material,     ///< Organize layers by material.
+    Name,         ///< Organize layers by name.
+    Group,        ///< Organize layers by group.
+    Subgroup,     ///< Organize layers by subgroup.
+  };
+
+  /// @brief The DXF versions supported by the export
+  enum class DxfExportVersion : int32_t
+  {
+    AutoCadR10 = 0,
+    AutoCadR27
   };
 }

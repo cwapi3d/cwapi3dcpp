@@ -1,11 +1,19 @@
-// Copyright (C) Cadwork. All rights reserved.
+/// @file
+/// Copyright (C) 2016 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         24.0
+/// @author        Paquet
+/// @date          2016-12-15
 
 #pragma once
 
 #include "ICwAPI3DElementIDList.h"
 #include "ICwAPI3DString.h"
-#include "ICwAPI3DStringList.h"
 #include "ICwAPI3DVertexList.h"
+#include "ICwAPI3DStringList.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -517,11 +525,11 @@ namespace CwAPI3D
       /// @param aGlobalOrigin global origin
       virtual void setGlobalOrigin(CwAPI3D::vector3D aGlobalOrigin) = 0;
 
-      //      /// @brief get snapshot from screen
-      //      /// @param aFormat file format png or jpeg
-      //      /// @param aQuality quality factor must be in the range 0 to 100 or -1
-      //      /// @param aWhiteBackground set background color either to white or black
-      //      /// @return snapshot
+      /// @brief get snapshot from screen
+      /// @param aFormat File format PNG, JPEG
+      /// @param aQuality The quality factor must be in the range 0 to 100 or -1. Specify 0 to obtain small compressed files, 100 for large uncompressed files, and -1 (the default) to use the default settings
+      /// @param aWhiteBackground set background color either to white or black
+      /// @return snapshot
       virtual ICwAPI3DString* createSnapshot(const character* aFormat = L"PNG", int aQuality = -1, bool aWhiteBackground = true) = 0;
 
       /// @brief Runs a 3D external program from a custom file path
@@ -554,6 +562,13 @@ namespace CwAPI3D
       /// @param aDefaultValue default value
       /// @return user string
       virtual ICwAPI3DString* getUserStringWithDefaultValue(const character* aMessage, const character* aDefaultValue) = 0;
+
+      /// @brief Gets the 3D version name
+      /// @return 3D version name
+      virtual ICwAPI3DString* get3DVersionName() = 0;
+
+      /// @brief Redirects output from Python's print function to the cadwork logger
+      virtual void redirectPythonOutputToLogger() = 0;
     };
   }
 }

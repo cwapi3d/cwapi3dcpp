@@ -1,4 +1,12 @@
-// Copyright (C) Cadwork. All rights reserved.
+/// @file
+/// Copyright (C) 2016 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         24.0
+/// @author        Paquet
+/// @date          2016-12-15
 
 #pragma once
 
@@ -337,7 +345,7 @@ namespace CwAPI3D
 
       ///
       /// @brief Set the camera data - this will override the current camera data
-      /// @param aCameraData data
+      /// @param camera data
       ///
       virtual void setCameraData(ICwAPI3DCameraData* aCameraData) = 0;
 
@@ -357,6 +365,36 @@ namespace CwAPI3D
       /// @param aPlaneNormal a normalized plane vector
       /// @param aPlaneOrigin a plane origin
       virtual void enterWorkingPlane(vector3D aPlaneNormal, vector3D aPlaneOrigin) = 0;
+
+      ///
+      /// @brief gets the element transparency
+      /// @param aID element id
+      virtual int32_t getElementTransparency(CwAPI3D::elementID aID) = 0;
+
+      ///
+      /// @brief sets the element transparency
+      /// @param aElementIDList element id list
+      /// @param aValue transparency value as percentage
+      virtual void setElementTransparency(ICwAPI3DElementIDList* aElementIDList, int32_t aValue) = 0;
+
+      ///
+      /// @brief check if element is using material texture
+      /// @param aID element id
+      virtual bool getUseMaterialTexture(CwAPI3D::elementID aID) = 0;
+
+      ///
+      /// @brief sets element to use material texture
+      /// @param aElementIDList element id list
+      /// @param aValue flag
+      virtual void setUseMaterialTexture(ICwAPI3DElementIDList* aElementIDList, bool aValue) = 0;
+
+      /// @brief Set the graphic option to display bitmaps as textures in shaded 1 
+      /// @param aValue 
+      virtual void displayBitmapsAsTextureRepresentationsInShaded1(bool aValue) = 0;
+
+      /// @brief Set the graphic option to display bitmaps as textures in shaded 2
+      /// @param aValue 
+      virtual void displayBitmapsAsTextureRepresentationsInShaded2(bool aValue) = 0;
     };
   }
 }

@@ -1,4 +1,12 @@
-// Copyright (C) Cadwork. All rights reserved.
+/// @file
+/// Copyright (C) 2016 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         24.0
+/// @author        Paquet
+/// @date          2016-12-15
 
 #pragma once
 
@@ -196,7 +204,7 @@ namespace CwAPI3D
       virtual void loadWebGlPresetFile(const character* aFilePath) = 0;
 
       /// @brief Exports a STEP file with extruded drillings
-      /// @param aElements element ID list
+      /// @param aElementList element ID list
       /// @param aFilePath file path
       /// @param aScaleFactor file scale factor
       /// @param aVersion file version
@@ -216,6 +224,17 @@ namespace CwAPI3D
       /// @param aElements element ID list
       /// @return a result object with a result code and a share link. If the code is not ok (0), the share link string is empty
       virtual bimTeamUploadResult uploadToBimTeamAndCreateShareLink(Interfaces::ICwAPI3DElementIDList* aElements) = 0;
+
+      /// @brief exports visible elements in the scene to a DXF file
+      /// @param aFilePath the out path for the file
+      /// @param aDxfLayerFormatType the format type of how to organize layers
+      /// @param aDxfExportVersion the dxf version to use for the export
+      /// @return true on successful export, false otherwise
+      virtual bool exportDxfFile(const character* aFilePath, DxfLayerFormatType aDxfLayerFormatType, DxfExportVersion aDxfExportVersion) = 0;
+
+      /// @brief exports active elements in the scene to a DSTV (.stp) file
+      /// @param aFilePath the out path for the file
+      virtual bool exportDstvFile(const CwAPI3D::character* aFilePath) = 0;
     };
   }
 }

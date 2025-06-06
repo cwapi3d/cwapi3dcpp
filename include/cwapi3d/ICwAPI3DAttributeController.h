@@ -1,4 +1,12 @@
-// Copyright (C) Cadwork. All rights reserved.
+/// @file
+/// Copyright (C) 2016 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         24.0
+/// @author        Paquet
+/// @date          2016-12-15
 
 #pragma once
 
@@ -829,6 +837,7 @@ namespace CwAPI3D
       virtual bool isHundeggerProcessingGroup(elementID aID) = 0;
 
       /// @brief Get the element grouping type (group, subgroup)
+      /// @param
       /// @return element grouping type
       virtual elementGroupingType getElementGroupingType() = 0;
 
@@ -859,6 +868,7 @@ namespace CwAPI3D
       /// @return A list of names for elements of the specified type.
       virtual ICwAPI3DStringList* getNameListItemsByElementType(ICwAPI3DElementType* aType) = 0;
 
+
       /// @brief Check if the user-attribute is visible in the modify window.
       /// @param aNumber
       /// @return visibility of Attribute in modify window
@@ -874,6 +884,17 @@ namespace CwAPI3D
       /// @param aCuttingSetName Name of the cutting set to apply.
       /// @return `true` if the cutting set was successfully applied, `false` otherwise.
       virtual bool setCuttingSet(ICwAPI3DElementIDList* aElementIDList, const character* aCuttingSetName) = 0;
+
+      /// @brief Gets the material id of a given element
+      /// @param aID The ID of the element.
+      /// @return The id of the element's material or 0 if no material id could be retrieved.
+      virtual materialID getStandardElementMaterialId(CwAPI3D::elementID aID) = 0;
+
+      /// @brief Sets the machine calculation set on the elements
+      /// @param aElementIDList List of element IDs
+      /// @param aName Name of the machine calculation set
+      /// @return `true` if the machine calculation set was successfully applied, `false` otherwise
+      virtual bool setMachineCalculationSet(ICwAPI3DElementIDList* aElementIDList, const character* aName) = 0;
     };
   }
 }

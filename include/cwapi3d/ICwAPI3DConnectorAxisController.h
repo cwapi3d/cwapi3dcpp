@@ -1,9 +1,17 @@
-// Copyright (C) Cadwork. All rights reserved.
+/// @file
+/// Copyright (C) 2017 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         24.0
+/// @author        Paquet
+/// @date          2017-05-25
 
 #pragma once
 
-#include "ICwAPI3DString.h"
 #include "ICwAPI3DStringList.h"
+#include "ICwAPI3DString.h"
 
 namespace CwAPI3D
 {
@@ -179,6 +187,100 @@ namespace CwAPI3D
       /// @brief Imports a file.
       /// @param aFilePath The path to the file to be imported.
       virtual void importFromFile(const character* aFilePath) = 0;
+
+      /// @param aAxisID
+      /// @param aSectionIndex
+      /// @return
+      virtual double getCounterboreDiameterForStartSide(elementID aAxisID, int32_t aSectionIndex) const = 0;
+
+      /// @param aAxisID
+      /// @param aSectionIndex
+      /// @return
+      virtual double getCounterboreDiameterForEndSide(elementID aAxisID, int32_t aSectionIndex) const = 0;
+
+      /// @param aAxisID
+      /// @param aSectionIndex
+      /// @return
+      virtual double getCounterboreDepthForStartSide(elementID aAxisID, int32_t aSectionIndex) const = 0;
+
+      /// @param aAxisID
+      /// @param aSectionIndex
+      /// @return
+      virtual double getCounterboreDepthForEndSide(elementID aAxisID, int32_t aSectionIndex) const = 0;
+
+      /// @param aAxisID
+      /// @param aSectionIndex
+      /// @return
+      virtual bool getCounterboreIsConicalForStartSide(elementID aAxisID, int32_t aSectionIndex) const = 0;
+
+      /// @param aAxisID
+      /// @param aSectionIndex
+      /// @return
+      virtual bool getCounterboreIsConicalForEndSide(elementID aAxisID, int32_t aSectionIndex) const = 0;
+
+      /// @param aAxisID
+      /// @param aSectionIndex
+      /// @param aDiameter
+      /// @param aDepth
+      /// @param aIsConical
+      virtual void setCounterboreForStartSide(elementID aAxisID, int32_t aSectionIndex, double aDiameter, double aDepth, bool aIsConical) = 0;
+
+      /// @param aAxisID
+      /// @param aSectionIndex
+      /// @param aDiameter
+      /// @param aDepth
+      /// @param aIsConical
+      virtual void setCounterboreForEndSide(elementID aAxisID, int32_t aSectionIndex, double aDiameter, double aDepth, bool aIsConical) = 0;
+
+      /// @param aAxisID
+      /// @return
+      virtual int32_t getIntersectionCount(elementID aAxisID) const = 0;
+
+      /// @param aAxisID
+      /// @param aIntersectionIndex
+      /// @return
+      virtual ICwAPI3DStringList* getItemGuidsAtIntersection(elementID aAxisID, int32_t aIntersectionIndex) = 0;
+
+      /// @param aAxisID
+      /// @param aIntersectionIndex
+      /// @param aItemGuids
+      virtual void setItemGuidsAtIntersection(elementID aAxisID, int32_t aIntersectionIndex, ICwAPI3DStringList* aItemGuids) = 0;
+
+      /// @param aAxisID
+      /// @param aSectionIndex
+      /// @return
+      virtual double getSectionLength(elementID aAxisID, int32_t aSectionIndex) const = 0;
+
+      /// @param aAxisID
+      /// @param aSectionIndex
+      /// @return
+      virtual bool getSectionOblongDrillingIsEnabled(elementID aAxisID, int32_t aSectionIndex) const = 0;
+
+      /// @param aAxisID
+      /// @param aSectionIndex
+      /// @return
+      virtual double getSectionOblongDrillingPositiveValue(elementID aAxisID, int32_t aSectionIndex) const = 0;
+
+      /// @param aAxisID
+      /// @param aSectionIndex
+      /// @return
+      virtual double getSectionOblongDrillingNegativeValue(elementID aAxisID, int32_t aSectionIndex) const = 0;
+
+      /// @param aAxisID
+      /// @param aSectionIndex
+      /// @return
+      virtual double getSectionOblongDrillingAngle(elementID aAxisID, int32_t aSectionIndex) const = 0;
+
+      /// @param aAxisID
+      /// @param aSectionIndex
+      virtual void setSectionOblongDrillingIsDisabled(elementID aAxisID, int32_t aSectionIndex) = 0;
+
+      /// @param aAxisID
+      /// @param aSectionIndex
+      /// @param aPositiveValue
+      /// @param aNegativeValue
+      /// @param aAngle
+      virtual void setSectionOblongDrillingIsEnabled(elementID aAxisID, int32_t aSectionIndex, double aPositiveValue, double aNegativeValue, double aAngle) = 0;
     };
   }
 }

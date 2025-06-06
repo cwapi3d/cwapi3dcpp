@@ -1,4 +1,13 @@
-// Copyright (C) Cadwork. All rights reserved.
+/** @file
+* Copyright (C) 2017 cadwork informatik AG
+*
+* This file is part of the CwAPI3D module for cadwork 3d.
+*
+* @ingroup       CwAPI3D
+* @since         24.0
+* @author        Paquet
+* @date          2017-08-09
+*/
 
 #pragma once
 
@@ -7,6 +16,7 @@ namespace CwAPI3D
   namespace Interfaces
   {
     /**
+    * @interface ICwAPI3DExtendedSettings
     * \brief
     */
     class ICwAPI3DExtendedSettings
@@ -126,6 +136,17 @@ namespace CwAPI3D
        * \return value of flag
        */
       virtual bool getIgnoreForConnectorAxis() = 0;
+
+      virtual void setFavorite(bool aValue) = 0;
+      virtual bool getFavorite() = 0;
+      virtual void setIgnoreProcessing(bool aValue) = 0;
+      virtual bool getIgnoreProcessing() = 0;
+      virtual void setSinglePiece(bool aValue) = 0;
+      virtual bool getSinglePiece() = 0;
+      virtual void setComposite(bool aValue) = 0;
+      virtual bool getComposite() = 0;
+      virtual void setDrillingCreateNotches(bool aValue) = 0;
+      virtual bool getDrillingCreateNotches() = 0;
     };
   }
 }

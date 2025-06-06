@@ -1,9 +1,17 @@
-// Copyright (C) Cadwork. All rights reserved.
+/// @file
+/// Copyright (C) 2016 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         25.0
+/// @author        Nodurft
+/// @date          2018-02-19
 
 #pragma once
 
-#include "ICwAPI3DEndtypeIDList.h"
 #include "ICwAPI3DString.h"
+#include "ICwAPI3DEndtypeIDList.h"
 
 namespace CwAPI3D
 {
