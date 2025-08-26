@@ -1,5 +1,5 @@
 EdgeList
 ========
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DEdgeList
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DEdgeList
    :members:

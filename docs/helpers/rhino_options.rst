@@ -1,5 +1,5 @@
 RhinoOptions
 ============
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DRhinoOptions
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DRhinoOptions
    :members:

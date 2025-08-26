@@ -1,5 +1,6 @@
-MachineController
-=================
+Machine Controller
+==================
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DMachineController
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DMachineController
+   :project: CwAPI3D
    :members:

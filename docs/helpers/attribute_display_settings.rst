@@ -1,5 +1,5 @@
 AttributeDisplaySettings
 ========================
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DAttributeDisplaySettings
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DAttributeDisplaySettings
    :members:

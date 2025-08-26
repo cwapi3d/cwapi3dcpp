@@ -1,5 +1,5 @@
 GridController
 ==============
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DGridController
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DGridController
    :members:

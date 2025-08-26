@@ -1,5 +1,6 @@
-VertexList
-==========
+Vertex List
+===========
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DVertexList
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DVertexList
+   :project: CwAPI3D
    :members:

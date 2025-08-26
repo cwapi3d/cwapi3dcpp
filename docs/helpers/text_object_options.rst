@@ -1,5 +1,5 @@
 TextObjectOptions
 =================
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DTextObjectOptions
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DTextObjectOptions
    :members:

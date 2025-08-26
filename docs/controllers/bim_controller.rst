@@ -1,5 +1,6 @@
-BimController
-=============
+Bim Controller
+==================
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DBimController
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DBimController
+   :project: CwAPI3D
    :members:

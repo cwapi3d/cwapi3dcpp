@@ -1,5 +1,6 @@
 String
 ======
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DString
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DString
+   :project: CwAPI3D
    :members:

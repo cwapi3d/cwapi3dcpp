@@ -1,5 +1,6 @@
-EndTypeController
-=================
+Endtype Controller
+==================
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DEndtypeController
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DEndtypeController
+   :project: CwAPI3D
    :members:

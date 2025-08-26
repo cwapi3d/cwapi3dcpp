@@ -1,5 +1,6 @@
-ActivationState
-===============
+Activation State
+================
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DActivationState
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DActivationState
+   :project: CwAPI3D
    :members:

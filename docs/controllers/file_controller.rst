@@ -1,5 +1,6 @@
-FileController
-==============
+File Controller
+===============
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DFileController
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DFileController
+   :project: CwAPI3D
    :members:

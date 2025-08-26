@@ -1,5 +1,6 @@
-VisibilityState
-===============
+Visibility State
+================
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DVisibilityState
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DVisibilityState
+   :project: CwAPI3D
    :members:

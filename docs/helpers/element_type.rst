@@ -1,5 +1,6 @@
-ElementType
-===========
+Element Type
+============
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DElementType
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DElementType
+   :project: CwAPI3D
    :members:

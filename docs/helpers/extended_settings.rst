@@ -1,5 +1,6 @@
-ExtendedSettings
-================
+Extended Settings
+=================
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DExtendedSettings
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DExtendedSettings
+   :project: CwAPI3D
    :members:

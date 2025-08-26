@@ -1,5 +1,6 @@
-ProcessType
-===========
+Process Type
+============
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DProcessType
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DProcessType
+   :project: CwAPI3D
    :members:

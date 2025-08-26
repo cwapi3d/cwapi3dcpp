@@ -1,5 +1,5 @@
 LayerSettings
 =============
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DLayerSettings
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DLayerSettings
    :members:

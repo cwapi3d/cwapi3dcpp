@@ -1,6 +1,3 @@
-Controllers
-===========
-
 .. toctree::
    :maxdepth: 1
 
@@ -17,7 +14,7 @@ Controllers
    controllers/machine_controller
    controllers/material_controller
    controllers/menu_controller
-   controllers/multi_layer_wall_controller
+   controllers/multi_layer_cover_controller
    controllers/roof_controller
    controllers/scene_controller
    controllers/shop_drawing_controller
