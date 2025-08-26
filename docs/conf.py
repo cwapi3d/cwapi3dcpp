@@ -3,7 +3,7 @@ import subprocess, os
 read_the_docs_build = os.environ.get('READTHEDOCS', None) == 'True'
 if read_the_docs_build:
     subprocess.call('cd ..; doxygen', shell=True)
-    subprocess.call('cd ..; doxygen doxyfile_types', shell=True)
+    subprocess.call('cd ..; doxygen Doxyfile_types', shell=True)
 
 
 # Configuration file for the Sphinx documentation builder.
