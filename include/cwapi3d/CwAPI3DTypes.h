@@ -13,46 +13,41 @@ namespace CwAPI3D
   using menuIndex = int32_t;
   using referenceSide = uint32_t;
   using multiLayerSetID = uint64_t;
-  /**
-   * \brief 3D Vector
-   */
+
+  /// @struct vector3D
+  /// @brief 3D vector
   struct vector3D
   {
-    /**
-     * \brief X Coordinate
-     */
+    /// @brief X Coordinate
     double mX;
-    /**
-     * \brief Y Coordinate
-     */
+    
+    /// @brief Y Coordinate
     double mY;
-    /**
-     * \brief Z Coordinate
-     */
+    
+    /// @brief Z Coordinate
     double mZ;
   };
-  /**
-   * \brief RGB Color
-   */
+
+  /// @struct colorRGB
+  /// @brief RGB Color
   struct colorRGB
   {
-    /**
-     * \brief Red Value
-     */
+    
+    /// @brief Red Value
     uint32_t mR;
-    /**
-     * \brief Green Value
-     */
+    
+    /// @brief Green Value
     uint32_t mG;
-    /**
-     * \brief Blue Value
-     */
+    
+    /// @brief Blue Value
     uint32_t mB;
   };
 
+  /// @struct windowGeometry
   /// @brief Holds the geometry of the 3d main window
   struct windowGeometry
   {
+    /// @struct
     /// @brief A point is specified by a x coordinate and an y coordinate
     struct point
     {
@@ -61,6 +56,7 @@ namespace CwAPI3D
       /// @brief y coordinate of this point
       int mY{0};
     };
+
     /// @brief position of the rectangle's bottom-left corner
     point mBottomLeft;
     /// @brief position of the rectangle's bottom-right corner
@@ -78,6 +74,8 @@ namespace CwAPI3D
   using narrowString = std::string;
   using wideString = std::wstring;
 
+  /// @enum divisionZoneDirection
+  /// @brief Direction of a division zone
   enum divisionZoneDirection
   {
     positive = 1,
@@ -85,6 +83,8 @@ namespace CwAPI3D
     none = 0
   };
 
+  /// @enum nodeSymbol
+  /// @brief Hoops node symbol
   enum nodeSymbol
   {
     SmallSquare,
@@ -98,6 +98,8 @@ namespace CwAPI3D
     FilledSquare
   };
 
+  /// @enum elementModuleDetail
+  /// @brief Element modul detail
   enum elementModuleDetail
   {
     NoDetail,
@@ -114,7 +116,9 @@ namespace CwAPI3D
     FloorLineDetail,
     FloorOpenDetail
   };
-
+ 
+  /// @enum shortcutKey
+  /// @brief Shortcut key
   enum shortcutKey
   {
     F1 = 1,
@@ -131,6 +135,8 @@ namespace CwAPI3D
     F12 = 12,
   };
 
+  /// @enum shortcutKeyModifier
+  /// @brief Shortcut key modifier
   enum shortcutKeyModifier
   {
     None = 0,
@@ -139,6 +145,8 @@ namespace CwAPI3D
     Alt = 3,
   };
 
+  /// @enum btlVersion
+  /// @brief BTL file version
   enum btlVersion
   {
     btl_1_0 = 110,
@@ -163,6 +171,8 @@ namespace CwAPI3D
     btlx_2_2 = 122
   };
 
+  /// @enum hundeggerMachineType
+  /// @brief Hundegger machine type
   enum hundeggerMachineType
   {
     p8_10 = 1,
@@ -181,6 +191,8 @@ namespace CwAPI3D
     turbo_drive = 15
   };
 
+  /// @enum weinmannMfbVersion
+  /// @brief Weinmann MFB version
   enum weinmannMfbVersion
   {
     wup_2_0 = 20,
@@ -190,6 +202,8 @@ namespace CwAPI3D
     wup_3_4 = 34
   };
 
+  /// @enum elementGroupingType
+  /// @brief Element grouping type
   enum elementGroupingType
   {
     group = 1,
@@ -197,12 +211,16 @@ namespace CwAPI3D
     _none = 3
   };
 
+  /// @enum ifcElementCombineBehaviour
+  /// @brief IFC element combine behaviour
   enum ifcElementCombineBehaviour
   {
     element_module = 0,
     element_assembly = 1,
   };
 
+  /// @enum ifcMaterialDefinition
+  /// @brief IFC material definition
   enum ifcMaterialDefinition
   {
     material_layer_set,
@@ -210,6 +228,8 @@ namespace CwAPI3D
     ignore
   };
 
+  /// @enum textElementType
+  /// @brief Text element type
   enum textElementType
   {
     line = 0,
@@ -218,6 +238,8 @@ namespace CwAPI3D
     raster = 3,
   };
 
+  /// @enum multiLayerType
+  /// @brief Multilayer type
   enum multiLayerType
   {
     Undefined = 0,
@@ -228,6 +250,37 @@ namespace CwAPI3D
     Covering = 5,
   };
 
+  namespace multiLayerSubType
+  {
+    /// @enum multiLayerSubType
+    /// @brief Multilayer subtype
+    enum multiLayerSubType
+    {
+      Undefined = 0,
+      FrameStructure = 1,
+      SolidStructure = 2,
+      StraightEdge = 3,
+      BiasEdge = 4,
+      Vertical = 5,
+      Horizontal = 6,
+      Air = 7,
+    };
+  }
+
+  namespace multiLayerComponentType
+  {
+    /// @enum multiLayerComponentType
+    /// @brief Multilayer component type
+    enum multiLayerComponentType
+    {
+      Undefined = 0,
+      Material = 1,
+      StandardElement = 2,
+    };
+  }
+
+  /// @enum standardElementType
+  /// @brief Standard element type
   enum standardElementType
   {
     beam = 0,
@@ -238,6 +291,7 @@ namespace CwAPI3D
     metal
   };
 
+  /// @enum bimTeamUploadResultCode
   /// @brief Result code of a BIMteam upload operation
   enum bimTeamUploadResultCode
   {
@@ -249,6 +303,7 @@ namespace CwAPI3D
     ErrorAuthenticationFailed,
   };
 
+  /// @struct bimTeamUploadResult
   /// @brief Result object of a BIMteam upload operation
   struct bimTeamUploadResult
   {
@@ -258,6 +313,8 @@ namespace CwAPI3D
     narrowString mShareLink;
   };
 
+  /// @enum ShoulderDrillingOrientation
+  /// @brief Shoulder drilling orientation
   enum ShoulderDrillingOrientation
   {
     DrillingPerpendicularToBisector = 0,
@@ -266,6 +323,8 @@ namespace CwAPI3D
     DrillingPerpendicularToContactSurface = 3,
   };
 
+  /// @enum ShoulderBeamGeometry
+  /// @brief Shoulder beam geometry
   enum ShoulderBeamGeometry
   {
     Bisector = 0,
@@ -274,12 +333,15 @@ namespace CwAPI3D
     Birdsmouth = 3,
   };
 
+  /// @enum HeelShoulderBeamGeometry
+  /// @brief Heel shoulder beam geometry
   enum HeelShoulderBeamGeometry
   {
     Normal = 0,
     Straight = 1,
   };
 
+  /// @enum DimensionBaseFormat
   /// @brief Format of how values are displayed for Dimensions
   enum class DimensionBaseFormat : int32_t
   {
@@ -290,6 +352,7 @@ namespace CwAPI3D
     SumMoved,       ///< Displays the sums with a moved position to prevent overlaps.
   };
 
+  /// @enum DxfLayerFormatType
   /// @brief The Formats of how to organize layers
   enum class DxfLayerFormatType : int32_t
   {
@@ -301,10 +364,35 @@ namespace CwAPI3D
     Subgroup,     ///< Organize layers by subgroup.
   };
 
+  /// @enum DxfExportVersion
   /// @brief The DXF versions supported by the export
   enum class DxfExportVersion : int32_t
   {
     AutoCadR10 = 0,
     AutoCadR27
+  };
+
+  /// @enum vbaCatalogItemType
+  /// @brief Types of the elements in the VBA Catalog
+  enum class vbaCatalogItemType : uint64_t
+  {
+    Null = 0,
+    Nut = 1,                       ///< Nuts
+    Washer = 2,                    ///< Washers
+    SpecialRing = 3,               ///< Special type dowels: Bulldog, Rigling
+    SquareWasher = 4,              ///< Rectangular washers
+    WoodenPlug = 5,                ///< Wood plugs
+    BoltWithHead = 10001,          ///< Bolts: basic element with head (like construction screws, etc.)
+    BoltWithoutHead = 10002,       ///< Bolts: basic element without head (like threaded rods, etc.)
+    LagBolt = 10003,               ///< Non-through bolts: like coach screws, etc.
+    BoltPeg = 10004,               ///< Bolts: dowel rods (length must be calculated differently for these — always about 2 mm shorter than the clamping length!) → different length automation
+    NormalScrew = 10005,           ///< Standard screw
+    WoodenDowl = 10006,            ///< Wood dowel
+    BoltAnchor = 10007,            ///< Bolt anchor (chemical anchor)
+    BoltWithMushroomHead = 10008,  ///< Carriage bolt / mushroom head
+    BoltWithConicalHead = 10009,   ///< Countersunk screw / conical head
+    BoltWithHeadAndWasher = 10010, ///< Bolt with head and washer
+    HangerBolt = 10011,            ///< Hanger bolt (double-ended screw)
+    ConnectionScrew = 10012        ///< Connection screw
   };
 }

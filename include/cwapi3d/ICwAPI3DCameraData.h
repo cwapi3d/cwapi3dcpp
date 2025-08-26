@@ -17,6 +17,7 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
+    /// @interface ICwAPI3DCameraData
     class ICwAPI3DCameraData
     {
     public:

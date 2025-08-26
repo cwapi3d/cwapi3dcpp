@@ -18,36 +18,36 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /// \brief
+    /// @interface ICwAPI3DMenuController
     class ICwAPI3DMenuController
     {
     public:
-      /// @brief Gets the last error
-      /// @param aErrorCode error code
-      /// @return error string
+      /// Gets the last error.
+      /// @param[out] aErrorCode [int32_t*] The error code.
+      /// @return [@ref ICwAPI3DString*] The error string.
       virtual ICwAPI3DString* getLastError(int32_t* aErrorCode) = 0;
 
-      /// @brief Creates an empty menu
-      /// @return menu
+      /// @brief Creates an empty menu.
+      /// @return [@ref ICwAPI3DMenu*] The created menu.
       virtual ICwAPI3DMenu* createMenu() = 0;
 
-      /// @brief Gets the selected menu item
-      /// @return menu index of selected item
+      /// @brief Gets the selected menu item.
+      /// @return [@ref menuIndex] The menu index of selected item.
       virtual menuIndex getSelectedMenuItem() = 0;
 
-      /// @brief Cleans all menus
+      /// @brief Cleans all menus.
       virtual void cleanupAllMenus() = 0;
 
       /// @brief Displays a menu
-      /// @param aMenu menu
+      /// @param aMenu [@ref ICwAPI3DMenu*] The menu.
       virtual void displayMenu(ICwAPI3DMenu* aMenu) = 0;
 
       /// @brief Clears all errors.
       virtual void clearErrors() = 0;
 
-      /// @brief
-      /// @param aMenuItems
-      /// @return
+      /// @brief Displays a simple menu.
+      /// @param aMenuItems [@ref ICwAPI3DStringList*] The menu items.
+      /// @return [@ref ICwAPI3DString*] The selected menu item.
       virtual ICwAPI3DString* displaySimpleMenu(ICwAPI3DStringList* aMenuItems) = 0;
     };
   }

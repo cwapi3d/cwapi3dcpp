@@ -18,30 +18,24 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /**
-    * @interface ICwAPI3DMenu
-    * \brief
-    */
+    /// @interface ICwAPI3DMenu
     class ICwAPI3DMenu
     {
     public:
-      /**
-       * \brief Destroys itself
-       */
+
+      /// @brief Destroys itself.
       virtual void destroy() = 0;
-      /**
-       * \brief Adds a button menu item
-       * \param aLabel button label
-       * \return menu index
-       */
+      
+      /// @brief Adds a button menu item.
+      /// @param aLabel [const @ref character*] The label of the button.
+      /// @return [@ref menuIndex] The menu index.
       virtual menuIndex addButtonMenuItem(const character* aLabel) = 0;
-      /**
-       * \brief Adds a blank menu item
-       */
+
+      /// @brief Adds a blank menu item.
       virtual void addBlankMenuItem() = 0;
 
-      /// @brief Gets menu items
-      /// @return menu items
+      /// @brief Gets menu items.
+      /// @return [@ref ICwAPI3DStringList*] The menu items.
       virtual ICwAPI3DStringList* getMenuItems() = 0;
     };
   }

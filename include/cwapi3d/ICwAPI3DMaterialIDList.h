@@ -17,10 +17,7 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /**
-    * @interface ICwAPI3DMaterialIDList
-    * \brief
-    */
+    /// @interface ICwAPI3DMaterialIDList
     class ICwAPI3DMaterialIDList
     {
     public:
