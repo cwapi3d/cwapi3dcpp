@@ -1,5 +1,6 @@
-ElementIdList
-=============
+Element ID List
+===============
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DElementIDList
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DElementIDList
+   :project: CwAPI3D
    :members:

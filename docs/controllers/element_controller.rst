@@ -1,5 +1,6 @@
-ElementController
-=================
+Element Controller
+==================
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DElementController
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DElementController
+   :project: CwAPI3D
    :members:

@@ -1,5 +1,6 @@
-ShopDrawingController
-=====================
+Shop Drawing Controller
+=======================
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DShopDrawingController
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DShopDrawingController
+   :project: CwAPI3D
    :members:

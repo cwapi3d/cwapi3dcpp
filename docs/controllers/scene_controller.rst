@@ -1,5 +1,6 @@
-SceneController
-===============
+Scene Controller
+================
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DSceneController
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DSceneController
+   :project: CwAPI3D
    :members:

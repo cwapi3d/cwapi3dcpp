@@ -1,5 +1,6 @@
-DimensionController
-===================
+Dimension Controller
+====================
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DDimensionController
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DDimensionController
+   :project: CwAPI3D
    :members:

@@ -1,5 +1,6 @@
-UtilityController
-=================
+Utility Controller
+==================
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DUtilityController
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DUtilityController
+   :project: CwAPI3D
    :members:

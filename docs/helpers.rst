@@ -1,13 +1,12 @@
-Helpers
-=======
-
 .. toctree::
    :maxdepth: 1
 
+   helpers/api_types
    helpers/activation_state
    helpers/attribute_display_settings
    helpers/camera_data
    helpers/coordinate_system_data
+   helpers/shoulder_options
    helpers/display_attribute
    helpers/edge_list
    helpers/element_filter
@@ -19,6 +18,7 @@ Helpers
    helpers/end_type_id_list
    helpers/extended_settings
    helpers/facet_list
+   helpers/hit_result
    helpers/ifc_element_type
    helpers/ifc_options
    helpers/ifc_predefined_type

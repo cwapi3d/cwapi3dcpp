@@ -1,5 +1,6 @@
-RoofController
-==============
+Roof Controller
+===================
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DRoofController
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DRoofController
+   :project: CwAPI3D
    :members:

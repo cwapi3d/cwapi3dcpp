@@ -1,5 +1,5 @@
 PolygonList
 ===========
 
-.. doxygenclass:: CwAPI3D::Interfaces::ICwAPI3DPolygonList
+.. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DPolygonList
    :members:
