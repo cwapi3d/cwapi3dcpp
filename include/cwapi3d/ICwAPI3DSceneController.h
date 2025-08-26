@@ -18,96 +18,101 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /// \brief
+    /// @interface ICwAPI3DSceneController
     class ICwAPI3DSceneController
     {
     public:
-      /// @brief Gets the last error
-      /// @param aErrorCode error code
-      /// @return error string
+      /// Gets the last error.
+      /// @param[out] aErrorCode [int32_t*] The error code.
+      /// @return [@ref ICwAPI3DString*] The error string.
       virtual ICwAPI3DString* getLastError(int32_t* aErrorCode) = 0;
 
-      /// @brief Adds a new scene
-      /// @param aName scene name
-      /// @return did operation succeed
+      /// @brief Adds a new scene.
+      /// @param[in] aName [const @ref character*] The scene name.
+      /// @return [bool] True if the operation succeeded, false otherwise.
       virtual bool addScene(const character* aName) = 0;
 
-      /// @brief Renames a scene
-      /// @param aOldName old scene name
-      /// @param aNewName new scene name
-      /// @return did operation succeed
+      /// @brief Renames a scene.
+      /// @param[in] aOldName [const @ref character*] The old scene name.
+      /// @param[in] aNewName [const @ref character*] The new scene name.
+      /// @return [bool] True if the operation succeeded, false otherwise.
       virtual bool renameScene(const character* aOldName, const character* aNewName) = 0;
 
-      /// @brief Deletes a scene
-      /// @param aName scene name
-      /// @return did operation succeed
+      /// @brief Deletes a scene.
+      /// @param[in] aName [const @ref character*] The scene name.
+      /// @return [bool] True if the operation succeeded, false otherwise.
       virtual bool deleteScene(const character* aName) = 0;
 
-      /// @brief Adds elements to a scene
-      /// @param aName scene name
-      /// @param aElementIDs element ID list
-      /// @return did operation succeed
-      virtual bool addElementsToScene(const character* aName, ICwAPI3DElementIDList* aElementIDs) = 0;
+      /// @brief Adds elements to a scene.
+      /// @param[in] aName [const @ref character*] The scene name.
+      /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The element id list.
+      /// @return [bool] True if the operation succeeded, false otherwise.
+      virtual bool addElementsToScene(const character* aName, ICwAPI3DElementIDList* aElementIdList) = 0;
 
-      /// @brief Removes elements from a scene
-      /// @param aName scene name
-      /// @param aElementIDs element ID list
-      /// @return did operation succeed
-      virtual bool removeElementsFromScene(const character* aName, ICwAPI3DElementIDList* aElementIDs) = 0;
+      /// @brief Removes elements from a scene.
+      /// @param[in] aName [const @ref character*] The scene name.
+      /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The element id list.
+      /// @return [bool] True if the operation succeeded, false otherwise.
+      virtual bool removeElementsFromScene(const character* aName, ICwAPI3DElementIDList* aElementIdList) = 0;
 
-      /// @brief Gets the elements from a scene
-      /// @param aName scene name
-      /// @return element ID list
+      /// @brief Gets the elements from a scene.
+      /// @param[in] aName [const @ref character*] The scene name.
+      /// @return [@ref ICwAPI3DElementIDList*] The element id list.
       virtual ICwAPI3DElementIDList* getElementsFromScene(const character* aName) = 0;
 
-      /// @brief Activates a scene
-      /// @param aName scene name
-      /// @return did operation succeed
+      /// @brief Activates a scene.
+      /// @param[in] aName [const @ref character*] The scene name.
+      /// @return [bool] True if the operation succeeded, false otherwise.
       virtual bool activateScene(const character* aName) = 0;
 
       /// @brief Clears all errors.
       virtual void clearErrors() = 0;
 
       /// @brief Gets the list of scenes.
-      /// @return A list of scenes.
+      /// @return [@ref ICwAPI3DStringList*] The list of scene names.
       virtual ICwAPI3DStringList* getSceneList() = 0;
 
-      /// @brief Groups the scenes to a scene group
-      /// @param aSceneNames scene names
-      /// @return index of new group
+      /// @brief Groups the scenes to a scene group.
+      /// @param[in] aSceneNames [@ref ICwAPI3DStringList*] The scene names.
+      /// @return [uint64_t] The index of the new group.
       virtual uint64_t groupScenes(ICwAPI3DStringList* aSceneNames) = 0;
 
-      /// @brief Deletes the Group of scenes
-      /// @param index of group
+      /// @brief Deletes the Group of scenes.
+      /// @param[in] aGroupIndex [uint64_t] The index of the group.
       virtual void ungroupScenes(uint64_t aGroupIndex) = 0;
 
       /// @brief Checks if a scene is present.
-      /// @param aName The name of the scene to check.
-      /// @return A boolean value indicating whether the scene is present (true) or not (false).
+      /// @param[in] aName [const @ref character*] The name of the scene to check.
+      /// @return [bool] True if the scene is present, false otherwise.
       virtual bool isScenePresent(const character* aName) = 0;
-      /// @brief Set group tab color
-      /// @param aSceneGroupName The name of the scene
-      /// @param aRed Red
-      /// @param aGreen Green
-      /// @param aBlue Blue
-      /// @param aAlpha Alpha from 0 to 255
+
+      /// @brief Set group tab color.
+      /// @param[in] aSceneGroupName [const @ref character*] The name of the scene group.
+      /// @param[in] aRed [int] Red
+      /// @param[in] aGreen [int] Green
+      /// @param[in] aBlue [int] Blue
+      /// @param[in] aAlpha [int] Alpha from 0 to 255, default is 255 (opaque)
       virtual void setGroupTabColor(const character* aSceneGroupName, int aRed, int aGreen, int aBlue, int aAlpha = 255) = 0;
-      /// @brief Rename the scene group
-      /// @param aOldName existing scene group name
-      /// @param aNewName new scene group name
+
+      /// @brief Rename the scene group.
+      /// @param[in] aOldName [const @ref character*] The old scene group name.
+      /// @param[in] aNewName [const @ref character*] The new scene group name.
       virtual void renameSceneGroup(const character* aOldName, const character* aNewName) = 0;
+
       /// @brief Gets the index of a scene group by its name.
-      /// @param aSceneGroupName existing scene group name
-      /// @return the index of the group
+      /// @param[in] aSceneGroupName [const @ref character*] The group name.
+      /// @return [uint64_t] The index of the group, or std::numeric_limits<uint64_t>::max() if not found.
       virtual uint64_t getGroupIndexByName(const character* aSceneGroupName) = 0;
+
       /// @brief Rename the scene group by its index.
-      /// @param  aGroupIndex group index
-      /// @param aNewName new scene group name
+      /// @param[in] aGroupIndex [uint64_t] The index of the group.
+      /// @param[in] aNewName [const @ref character*] The new scene group name.
       virtual void renameSceneGroupByIndex(uint64_t aGroupIndex, const character* aNewName) = 0;
+
       /// @brief Groups the scenes to a scene group and sets the name of the new group.
-      /// @param  aSceneNames scene names
-      /// @param aGroupName name of the new group
-      /// @return index of new group
+      /// @param[in] aSceneNames [@ref ICwAPI3DStringList*] The scene names to group.
+      /// @param[in] aGroupName [const @ref character*] The name of the new group.
+      /// @return [uint64_t] The index of the new group.
       virtual uint64_t groupScenesWithName(ICwAPI3DStringList* aSceneNames, const character* aGroupName) = 0;
     };
   }

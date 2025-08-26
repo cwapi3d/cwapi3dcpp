@@ -17,23 +17,23 @@ namespace CwAPI3D
   namespace Interfaces
   {
 
-    /**
- * \brief IfcPredefinedType Getter/Setters. Please note that you are responsible for ensuring that the correct values are set.
- * 
- * @code
- * const auto lElementController = aFactory->getElementController();
- * const auto lBimController = aFactory->getBimController();
- *
- * const auto lElementIds = lElementController->getActiveIdentifiableElementIDs();
- * for (auto il{0u}; il < lElementIds->count(); il++)
- * {
- *     const auto lElement = lElementIds->at(il);
- *     const auto lPredefinedType = lBimController->getIfcPredefinedType(lElement);
- *     lPredefinedType->isRafter() ? lPredefinedType->setPurlin() : lPredefinedType->setBeam();
- *     lBimController->setIfcPredefinedType(aFactory->createElementIDListFromElement(lElement), lPredefinedType);
- * }
- * @endcode
- */
+    /** @struct ICwAPI3DIfcPredefinedType
+    * @brief IfcPredefinedType Getter/Setters. Please note that you are responsible for ensuring that the correct values are set.
+    * 
+    * @code
+    * const auto lElementController = aFactory->getElementController();
+    * const auto lBimController = aFactory->getBimController();
+    *
+    * const auto lElementIds = lElementController->getActiveIdentifiableElementIDs();
+    * for (auto il{0u}; il < lElementIds->count(); il++)
+    * {
+    *     const auto lElement = lElementIds->at(il);
+    *     const auto lPredefinedType = lBimController->getIfcPredefinedType(lElement);
+    *     lPredefinedType->isRafter() ? lPredefinedType->setPurlin() : lPredefinedType->setBeam();
+    *     lBimController->setIfcPredefinedType(aFactory->createElementIDListFromElement(lElement), lPredefinedType);
+    * }
+    * @endcode
+    */
     struct ICwAPI3DIfcPredefinedType
     {
       virtual ~ICwAPI3DIfcPredefinedType() = default;

@@ -18,28 +18,62 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /// \brief
+    /// @interface ICwAPI3DRoofController
     class ICwAPI3DRoofController
     {
     public:
-      /// @brief Gets the profile length
-      /// @param aID element ID
-      /// @return profile length
-      virtual double getProfileLength(elementID aID) = 0;
+      /// @brief Gets the profile length.
+      /// @param[in] aElementId [@ref elementID] The element id.
+      /// @return [double] The profile length.
+      virtual double getProfileLength(elementID aElementId) = 0;
 
-      /// @brief Gets the edge length
-      /// @param aID element ID
-      /// @param aEdgeType edge type
-      /// @return edge length
-      virtual double getEdgeLength(elementID aID, const character* aEdgeType) = 0;
+      /// @brief Gets the edge length.
+      /// @param[in] aElementId [@ref elementID] The element id.
+      /// @param[in] aEdgeType [const @ref character*] The edge type : 
+      /// - "none"
+      /// 
+      /// - "ridge"
+      /// 
+      /// - "eave"
+      /// 
+      /// - "vergeright"
+      /// - "vergeleft"
+      /// - "vergeoblique"
+      /// 
+      /// - "hip"
+      /// 
+      /// - "valley"
+      /// 
+      /// - "userdefined1"
+      /// - "userdefined2"
+      /// 
+      /// - "userdefinedmitrejoint1"
+      /// - "userdefinedmitrejoint2"
+      /// 
+      /// - "wallconnection"
+      /// - "wallconnectionright"
+      /// - "wallconnectionleft"
+      /// - "wallconnectiontop"
+      /// - "wallconnectionbottom"
+      /// 
+      /// - "roofcutout"
+      /// - "roofcutoutright"
+      /// - "roofcutoutleft"
+      /// - "roofcutouttop"
+      /// - "roofcutoutbottom"
+      /// 
+      /// - "roofedgeontoproofsurface"
+      /// - "roofedgeonbottomroofsurface"
+      /// @return [double] The edge length.
+      virtual double getEdgeLength(elementID aElementId, const character* aEdgeType) = 0;
 
-      /// @brief Gets all caddy elements
-      /// @return element ID list
+      /// @brief Gets all caddy elements.
+      /// @return [@ref ICwAPI3DElementIDList*] The list of all caddy element Id.
       virtual ICwAPI3DElementIDList* getAllCaddyElementIDs() = 0;
 
-      /// @brief Gets the last error message.
-      /// @param aErrorCode A pointer to an integer where the error code will be stored.
-      /// @return A pointer to an ICwAPI3DString object containing the last error message.
+      /// Gets the last error.
+      /// @param[out] aErrorCode [int32_t*] The error code.
+      /// @return [@ref ICwAPI3DString*] The error string.
       virtual ICwAPI3DString* getLastError(int32_t* aErrorCode) = 0;
 
       /// @brief Clears all errors.
