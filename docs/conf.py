@@ -2,7 +2,9 @@ import subprocess, os
 
 read_the_docs_build = os.environ.get('READTHEDOCS', None) == 'True'
 if read_the_docs_build:
-     subprocess.call('cd ..; doxygen', shell=True)
+    subprocess.call('cd ..; doxygen', shell=True)
+    subprocess.call('cd ..; doxygen doxyfile_types', shell=True)
+
 
 # Configuration file for the Sphinx documentation builder.
 #
@@ -25,7 +27,8 @@ extensions = ['breathe']
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'venv']
 
-breathe_projects = {"CwAPI3D": "../doxyxml/"}
+breathe_projects = {"CwAPI3D": "../doxyxml/",
+                    "APITypes": "../docTypes/doxyxml/"}
 breathe_default_project = "CwAPI3D"
 
 # -- Options for HTML output -------------------------------------------------
