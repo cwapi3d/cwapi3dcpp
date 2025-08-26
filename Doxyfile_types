@@ -1,0 +1,15 @@
+; compile only the ApiType file 
+PROJECT_NAME     = "CwAPI3DTypes"
+OUTPUT_DIRECTORY = docTypes
+XML_OUTPUT       = doxyxml
+GENERATE_LATEX   = NO
+GENERATE_MAN     = NO
+GENERATE_RTF     = NO
+CASE_SENSE_NAMES = NO
+RECURSIVE        = NO
+GENERATE_HTML    = NO
+GENERATE_XML     = YES
+INPUT            = include/cwapi3d
+FILE_PATTERNS    = CwAPI3DTypes.h
+EXTRACT_ALL      = YES
+EXTRACT_TYPEDEFS = YES
