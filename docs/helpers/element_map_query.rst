@@ -3,3 +3,4 @@ ElementMapQuery
 
 .. doxygeninterface:: CwAPI3D::Interfaces::ICwAPI3DElementMapQuery
    :members:
+   :undoc-members:
