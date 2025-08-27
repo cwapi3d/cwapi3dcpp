@@ -15,4 +15,3 @@ Shoulder Options
    :project: CwAPI3D
    :members:
    :undoc-members:
-
