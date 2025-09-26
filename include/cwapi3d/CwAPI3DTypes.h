@@ -327,18 +327,18 @@ namespace CwAPI3D
   /// @brief Shoulder beam geometry
   enum ShoulderBeamGeometry
   {
-    Bisector = 0,
-    PerpendicularToStrut = 1,
-    PerpendicularToCounterPart = 2,
-    Birdsmouth = 3,
+    Bisector = 0, ///< Bisector
+    Birdsmouth = 2, ///< PerpBirdmouth
+    PerpendicularToStrut = 3, ///< PerpShoulder
+    PerpendicularToCounterPart = 4, ///< PerpChord
   };
 
   /// @enum HeelShoulderBeamGeometry
   /// @brief Heel shoulder beam geometry
   enum HeelShoulderBeamGeometry
   {
-    Normal = 0,
-    Straight = 1,
+    Normal = 0, ///< NormalHeel
+    Straight = 3, ///< StraightHeel
   };
 
   /// @enum DimensionBaseFormat
