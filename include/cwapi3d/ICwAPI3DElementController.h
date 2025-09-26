@@ -660,8 +660,8 @@ namespace CwAPI3D
 
       /// @brief Glides elements to a specified point.
       /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList] The element list id to move.
-      /// @param[in] aGlidePoint [@ref vector3D] The glide destination point.
-      virtual void glideElements(ICwAPI3DElementIDList* aElementIdList, vector3D aGlidePoint) = 0;
+      /// @param[in] aGlidePoint [@ref vector3D] The glide origin point.
+      virtual void glideElements(ICwAPI3DElementIDList* aElementIdList, vector3D aGlideOriginPoint) = 0;
 
       /// @brief Retrieves the contact facets between two elements.
       /// @param[in] aFirstID [@ref elementID] The ID of the first element.
