@@ -65,7 +65,7 @@ namespace CwAPI3D
   {
     class ICwAPI3DEventSubscriptionController;
 
-    /// @interface ICwAPI3DControllerFactory
+    /// \brief
     class ICwAPI3DControllerFactory
     {
     public:

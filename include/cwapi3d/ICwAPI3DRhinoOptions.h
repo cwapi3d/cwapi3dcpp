@@ -16,7 +16,6 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /// @interface ICwAPI3DRhinoOptions
     class ICwAPI3DRhinoOptions
     {
     public:

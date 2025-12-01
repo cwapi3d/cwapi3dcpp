@@ -16,7 +16,7 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /// @interface ICwAPI3DGridController
+    /// \brief 
     class ICwAPI3DGridController
     {
     public:

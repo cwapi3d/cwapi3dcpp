@@ -17,7 +17,6 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /// @interface ICwAPI3DTextObjectOptions
     class ICwAPI3DTextObjectOptions
     {
     public:

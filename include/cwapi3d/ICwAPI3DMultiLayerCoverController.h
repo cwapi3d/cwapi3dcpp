@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include "ICwAPI3DList.h"
 #include "ICwAPI3DString.h"
 
 #include <vector>
@@ -24,6 +25,7 @@ namespace CwAPI3D
     public:
       /// @brief Gets all multi layer wall ids.
       /// @return [std::vector<@ref multiLayerSetID>] The multi layer wall ids.
+      /// @attention This function is not ABI stable. Use getMultiLayerWallsEx() for ABI stable code.
       /// @par Example:
       /// @code{.cpp}
       ///     std::vector<multiLayerSetID> wallIds = aFactory->getMultiLayerCoverController()->getMultiLayerWalls();
@@ -405,6 +407,225 @@ namespace CwAPI3D
       /// @param[in] aBeamGuid [@ref character*] The layer standard beam guid.
       /// @param[in] aThickness [double] The layer thickness.
       virtual void addLayerByStandardElements(multiLayerSetID aSetId, multiLayerType aType, const character* aName, const character* aPanelGuid, const character* aBeamGuid, double aThickness) = 0;
+
+      /// @brief Gets all framed multi layer floor ids.
+      /// @return [std::vector<@ref multiLayerSetID>] The multi layer floor ids.
+      /// @par Example:
+      /// @code{.cpp}
+      ///     std::vector<multiLayerSetID> floorIds = aFactory->getMultiLayerCoverController()->getMultiLayerFramedFloors();
+      ///     printf("Found %d multi-layer floor definitions\n", floorIds.size());
+      ///
+      ///     for (size_t i = 0; i < floorIds.size(); ++i)
+      ///     {
+      ///         multiLayerSetID floorId = floorIds[i];
+      ///         ICwAPI3DString* name = aFactory->getMultiLayerCoverController()->getMultiLayerSetName(floorId);
+      ///         wprintf(L"Floor ID: %d, Name: %ls\n", floorId, name->data());
+      ///     }
+      /// @endcode
+      virtual ICwAPI3DMultiLayerSetIDList* getMultiLayerFramedFloors() = 0;
+
+      /// @brief Creates a new multi layer floor with given name and default values.
+      /// @param[in] aSetName  [const @ref character*] The multi layer set name.
+      /// @return [@ref multiLayerSetID] The multi layer set id.
+      /// @par Example:
+      /// @code{.cpp}
+      ///     multiLayerSetID multiLayerSetId = aFactory->getMultiLayerCoverController()->createMultiLayerFramedFloor("Standard Floor");
+      ///     printf("Created new multi-layer floor with ID: %d\n", multiLayerSetId);
+      /// @endcode
+      virtual multiLayerSetID createMultiLayerFramedFloor(const character* aSetName) = 0;
+
+      /// @brief Gets all multi layer roof ids.
+      /// @return [std::vector<@ref multiLayerSetID>] The multi layer roof ids.
+      /// @par Example:
+      /// @code{.cpp}
+      ///     std::vector<multiLayerSetID> roofIds = aFactory->getMultiLayerCoverController()->getMultiLayerFramedRoofs();
+      ///     printf("Found %d multi-layer roof definitions\n", roofIds.size());
+      ///
+      ///     for (size_t i = 0; i < roofIds.size(); ++i)
+      ///     {
+      ///         multiLayerSetID roofId = roofIds[i];
+      ///         ICwAPI3DString* name = aFactory->getMultiLayerCoverController()->getMultiLayerSetName(roofId);
+      ///         wprintf(L"Roof ID: %d, Name: %ls\n", roofId, name->data());
+      ///     }
+      /// @endcode
+      virtual ICwAPI3DMultiLayerSetIDList* getMultiLayerFramedRoofs() = 0;
+
+      /// @brief Gets all solid multi layer floor ids.
+      /// @return [std::vector<@ref multiLayerSetID>] The multi layer floor ids.
+      /// @par Example:
+      /// @code{.cpp}
+      ///     std::vector<multiLayerSetID> floorIds = aFactory->getMultiLayerCoverController()->getMultiLayerSolidFloors();
+      ///     printf("Found %d multi-layer floor definitions\n", floorIds.size());
+      ///
+      ///     for (size_t i = 0; i < floorIds.size(); ++i)
+      ///     {
+      ///         multiLayerSetID floorId = floorIds[i];
+      ///         ICwAPI3DString* name = aFactory->getMultiLayerCoverController()->getMultiLayerSetName(floorId);
+      ///         wprintf(L"Floor ID: %d, Name: %ls\n", floorId, name->data());
+      ///     }
+      /// @endcode
+      virtual ICwAPI3DMultiLayerSetIDList* getMultiLayerSolidFloors() = 0;
+
+      /// @brief Creates a new multi layer solid floor with given name and default values.
+      /// @param[in] aSetName  [const @ref character*] The multi layer set name.
+      /// @return [@ref multiLayerSetID] The multi layer set id.
+      /// @par Example:
+      /// @code{.cpp}
+      ///     multiLayerSetID multiLayerSetId = aFactory->getMultiLayerCoverController()->createMultiLayerSolidFloor("Standard Solid Floor");
+      ///     printf("Created new multi-layer solid floor with ID: %d\n", multiLayerSetId);
+      /// @endcode
+      virtual multiLayerSetID createMultiLayerSolidFloor(const character* aSetName) = 0;
+
+
+      /// @brief Creates a new multi layer roof with given name and default values.
+      /// @param[in] aSetName  [const @ref character*] The multi layer set name.
+      /// @return [@ref multiLayerSetID] The multi layer set id.
+      /// @par Example:
+      /// @code{.cpp}
+      ///     multiLayerSetID multiLayerSetId = aFactory->getMultiLayerCoverController()->createMultiLayerFramedRoof("Pitched Roof");
+      ///     printf("Created new multi-layer roof with ID: %d\n", multiLayerSetId);
+      /// @endcode
+      virtual multiLayerSetID createMultiLayerFramedRoof(const character* aSetName) = 0;
+
+      /// @brief Creates a new multi layer wall with given name and default values.
+      /// @param[in] aSetName  [const @ref character*] The multi layer set name.
+      /// @return [@ref multiLayerSetID] The multi layer set id.
+      /// @par Example:
+      /// @code{.cpp}
+      ///     multiLayerSetID multiLayerSetId = aFactory->getMultiLayerCoverController()->createMultiLayerFramedWall("Standard Wall");
+      ///     printf("Created new multi-layer wall with ID: %d\n", multiLayerSetId);
+      /// @endcode
+      virtual multiLayerSetID createMultiLayerFramedWall(const character* aSetName) = 0;
+
+      /// @brief Gets all multi layer set ids of all types.
+      /// @return [std::vector<@ref multiLayerSetID>] All multi layer set ids.
+      /// @par Example:
+      /// @code{.cpp}
+      ///     std::vector<multiLayerSetID> allIds = aFactory->getMultiLayerCoverController()->getAllMultiLayerTypes();
+      ///     printf("Found %d multi-layer definitions in total\n", allIds.size());
+      ///
+      ///     for (size_t i = 0; i < allIds.size(); ++i)
+      ///     {
+      ///         multiLayerSetID setId = allIds[i];
+      ///         ICwAPI3DString* name = aFactory->getMultiLayerCoverController()->getMultiLayerSetName(setId);
+      ///         wprintf(L"Set ID: %d, Name: %ls\n", setId, name->data());
+      ///     }
+      /// @endcode
+      virtual ICwAPI3DMultiLayerSetIDList* getMultiLayerSets() = 0;
+
+      /// @brief Creates a new multi layer set of specified type with given name and default values.
+      /// @param[in] aSetName  [const @ref character*] The multi layer set name.
+      /// @param[in] aCoverType [@ref multiLayerCoverType::multiLayerCoverType] The cover type.
+      /// @return [@ref multiLayerSetID] The multi layer set id.
+      /// @par Example:
+      /// @code{.cpp}
+      ///     multiLayerSetID multiLayerSetId = aFactory->getMultiLayerCoverController()->createMultiLayerByCoverType("Custom Solid Wall", multiLayerCoverType::multiLayerCoverType::SolidWall);
+      ///     printf("Created new multi-layer set with ID: %d\n", multiLayerSetId);
+      /// @endcode
+      virtual multiLayerSetID createMultiLayerByCoverType(const character* aSetName, multiLayer::multiLayerCoverType aCoverType) = 0;
+
+      /// @brief Gets all multi layer set ids of specified cover type.
+      /// @param[in] aCoverType [@ref multiLayerCoverType::multiLayerCoverType] The cover type.
+      /// @return  [ICwAPI3DMultiLayerSetIDList*] The multi layer set ids.
+      /// @par Example:
+      /// @code{.cpp}
+      ///       ICwAPI3DMultiLayerSetIDList* setIds = aFactory->getMultiLayerCoverController()->getMultiLayerSetsForCoverType(multiLayerCoverType::multiLayerCoverType::SolidWall);
+      /// @endcode
+      virtual ICwAPI3DMultiLayerSetIDList* getMultiLayerSetsForCoverType(multiLayer::multiLayerCoverType aCoverType) = 0;
+
+      /// @brief Gets all multi layer wall ids.
+      /// @return [ICwAPI3DMultiLayerSetIDList*] The multi layer wall ids.
+      /// @par Example:
+      /// @code{.cpp}
+      ///     ICwAPI3DMultiLayerSetIDList* wallIds = aFactory->getMultiLayerCoverController()->getMultiLayerWallsEx();
+      ///     printf("Found %d multi-layer wall definitions\n", wallIds->count());
+      ///
+      ///     for (size_t i = 0; i < wallIds->count(); ++i)
+      ///     {
+      ///         multiLayerSetID wallId = wallIds->at(i);
+      ///         ICwAPI3DString* name = aFactory->getMultiLayerCoverController()->getMultiLayerSetName(wallId);
+      ///         wprintf(L"Wall ID: %d, Name: %ls\n", wallId, name->data());
+      ///     }
+      /// @endcode
+      virtual ICwAPI3DMultiLayerSetIDList* getMultiLayerWallsEx() = 0;
+
+      /// @brief Gets all multi layer log wall ids.
+      /// @return [ICwAPI3DMultiLayerSetIDList*] The multi layer log wall ids.
+      /// @par Example:
+      /// @code{.cpp}
+      ///     ICwAPI3DMultiLayerSetIDList* logWallIds = aFactory->getMultiLayerCoverController()->getMultiLayerLogWalls();
+      ///     printf("Found %d multi-layer log wall definitions\n", logWallIds->count());
+      ///
+      ///     for (size_t i = 0; i < logWallIds->count(); ++i)
+      ///     {
+      ///         multiLayerSetID logWallId = logWallIds->at(i);
+      ///         ICwAPI3DString* name = aFactory->getMultiLayerCoverController()->getMultiLayerSetName(logWallId);
+      ///         wprintf(L"Log Wall ID: %d, Name: %ls\n", logWallId, name->data());
+      ///     }
+      /// @endcode
+      virtual ICwAPI3DMultiLayerSetIDList* getMultiLayerLogWalls() = 0;
+
+      /// @brief Creates a new multi layer log wall with given name and default values.
+      /// @param[in] aSetName  [const @ref character*] The multi layer set name.
+      /// @return [@ref multiLayerSetID] The multi layer set id.
+      /// @par Example:
+      /// @code{.cpp}
+      ///     multiLayerSetID multiLayerSetId = aFactory->getMultiLayerCoverController()->createMultiLayerLogWall("Standard Log Wall");
+      ///     printf("Created new multi-layer log wall with ID: %d\n", multiLayerSetId);
+      /// @endcode
+      virtual multiLayerSetID createMultiLayerLogWall(const character* aSetName) = 0;
+
+      /// @brief Gets all multi layer solid roof ids.
+      /// @return [ICwAPI3DMultiLayerSetIDList*] The multi layer solid roof ids.
+      /// @par Example:
+      /// @code{.cpp}
+      ///     ICwAPI3DMultiLayerSetIDList* solidRoofIds = aFactory->getMultiLayerCoverController()->getMultiLayerSolidRoofs();
+      ///     printf("Found %d multi-layer solid roof definitions\n", solidRoofIds->count());
+      ///
+      ///     for (size_t i = 0; i < solidRoofIds->count(); ++i)
+      ///     {
+      ///         multiLayerSetID solidRoofId = solidRoofIds->at(i);
+      ///         ICwAPI3DString* name = aFactory->getMultiLayerCoverController()->getMultiLayerSetName(solidRoofId);
+      ///         wprintf(L"Solid Roof ID: %d, Name: %ls\n", solidRoofId, name->data());
+      ///     }
+      /// @endcode
+      virtual ICwAPI3DMultiLayerSetIDList* getMultiLayerSolidRoofs() = 0;
+
+      /// @brief Creates a new multi layer solid roof with given name and default values.
+      /// @param[in] aSetName  [const @ref character*] The multi layer set name.
+      /// @return [@ref multiLayerSetID] The multi layer set id.
+      /// @par Example:
+      /// @code{.cpp}
+      ///     multiLayerSetID multiLayerSetId = aFactory->getMultiLayerCoverController()->createMultiLayerSolidRoof("Standard Solid Roof");
+      ///     printf("Created new multi-layer solid roof with ID: %d\n", multiLayerSetId);
+      /// @endcode
+      virtual multiLayerSetID createMultiLayerSolidRoof(const character* aSetName) = 0;
+
+      /// @brief Gets all multi layer solid wall ids.
+      /// @return [ICwAPI3DMultiLayerSetIDList*] The multi layer solid wall ids.
+      /// @par Example:
+      /// @code{.cpp}
+      ///     ICwAPI3DMultiLayerSetIDList* solidWallIds = aFactory->getMultiLayerCoverController()->getMultiLayerSolidWalls();
+      ///     printf("Found %d multi-layer solid wall definitions\n", solidWallIds->count());
+      ///
+      ///     for (size_t i = 0; i < solidWallIds->count(); ++i)
+      ///     {
+      ///         multiLayerSetID solidWallId = solidWallIds->at(i);
+      ///         ICwAPI3DString* name = aFactory->getMultiLayerCoverController()->getMultiLayerSetName(solidWallId);
+      ///         wprintf(L"Solid Wall ID: %d, Name: %ls\n", solidWallId, name->data());
+      ///     }
+      /// @endcode
+      virtual ICwAPI3DMultiLayerSetIDList* getMultiLayerSolidWalls() = 0;
+
+      /// @brief Creates a new multi layer solid wall with given name and default values.
+      /// @param[in] aSetName  [const @ref character*] The multi layer set name.
+      /// @return [@ref multiLayerSetID] The multi layer set id.
+      /// @par Example:
+      /// @code{.cpp}
+      ///     multiLayerSetID multiLayerSetId = aFactory->getMultiLayerCoverController()->createMultiLayerSolidWall("Standard Solid Wall");
+      ///     printf("Created new multi-layer solid wall with ID: %d\n", multiLayerSetId);
+      /// @endcode
+      virtual multiLayerSetID createMultiLayerSolidWall(const character* aSetName) = 0;
     };
   }
 }

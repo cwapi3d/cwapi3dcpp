@@ -18,7 +18,9 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /// @interface ICwAPI3DEndtypeIDList
+    /**
+   * \brief EndtypeIDList interface
+   */
     class ICwAPI3DEndtypeIDList
     {
     public:

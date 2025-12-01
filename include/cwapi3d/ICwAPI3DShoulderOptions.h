@@ -17,7 +17,6 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /// @interface ICwAPI3DShoulderOptions
     class ICwAPI3DShoulderOptions
     {
     public:
@@ -76,7 +75,6 @@ namespace CwAPI3D
       virtual void setEndTypeNameQueryUserFlag(bool aFlag) = 0;
     };
 
-    /// @interface ICwAPI3DHeelShoulderOptions
     class ICwAPI3DHeelShoulderOptions
     {
     public:
@@ -115,7 +113,6 @@ namespace CwAPI3D
       virtual void setEndTypeNameQueryUserFlag(bool aFlag) = 0;
     };
 
-    /// @interface ICwAPI3DDoubleShoulderOptions
     class ICwAPI3DDoubleShoulderOptions
     {
     public:
