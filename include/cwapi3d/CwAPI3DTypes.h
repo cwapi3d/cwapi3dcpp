@@ -20,10 +20,10 @@ namespace CwAPI3D
   {
     /// @brief X Coordinate
     double mX;
-
+    
     /// @brief Y Coordinate
     double mY;
-
+    
     /// @brief Z Coordinate
     double mZ;
   };
@@ -32,13 +32,13 @@ namespace CwAPI3D
   /// @brief RGB Color
   struct colorRGB
   {
-
+    
     /// @brief Red Value
     uint32_t mR;
-
+    
     /// @brief Green Value
     uint32_t mG;
-
+    
     /// @brief Blue Value
     uint32_t mB;
   };
@@ -116,7 +116,7 @@ namespace CwAPI3D
     FloorLineDetail,
     FloorOpenDetail
   };
-
+ 
   /// @enum shortcutKey
   /// @brief Shortcut key
   enum shortcutKey
@@ -257,14 +257,13 @@ namespace CwAPI3D
     enum multiLayerSubType
     {
       Undefined = 0,
-      LoadBearingFrameStructure = 1,
+      FrameStructure = 1,
       SolidStructure = 2,
       StraightEdge = 3,
       BiasEdge = 4,
       Vertical = 5,
       Horizontal = 6,
       Air = 7,
-      NonLoadBearingFrameStructure = 8,
     };
   }
 
@@ -277,22 +276,6 @@ namespace CwAPI3D
       Undefined = 0,
       Material = 1,
       StandardElement = 2,
-    };
-  }
-
-  namespace multiLayer
-  {
-    enum class multiLayerCoverType : uint8_t
-    {
-      FramedWall = 0,
-      SolidWall = 1,
-      LogWall = 2,
-
-      FramedRoof = 3,
-      SolidRoof = 4,
-
-      FramedFloor = 5,
-      SolidFloor = 6,
     };
   }
 
@@ -344,9 +327,9 @@ namespace CwAPI3D
   /// @brief Shoulder beam geometry
   enum ShoulderBeamGeometry
   {
-    Bisector = 0,                   ///< Bisector
-    Birdsmouth = 2,                 ///< PerpBirdmouth
-    PerpendicularToStrut = 3,       ///< PerpShoulder
+    Bisector = 0, ///< Bisector
+    Birdsmouth = 2, ///< PerpBirdmouth
+    PerpendicularToStrut = 3, ///< PerpShoulder
     PerpendicularToCounterPart = 4, ///< PerpChord
   };
 
@@ -354,7 +337,7 @@ namespace CwAPI3D
   /// @brief Heel shoulder beam geometry
   enum HeelShoulderBeamGeometry
   {
-    Normal = 0,   ///< NormalHeel
+    Normal = 0, ///< NormalHeel
     Straight = 3, ///< StraightHeel
   };
 

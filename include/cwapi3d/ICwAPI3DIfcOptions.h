@@ -39,6 +39,7 @@ namespace CwAPI3D
       virtual ICwAPI3DIfcOptionsAggregation* getCwAPI3DIfcOptionsAggregation() = 0;
     };
 
+    /// @interface ICwAPI3DIfcOptionsProjectData
     class ICwAPI3DIfcOptionsProjectData
     {
     public:
@@ -60,6 +61,7 @@ namespace CwAPI3D
       virtual void setExportTrueNorthInObjectPlacement(bool aValue) = 0;
     };
 
+    /// @interface ICwAPI3DIfcOptionsProperties
     class ICwAPI3DIfcOptionsProperties
     {
     public:
@@ -87,6 +89,7 @@ namespace CwAPI3D
       virtual void setExportQuantitySets(bool aValue) = 0;
     };
 
+    /// @interface ICwAPI3DIfcOptionsLevelOfDetail
     class ICwAPI3DIfcOptionsLevelOfDetail
     {
     public:
@@ -123,6 +126,7 @@ namespace CwAPI3D
       virtual void setExportSweptSolidForSimpleGeometry(bool aValue) = 0;
     };
 
+    /// @interface ICwAPI3DIfcOptionsAggregation
     class ICwAPI3DIfcOptionsAggregation
     {
     public:

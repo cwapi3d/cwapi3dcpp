@@ -4,10 +4,7 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /**
-    * @interface ICwAPI3DWebGLExportAttribute
-    * \brief
-    */
+    /// @interface ICwAPI3DDisplayAttribute
     class ICwAPI3DDisplayAttribute
     {
     public:

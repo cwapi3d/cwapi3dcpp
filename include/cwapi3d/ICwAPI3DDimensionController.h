@@ -27,12 +27,37 @@ namespace CwAPI3D
       /// @return [@ref ICwAPI3DString*] A string containing the last error message.
       virtual ICwAPI3DString* getLastError(int32_t* aErrorCode) = 0;
 
-      /// @brief Creates a dimension element.
-      /// @param[in] aXl [@ref vector3D] The x direction of the dimension.
-      /// @param[in] aPlaneNormal [@ref vector3D] The plane normal.
-      /// @param[in] aDistance [@ref vector3D] The distance vector from the anchor point to the dimension reference point.
-      /// @param[in] aDimensionPoints [@ref ICwAPI3DVertexList*] A list of dimension points.
-      /// @return [@ref elementID] The element id of created dimension element.
+      /// @brief Creates a dimension element to measure distances on 3D parts.
+      /// @details Creates a dimension annotation in 3D space. The dimension is drawn on a plane 
+      /// defined by its normal and offset distance. Points added to the dimension are projected 
+      /// onto this plane, and dimension segments are automatically created between consecutive points.
+      /// @param[in] aXl [@ref vector3D] The direction vector defining the dimension line axis 
+      /// (the direction of the measurement arrow). Can be aligned with X, Y, Z axes or any 3D direction.
+      /// @param[in] aPlaneNormal [@ref vector3D] The normal vector defining the orientation of 
+      /// the dimension plane.
+      /// @param[in] aDistance [@ref vector3D] The offset vector from the dimensioned geometry 
+      /// to where the dimension line is drawn. Can offset in any direction.
+      /// @param[in] aDimensionPoints [@ref ICwAPI3DVertexList*] A list of dimension points to measure. 
+      /// At least 2 points are needed for a valid dimension measurement, but the points can be 
+      /// added later using addSegment(). Points are projected onto the dimension plane.
+      /// @return [@ref elementID] The element ID of the created dimension element.
+      /// @par Example:
+      /// @code{.cpp}
+      /// // Create a list of dimension points
+      /// ICwAPI3DVertexList lListPoints;
+      /// lListPoints.append(vector3D{0, 0, 0});
+      /// lListPoints.append(vector3D{1000, 0, 0});
+      /// lListPoints.append(vector3D{2000, 500, 0});
+      /// lListPoints.append(vector3D{3000, 200, 0});
+      /// lListPoints.append(vector3D{4000, 360, 0});
+      /// lListPoints.append(vector3D{6000, 451, 0});
+      /// // Create the dimension element
+      /// elementID lIdDimension = aFactory.getDimensionController()->createDimension(
+      ///                          vector3D{1, 0, 0}, // xl - dimension arrow direction
+      ///                          vector3D{0, 1, 0}, // plane_normal
+      ///                          vector3D{0, 0, 500}, // distance - offset from geometry
+      ///                          &lListPoints); // dimension_points
+      /// @endcode
       virtual elementID createDimension(vector3D aXl, vector3D aPlaneNormal, vector3D aDistance, ICwAPI3DVertexList* aDimensionPoints) = 0;
 
       /// @brief Sets the orientation of a dimension element.
@@ -41,9 +66,14 @@ namespace CwAPI3D
       /// @param[in] aViewDirUp [@ref vector3D] The view direction up vector.
       virtual void setOrientation(ICwAPI3DElementIDList* aElementIdList, vector3D aViewDir, vector3D aViewDirUp) = 0;
 
-      /// @brief Adds a segment to a dimension element.
-      /// @param[in] aElementId [@ref elementID] The dimension element id.
-      /// @param[in] aSegment [@ref vector3D] The segment to add.
+
+      /// @brief Adds a point to an existing dimension element.
+      /// @details Adds a new point to the dimension's point list. A dimension segment is automatically 
+      /// created between this point and the previous point. This method can be called multiple times 
+      /// to progressively add more measurement points to the dimension.
+      /// @param[in] aElementId [@ref elementID] The dimension element ID.
+      /// @param[in] aSegment [@ref vector3D] The point to add to the dimension (despite the parameter name, 
+      /// this is a point, not a segment).
       virtual void addSegment(elementID aElementId, vector3D aSegment) = 0;
 
       /// @brief Sets the precision/decimal places of a dimension element.
