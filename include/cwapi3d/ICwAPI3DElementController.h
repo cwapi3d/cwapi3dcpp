@@ -1796,6 +1796,11 @@ namespace CwAPI3D
       /// @brief Gets double shoulder cut options.
       /// @return Double shoulder options
       virtual ICwAPI3DDoubleShoulderOptions* getDoubleShoulderOptions() = 0;
+
+      /// @brief Gets the active point of an element.
+      /// @param[in] aElementID The ID of the element to query.
+      /// @return The active point result containing the active point information.
+      virtual activePointResult getElementActivePoint(elementID aElementID) = 0;
     };
   }
 }

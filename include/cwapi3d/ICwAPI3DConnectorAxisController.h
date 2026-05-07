@@ -12,6 +12,7 @@
 
 #include "ICwAPI3DStringList.h"
 #include "ICwAPI3DString.h"
+#include "ICwAPI3DConnectorAxisItemList.h"
 
 namespace CwAPI3D
 {
@@ -300,6 +301,12 @@ namespace CwAPI3D
       /// @param[in] aNegativeValue [double] The negative value.
       /// @param[in] aAngle [double] The drilling angle.
       virtual void setSectionOblongDrillingIsEnabled(elementID aAxisId, int32_t aSectionIndex, double aPositiveValue, double aNegativeValue, double aAngle) = 0;
+
+      /// @brief Set items at intersection.
+      /// @param[in] aAxisId [@ref elementID] The ID of the axis.
+      /// @param[in] aIntersectionIndex [int32_t] The intersection index. (0 based index)
+      /// @param[in] aItems [@ref ICwAPI3DConnectorAxisItemList*] The item list at intersection.
+      virtual void setItemsAtIntersection(elementID aAxisId, int32_t aIntersectionIndex, ICwAPI3DConnectorAxisItemList* aItems) = 0;
     };
   }
 }

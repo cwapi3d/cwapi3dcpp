@@ -99,6 +99,11 @@ namespace CwAPI3D
       /// @param[in] aExportFilePath [const @ref character*] The exported file path.
       /// @param[in] aSettingsFilePath [const @ref character*] The settings file path.
       virtual void exportCoverListWithSettings(ICwAPI3DElementIDList* aElementIdList, const character* aExportFilePath, const character* aSettingsFilePath) = 0;
+
+      /// @brief Exports a container list.
+      /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The element list id.
+      /// @param[in] aExportFilePath [const @ref character*] The exported file path.
+      virtual void exportContainerList(ICwAPI3DElementIDList* aElementIdList, const character* aExportFilePath) = 0;
     };
   }
 }

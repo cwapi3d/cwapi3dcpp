@@ -368,12 +368,12 @@ namespace CwAPI3D
       /// @brief Tests if the element has a 2dc reference wall.
       /// @param[in] aElement [@ref elementID] The element id.
       /// @return [bool] True if it's an architecture wall 2dc, false otherwise.
-      virtual bool isArchitectureWall2dc(CwAPI3D::elementID aElement) = 0;
+      virtual bool isArchitectureWall2dc(elementID aElement) = 0;
 
       /// @brief Tests if the element has a xml reference wall.
       /// @param[in] aElement [@ref elementID] The element id.
       /// @return [bool] True if it's an architecture wall xml, false otherwise.
-      virtual bool isArchitectureWallXml(CwAPI3D::elementID aElement) = 0;
+      virtual bool isArchitectureWallXml(elementID aElement) = 0;
 
       /// @brief Applies a new 2dc reference wall to an element.
       /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The elements to set element IDs
@@ -383,12 +383,12 @@ namespace CwAPI3D
       /// @brief Tests if the element is a Surface.
       /// @param[in] aElementId [@ref elementID] The element id.
       /// @return [bool] True if the element is a Surface, false otherwise.
-      virtual bool isSurface(CwAPI3D::elementID aElementId) = 0;
+      virtual bool isSurface(elementID aElementId) = 0;
 
       /// @brief Tests if the element is a Line.
       /// @param[in] aElementId [@ref elementID] The element id.
       /// @return [bool] True if the element is a Line, false otherwise.
-      virtual bool isLine(CwAPI3D::elementID aElementId) = 0;
+      virtual bool isLine(elementID aElementId) = 0;
 
       /// @brief Retrieves the attribute display settings for 3D.
       /// @return [@ref ICwAPI3DAttributeDisplaySettings*] The attribute display settings for 3D.
@@ -590,7 +590,7 @@ namespace CwAPI3D
       /// @brief Retrieves the symbol of the node for the given element.
       /// @param[in] aElement [@ref elementID] The element id.
       /// @return [@ref nodeSymbol] The symbol of the node for the element.
-      virtual int32_t getNodeSymbol(CwAPI3D::elementID aElement) = 0;
+      virtual int32_t getNodeSymbol(elementID aElement) = 0;
 
       /// @brief Sets the node symbol for a list of elements.
       /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The list of element IDs.
@@ -600,27 +600,27 @@ namespace CwAPI3D
       /// @brief Checks if the given element is processing.
       /// @param[in] aElementId [@ref elementID] The element id.
       /// @return [bool] True if the element is processing, false otherwise.
-      virtual bool isProcessing(CwAPI3D::elementID aElementId) = 0;
+      virtual bool isProcessing(elementID aElementId) = 0;
 
       /// @brief Retrieves the standard name of the given element.
       /// @param[in] aElementId [@ref elementID] The element id.
       /// @return [@ref ICwAPI3DString*] The standard name of the element.
-      virtual ICwAPI3DString* getStandardElementName(CwAPI3D::elementID aElementId) = 0;
+      virtual ICwAPI3DString* getStandardElementName(elementID aElementId) = 0;
 
       /// @brief Retrieves the name of the steel shape for the given element.
       /// @param[in] aElementId [@ref elementID] The element id.
       /// @return [@ref ICwAPI3DString*] The name of the steel shape for the element.
-      virtual ICwAPI3DString* getSteelShapeName(CwAPI3D::elementID aElementId) = 0;
+      virtual ICwAPI3DString* getSteelShapeName(elementID aElementId) = 0;
 
       /// @brief Retrieves the associated nesting number for the given element.
       /// @param[in] aElementId [@ref elementID] The element id.
       /// @return [@ref ICwAPI3DString*] The associated nesting number for the element.
-      virtual ICwAPI3DString* getAssociatedNestingNumber(CwAPI3D::elementID aElementId) = 0;
+      virtual ICwAPI3DString* getAssociatedNestingNumber(elementID aElementId) = 0;
 
       /// @brief Retrieves the associated nesting name for the given element.
       /// @param[in] aElementId [@ref elementID] The element id.
       /// @return [@ref ICwAPI3DString*] The associated nesting name for the element.
-      virtual ICwAPI3DString* getAssociatedNestingName(CwAPI3D::elementID aElementId) = 0;
+      virtual ICwAPI3DString* getAssociatedNestingName(elementID aElementId) = 0;
 
       /// @brief Enables the attribute display.
       virtual void enableAttributeDisplay() = 0;
@@ -845,7 +845,7 @@ namespace CwAPI3D
 
       /// @brief Set the element grouping type (group, subgroup).
       /// @param[in] aType [const @ref elementGroupingType] The element grouping type to set.
-      virtual void setElementGroupingType(const CwAPI3D::elementGroupingType aType) = 0;
+      virtual void setElementGroupingType(const elementGroupingType aType) = 0;
 
       /// @brief Sets the element to framed wall.
       /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The element id list.
@@ -888,12 +888,21 @@ namespace CwAPI3D
       /// @brief Gets the material id of a given element.
       /// @param[in] aElementId [@ref elementID] The element id.
       /// @return [@ref materialID] The id of the element's material or 0 if no material id could be retrieved.
-      virtual materialID getStandardElementMaterialId(CwAPI3D::elementID aElementId) = 0;
+      virtual materialID getStandardElementMaterialId(elementID aElementId) = 0;
 
       /// @brief Sets the machine calculation set on the elements.
       /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] List of element IDs.
       /// @param[in] aName [const @ref character*] Name of the machine calculation set.
+      /// @note If multiple sets share the same name, the first matching set is used.
       /// @return [bool] True if the machine calculation set was successfully set, false otherwise.
+      /// @par Example :
+      /// @code{.cpp}
+      /// ICwAPI3DElementIDList* activeElements = aFactory->getElementController()->getActiveIdentifiableElementIDs();
+      /// elementID element = activeElements->at(0);
+      ///
+      /// ICwAPI3DString* currentSet = aFactory->getAttributeController()->getMachineCalculationSet(element);
+      /// bool result = aFactory->getAttributeController()->setMachineCalculationSet(activeElements, L"xyz_hundegger K2_BVN");
+      /// @endcode
       virtual bool setMachineCalculationSet(ICwAPI3DElementIDList* aElementIdList, const character* aName) = 0;
     };
   }

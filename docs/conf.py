@@ -15,9 +15,9 @@ if read_the_docs_build:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'CwAPI3D'
-copyright = '2024, Cadwork'
+copyright = '2026, Cadwork'
 author = 'Cadwork'
-release = '30'
+release = 'V2026'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

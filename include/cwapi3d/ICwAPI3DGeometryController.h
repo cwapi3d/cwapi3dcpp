@@ -24,8 +24,8 @@ namespace CwAPI3D
     {
     public:
       /// Gets the last error.
-      /// @param[out] aErrorCode [int32_t*] error code 
-      /// @return [@ref ICwAPI3DString*] error string 
+      /// @param[out] aErrorCode [int32_t*] error code
+      /// @return [@ref ICwAPI3DString*] error string
       virtual ICwAPI3DString* getLastError(int32_t* aErrorCode) = 0;
 
       /// @brief Gets the element width.
@@ -66,7 +66,7 @@ namespace CwAPI3D
       /// @brief Gets the element start width cut angle.
       /// @param[in] aElementId [@ref elementID] The element Id.
       /// @return [double] The element start width cut angle.
-      virtual double getStartWidthCutAngle(elementID aElementId) = 0; 
+      virtual double getStartWidthCutAngle(elementID aElementId) = 0;
 
       /// @brief Gets the element end height cut angle.
       /// @param[in] aElementId [@ref elementID] The element Id.
@@ -425,7 +425,7 @@ namespace CwAPI3D
       /// @return [double] The real weight of the element.
       virtual double getWeightReal(elementID aElementId) = 0;
 
-      /// @brief Gets actual physical volume (includes negative geometry operations, such as end-types, drillings, connectors, openings, and MEP elements) 
+      /// @brief Gets actual physical volume (includes negative geometry operations, such as end-types, drillings, connectors, openings, and MEP elements)
       ///       (it might also take into account different drilling bodies and counterbores in a connector).
       /// @param[in] aElementId [@ref elementID] The element id.
       /// @return [double] The actual physical volume.
@@ -526,6 +526,11 @@ namespace CwAPI3D
       /// @param[in] aStandardElementName [const @ref character*] The standard element name.
       /// @return [double] The standard element length.
       virtual double getStandardElementLengthFromName(const character* aStandardElementName) = 0;
+
+      /// @brief Gets the length of an element including end-types.
+      /// @param[in] aElementId [@ref elementID] The element id.
+      /// @return [double] The element length including end-types.
+      virtual double getLengthIncludingEndTypes(elementID aElementId) = 0;
     };
   }
 }

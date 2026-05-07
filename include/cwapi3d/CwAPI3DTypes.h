@@ -67,6 +67,14 @@ namespace CwAPI3D
     point mTopRight;
   };
 
+  /// @struct activePointResult
+  /// @brief Result of an active point query
+  struct activePointResult
+  {
+    bool mHasPoint;
+    vector3D mPoint;
+  };
+
   using character = wchar_t;
   using narrowCharacter = char;
   using wideCharacter = wchar_t;

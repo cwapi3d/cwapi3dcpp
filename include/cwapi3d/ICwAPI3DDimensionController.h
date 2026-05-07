@@ -66,7 +66,6 @@ namespace CwAPI3D
       /// @param[in] aViewDirUp [@ref vector3D] The view direction up vector.
       virtual void setOrientation(ICwAPI3DElementIDList* aElementIdList, vector3D aViewDir, vector3D aViewDirUp) = 0;
 
-
       /// @brief Adds a point to an existing dimension element.
       /// @details Adds a new point to the dimension's point list. A dimension segment is automatically 
       /// created between this point and the previous point. This method can be called multiple times 
