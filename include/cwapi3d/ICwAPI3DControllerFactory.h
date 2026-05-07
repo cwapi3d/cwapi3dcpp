@@ -273,7 +273,17 @@ namespace CwAPI3D
       /// @return event subscription controller
       virtual ICwAPI3DEventSubscriptionController* getEventSubscriptionController() = 0;
 
+      /// @brief Creates an empty hit result
+      /// @return hit result
       virtual ICwAPI3DHitResult* createEmptyHitResult() = 0;
+
+      /// @brief Creates a connector axis item
+      /// @return item
+      virtual ICwAPI3DConnectorAxisItem* createConnectorAxisItem() = 0;
+
+      /// @brief Creates an empty connector axis item list
+      /// @return item list
+      virtual ICwAPI3DConnectorAxisItemList* createEmptyConnectorAxisItemList() = 0;
     };
   }
 }
