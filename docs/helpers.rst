@@ -6,6 +6,8 @@
    helpers/attribute_display_settings
    helpers/camera_data
    helpers/coordinate_system_data
+   helpers/connector_axis_item
+   helpers/connector_axis_item_list
    helpers/shoulder_options
    helpers/display_attribute
    helpers/edge_list
