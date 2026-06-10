@@ -295,7 +295,7 @@ namespace CwAPI3D
       /// @param[in] aDiameter [double] The diameter of the drilling.
       /// @param[in] aLength [double] The length of the drilling.
       /// @param[in] aStartingPoint [@ref vector3D] The starting point.
-      /// @param[in] aDrillingDirection [@ref vector3D] The direction of the drilling.
+      /// @param[in] aDrillingDirection [@ref vector3D] The direction of the drilling. (The vector needs to be normalized beforehand)
       /// @return [@ref elementID] The ID of the created drilling.
       /// @par Example :
       /// @code{.cpp}
@@ -425,7 +425,7 @@ namespace CwAPI3D
       /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The list of elements to be rotated.
       /// @param[in] aOrigin [@ref vector3D] The origin of the rotation.
       /// @param[in] aRotationAxis [@ref vector3D] The axis of the rotation.
-      /// @param[in] aRotationAngle [double] The angle of the rotation in degrees.
+      /// @param[in] aRotationAngle [double] The angle of the rotation in radians.
       virtual void rotateElements(ICwAPI3DElementIDList* aElementIdList, vector3D aOrigin, vector3D aRotationAxis, double aRotationAngle) = 0;
 
       /// @brief Subtracts a list of "soft" elements from a list of "hard" elements.
@@ -1801,6 +1801,22 @@ namespace CwAPI3D
       /// @param[in] aElementID The ID of the element to query.
       /// @return The active point result containing the active point information.
       virtual activePointResult getElementActivePoint(elementID aElementID) = 0;
+
+      /// @brief Retrieves a list of standard beam GUIDs.
+      /// @return [@ref ICwAPI3DStringList*] A list of guids of standard beams.
+      virtual ICwAPI3DStringList* getStandardBeamGuidList() = 0;
+
+      /// @brief Retrieves a list of standard panel GUIDs.
+      /// @return [@ref ICwAPI3DStringList*] A list of guids of standard panels.
+      virtual ICwAPI3DStringList* getStandardPanelGuidList() = 0;
+
+      /// @brief Imports a standard beam from a file.
+      /// @param[in] aFilePath The path to the file to be imported.
+      virtual void importStandardBeamFromFile(const character* aFilePath) = 0;
+
+      /// @brief Imports a standard panel from a file.
+      /// @param[in] aFilePath The path to the file to be imported.
+      virtual void importStandardPanelFromFile(const character* aFilePath) = 0;
     };
   }
 }

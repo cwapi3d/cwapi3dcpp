@@ -18,36 +18,29 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /**
-    * @interface ICwAPI3DStringList
-    * \brief
-    */
+
+    /// @interface ICwAPI3DConnectorAxisItem
+    /// @brief
     class ICwAPI3DConnectorAxisItem
     {
     public:
-      /**
-       * \brief Destroys itself
-       */
+      /// @brief Destroys itself
       virtual void destroy() = 0;
-      /**
-       * \brief Sets the item guid
-       * \param aGuid
-       */
+
+      /// @brief Sets the item guid
+      /// @param[in] aGuid
       virtual void setGuid(const character* aGuid) = 0;
-      /**
-       * \brief Sets the item position
-       * \param aPosition
-       */
+
+      /// @brief Sets the item position
+      /// @param[in] aPosition
       virtual void setPosition(int32_t aPosition) = 0;
-      /**
-       * \brief Returns the item guid
-       * \return item guid
-       */
+
+      /// @brief Returns the item guid
+      /// @return item guid
       virtual ICwAPI3DString* getGuid() const = 0;
-      /**
-       * \brief Returns the item position
-       * \return item position
-       */
+
+      /// @brief Returns the item position
+      /// @return item position
       virtual int32_t getPosition() const = 0;
     };
   }
