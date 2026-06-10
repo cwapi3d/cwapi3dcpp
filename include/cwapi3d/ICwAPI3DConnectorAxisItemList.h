@@ -17,32 +17,26 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /**
-    * @interface ICwAPI3DStringList
-    * \brief
-    */
+
+    /// @interface ICwAPI3DConnectorAxisItemList
+    /// @brief
     class ICwAPI3DConnectorAxisItemList
     {
     public:
-      /**
-       * \brief Destroys itself
-       */
+      /// @brief Destroys itself
       virtual void destroy() = 0;
-      /**
-       * \brief Returns the number of elements in the list
-       * \return number of elements in list
-       */
+
+      /// @brief Returns the number of elements in the list
+      /// @return number of elements in list
       virtual uint32_t count() = 0;
-      /**
-       * \brief Returns the item at index
-       * \param aIndex
-       * \return element at index
-       */
+
+      /// @brief Returns the item at index
+      /// @param[in] aIndex
+      /// @return element at index
       virtual ICwAPI3DConnectorAxisItem* at(uint32_t aIndex) = 0;
-      /**
-       * \brief Appends an item to the list
-       * \param aItem
-       */
+
+      /// @brief Appends an item to the list
+      /// @param[in] aItem
       virtual void append(ICwAPI3DConnectorAxisItem* aItem) = 0;
     };
   }
