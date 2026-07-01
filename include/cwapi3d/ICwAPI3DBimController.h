@@ -273,6 +273,61 @@ namespace CwAPI3D
       /// @param[in] aFilePath [const @ref character*] The path where the IFC file will be exported.
       /// @return [bool] True if the export was successful, false otherwise.
       virtual bool exportIfc4(ICwAPI3DElementIDList* aElementIdList, const character* aFilePath) = 0;
+
+      /// @brief Deletes a storey from a building.
+      /// @param[in] aBuilding [const @ref character*] The name of the building.
+      /// @param[in] aStorey [const @ref character*] The name of the storey to delete.
+      /// @return [bool] True if the storey was deleted successfully, false otherwise.
+      virtual bool deleteStorey(const character* aBuilding, const character* aStorey) = 0;
+
+      /// @brief Deletes a building.
+      /// @param[in] aBuilding [const @ref character*] The name of the building to delete.
+      /// @return [bool] True if the building was deleted successfully, false otherwise.
+      virtual bool deleteBuilding(const character* aBuilding) = 0;
+
+      /// @brief Renames a storey in a building.
+      /// @param[in] aBuilding [const @ref character*] The name of the building.
+      /// @param[in] aStorey [const @ref character*] The current name of the storey.
+      /// @param[in] aNewStorey [const @ref character*] The new name for the storey.
+      /// @return [bool] True if the storey was renamed successfully, false otherwise.
+      virtual bool renameStorey(const character* aBuilding, const character* aStorey, const character* aNewStorey) = 0;
+
+      /// @brief Renames a building.
+      /// @param[in] aBuilding [const @ref character*] The current name of the building.
+      /// @param[in] aNewBuilding [const @ref character*] The new name for the building.
+      /// @return [bool] True if the building was renamed successfully, false otherwise.
+      virtual bool renameBuilding(const character* aBuilding, const character* aNewBuilding) = 0;
+
+      /// @brief Sets the active building and storey.
+      /// @param[in] aBuilding [const @ref character*] The name of the building.
+      /// @param[in] aStorey [const @ref character*] The name of the storey.
+      virtual void setActiveStorey(const character* aBuilding, const character* aStorey) = 0;
+
+      /// @brief Gets the active storey.
+      /// @return [@ref ICwAPI3DString*] A string containing the active storey name.
+      virtual ICwAPI3DString* getActiveStorey() = 0;
+
+      /// @brief Gets the active building.
+      /// @return [@ref ICwAPI3DString*] A string containing the active building name.
+      virtual ICwAPI3DString* getActiveBuilding() = 0;
+
+      /// @brief Gets the finished floor thickness for a specific storey in a building.
+      /// @param[in] aBuilding [const @ref character*] The name of the building.
+      /// @param[in] aStorey [const @ref character*] The name of the storey.
+      /// @return [double] The finished floor thickness.
+      virtual double getFinishedFloorThickness(const character* aBuilding, const character* aStorey) = 0;
+
+      /// @brief Sets the finished floor thickness for a specific storey in a building.
+      /// @param[in] aBuilding [const @ref character*] The name of the building.
+      /// @param[in] aStorey [const @ref character*] The name of the storey.
+      /// @param[in] aFinishedFloorThickness [double] The finished floor thickness to set.
+      virtual void setFinishedFloorThickness(const character* aBuilding, const character* aStorey, double aFinishedFloorThickness) = 0;
+
+      /// @brief Gets all elements assigned to a specific storey in a building.
+      /// @param[in] aBuilding [const @ref character*] The name of the building.
+      /// @param[in] aStorey [const @ref character*] The name of the storey.
+      /// @return [@ref ICwAPI3DElementIDList*] The list of element ids assigned to the storey.
+      virtual ICwAPI3DElementIDList* getElementsForStorey(const character* aBuilding, const character* aStorey) = 0;
     };
   }
 }
