@@ -1817,6 +1817,52 @@ namespace CwAPI3D
       /// @brief Imports a standard panel from a file.
       /// @param[in] aFilePath The path to the file to be imported.
       virtual void importStandardPanelFromFile(const character* aFilePath) = 0;
+
+      /// @brief Exports an existing element as a standard element.
+      /// In case of duplicated names will append a count suffix e.g. (2).
+      /// Note that creating elements of standard element type Metal is not supported by this function.
+      /// @param[in] aElementId The element to create a standard element from.
+      /// @param[in] aName The name of the standard element.
+      /// @return The GUID of the new standard element on success, an empty string on error.
+      virtual ICwAPI3DString* exportAsStandardElement(elementID aElementId, const character* aName) = 0;
+
+      /// @brief Creates a rotation element from a surface element by rotating it around an axis.
+      /// @param[in] aSurfaceElementId [@ref elementID] The ID of the source surface element to rotate. /!\ Element need to be a surface.
+      /// @param[in] aAxisPoint [@ref vector3D] A point on the rotation axis.
+      /// @param[in] aAxisDirection [@ref vector3D] The direction vector of the rotation axis.
+      /// @param[in] aAngleRad [double] The rotation angle in radians.
+      /// @param[in] aSegmentation [int32_t] Number of divisions steps used to tessellate the generated rotation element. (0 for smooth ACIS solid, >0 for faceted)
+      /// @return [@ref elementID] The ID of the created rotation element.
+      /// @par Example:
+      /// @code{.cpp}
+      /// // Create a rectangular surface and rotate it 360° around an axis to form a cylinder
+      /// double radius = 200.0;
+      /// double height = 1000.0;
+      ///
+      /// // Define a rectangular surface profile in the XZ plane
+      /// ICwAPI3DVertexList* vertices = aFactory.createVertexList();
+      /// vertices->append(vector3D{0.0, 0.0, 0.0});
+      /// vertices->append(vector3D{0.0, 0.0, height});
+      /// vertices->append(vector3D{radius, 0.0, height});
+      /// vertices->append(vector3D{radius, 0.0, 0.0});
+      ///
+      /// elementID surfaceID = aFactory.getElementController()->createSurface(vertices);
+      ///
+      /// // Rotate the surface 360° around the Z axis to create a cylinder
+      /// vector3D axisPoint{0.0, 0.0, 0.0};
+      /// vector3D axisDirection{0.0, 0.0, 1.0};
+      /// double fullRotation = 2.0 * M_PI;  // 360 degrees
+      /// int32_t discretizationSteps = 0; // automatic
+      ///
+      /// elementID cylinderID = aFactory.getElementController()->createRotationElement(
+      ///     surfaceID,
+      ///     axisPoint,
+      ///     axisDirection,
+      ///     fullRotation,
+      ///     discretizationSteps
+      /// );
+      /// @endcode
+      virtual elementID createRotationElement(elementID aSurfaceElementId, vector3D aAxisPoint, vector3D aAxisDirection, double aAngleRad, int32_t aSegmentation) = 0;
     };
   }
 }
