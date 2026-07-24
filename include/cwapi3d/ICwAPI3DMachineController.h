@@ -11,6 +11,8 @@
 #pragma once
 
 #include "ICwAPI3DElementIDList.h"
+#include "ICwAPI3DPanelPrefabElementData.h"
+#include "ICwAPI3DPanelPrefabElementSettings.h"
 #include "ICwAPI3DString.h"
 #include "ICwAPI3DStringList.h"
 #include "ICwAPI3DVertexList.h"
@@ -255,6 +257,37 @@ namespace CwAPI3D
       /// aFactory.getMachineController()->exportHundeggerWithFilePathAndPresettingSilent(static_cast<uint32_t>(hundeggerType), outputPath, presettingFile);
       /// @endcode
       virtual void exportHundeggerWithFilePathAndPresettingSilent(uint32_t aHundeggertype, const character* aExportFilePath, const character* aPresetting) = 0;
+
+      /// @brief Gets the machine panel prefabrication data of an element (element type, layer location and MFB prefab config).
+      /// @param[in] aElementId [@ref elementID] The element id.
+      /// @return [@ref ICwAPI3DPanelPrefabElementData*] The panel prefab element data.
+      /// @par Example:
+      /// @code{.cpp}
+      /// elementID element = 123456789;
+      /// ICwAPI3DPanelPrefabElementData* data = aFactory.getMachineController()->getPanelPrefabElementData(element);
+      /// panelPrefabElementType type = data->getElementType();
+      /// if (data->hasLayer())
+      /// {
+      ///   int32_t layer = data->getLayer();
+      /// }
+      /// ICwAPI3DString* config = data->getMachineCalculationSet();
+      /// @endcode
+      virtual ICwAPI3DPanelPrefabElementData* getPanelPrefabElementData(elementID aElementId) = 0;
+
+      /// @brief Sets the machine panel prefabrication data on a list of elements.
+      /// @details Only the fields explicitly set on the settings object are applied; unset fields are left untouched.
+      /// Elements without a panel prefabrication interface are skipped.
+      /// @param[in] aElements [@ref ICwAPI3DElementIDList*] The list of element ids.
+      /// @param[in] aSettings [@ref ICwAPI3DPanelPrefabElementSettings*] The panel prefab settings to apply.
+      /// @par Example:
+      /// @code{.cpp}
+      /// ICwAPI3DPanelPrefabElementSettings* settings = aFactory.createPanelPrefabElementSettings();
+      /// settings->setElementType(panelPrefabElementType::batten);
+      /// settings->setLayer(2);
+      /// settings->setMachineCalculationSet(L"MyMfbConfig");
+      /// aFactory.getMachineController()->setPanelPrefabElementData(elements, settings);
+      /// @endcode
+      virtual void setPanelPrefabElementData(ICwAPI3DElementIDList* aElements, ICwAPI3DPanelPrefabElementSettings* aSettings) = 0;
     };
   }
 }
