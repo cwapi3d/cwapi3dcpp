@@ -420,4 +420,40 @@ namespace CwAPI3D
     HangerBolt = 10011,            ///< Hanger bolt (double-ended screw)
     ConnectionScrew = 10012        ///< Connection screw
   };
+
+  /// @enum panelPrefabElementType
+  /// @brief Exclusive machine panel prefabrication element type of an element.
+  enum class panelPrefabElementType : int32_t
+  {
+    none = 0,         ///< No prefab element type
+    frame = 1,        ///< Frame
+    panel = 2,        ///< Panel
+    batten = 3,       ///< Batten
+    cladding = 4,     ///< Cladding
+    insulation = 5,   ///< Insulation
+    built_in_part = 6 ///< Built-in part
+  };
+
+  /// @enum language
+  /// @brief Available cadwork UI languages for setLanguage(). Values match the ISO codes returned by getLanguage().
+  enum class language : uint32_t
+  {
+    english = 0, ///< en
+    german,      ///< de
+    french,      ///< fr
+    italian,     ///< it
+    spanish,     ///< es
+    czech,       ///< cs
+    finnish,     ///< fi
+    russian,     ///< ru
+    polish,      ///< pl
+    romanian,    ///< ro
+    norwegian,   ///< no
+    chinese,     ///< zh
+    portuguese,  ///< pt
+    estonian,    ///< et
+    japanese,    ///< ja
+    dutch,       ///< nl
+    swedish,     ///< sv
+  };
 }

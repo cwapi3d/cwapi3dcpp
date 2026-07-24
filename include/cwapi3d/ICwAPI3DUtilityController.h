@@ -249,7 +249,7 @@ namespace CwAPI3D
       virtual void disableAutoDisplayRefresh() = 0;
 
       /// @brief Enables automatic display refresh.
-      /// This function restores the default behavior where the display updates automatically after each operation. 
+      /// This function restores the default behavior where the display updates automatically after each operation.
       /// Use this function to resume normal display updates after previously disabling them with disable_auto_display_refresh().
       /// It's recommended to call this function after completing operations that required disabled display refreshing.
       /// @note If elements were created while display refresh was disabled, it's important to recreate these elements after enabling the display refresh to ensure they are properly visualized in cadwork.
@@ -599,6 +599,14 @@ namespace CwAPI3D
       /// @brief Redirects output from Python's print function to the cadwork logger.
       /// This function is used to redirect the output of the Python interpreter to the logger. This is useful for debugging and logging purposes.
       virtual void redirectPythonOutputToLogger() = 0;
+
+      /// @brief Sets the 3D language and refreshes the UI.
+      /// @param[in] aLanguage [@ref language] The language to set.
+      virtual void setLanguage(language aLanguage) = 0;
+
+      /// @brief Gets the 3D language as a typed enum.
+      /// @return [@ref language] The active language.
+      virtual language getLanguageEnum() = 0;
     };
   }
 }

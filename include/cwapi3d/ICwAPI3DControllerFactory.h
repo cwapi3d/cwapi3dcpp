@@ -45,6 +45,7 @@
 #include "ICwAPI3DMaterialIDList.h"
 #include "ICwAPI3DMenuController.h"
 #include "ICwAPI3DMultiLayerCoverController.h"
+#include "ICwAPI3DPanelPrefabElementSettings.h"
 #include "ICwAPI3DPolygonList.h"
 #include "ICwAPI3DProcessType.h"
 #include "ICwAPI3DRhinoOptions.h"
@@ -284,6 +285,10 @@ namespace CwAPI3D
       /// @brief Creates an empty connector axis item list
       /// @return item list
       virtual ICwAPI3DConnectorAxisItemList* createEmptyConnectorAxisItemList() = 0;
+
+      /// @brief Creates an empty panel prefab element settings
+      /// @return panel prefab element settings
+      virtual ICwAPI3DPanelPrefabElementSettings* createPanelPrefabElementSettings() = 0;
     };
   }
 }
