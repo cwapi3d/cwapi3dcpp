@@ -904,6 +904,11 @@ namespace CwAPI3D
       /// bool result = aFactory->getAttributeController()->setMachineCalculationSet(activeElements, L"xyz_hundegger K2_BVN");
       /// @endcode
       virtual bool setMachineCalculationSet(ICwAPI3DElementIDList* aElementIdList, const character* aName) = 0;
+
+      /// @brief Deletes an item from the Name list.
+      /// @param[in] aItem [const @ref character*] The item to delete from the Name list.
+      /// @return [bool] True if the item was successfully deleted, false otherwise.
+      virtual bool deleteItemFromNameList(const character* aItem) = 0;
     };
   }
 }

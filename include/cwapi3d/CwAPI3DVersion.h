@@ -16,5 +16,5 @@
 namespace CwAPI3D
 {
   const uint32_t versionMajor = 2026; // PQ: Do not increment this number without consulting me.
-  const uint32_t versionMinor = 318;  // PQ: Let's try matching the build number +1 manually for now.
+  const uint32_t versionMinor = 324;  // PQ: Let's try matching the build number +1 manually for now.
 }
