@@ -456,4 +456,18 @@ namespace CwAPI3D
     dutch,       ///< nl
     swedish,     ///< sv
   };
+
+  /// @enum endType
+  /// @brief End type of an element.
+  enum class endType : int32_t
+  {
+    Unknown,                ///< Unknown
+    Tenon = 1,              ///< Tenon
+    Lengthening = 2,        ///< Lengthening
+    DovetailTenon = 3,      ///< Dovetail Tenon
+    GMIWithCounterpart = 4, ///< GMI With Counterpart
+    DovetailMortise = 5,    ///< Dovetail Mortise
+    FrontSlot = 6,          ///< Front Slot
+    JapaneseTenon = 7       ///< Japanese Tenon
+  };
 }

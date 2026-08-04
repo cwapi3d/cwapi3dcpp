@@ -26,8 +26,8 @@ namespace CwAPI3D
       /// @return [@ref ICwAPI3DString*] A string containing the last error message.
       virtual ICwAPI3DString* getLastError(int32_t* aErrorCode) = 0;
 
-      /// @brief Gets the endtype name by endtype id.
-      /// @param[in] aEndtypeId [@ref endtypeID] The endtype id.
+      /// @brief Gets the endtype name by endtype element id.
+      /// @param[in] aEndtypeElementId [@ref endtypeID] The endtype element id.
       /// @return [@ref ICwAPI3DString*] The endtype name.
       /// @par Example:
       /// @code{.cpp}
@@ -40,7 +40,7 @@ namespace CwAPI3D
       /// // Output the result
       /// printf("Endtype name: %s\n", endtypeName);
       /// @endcode
-      virtual ICwAPI3DString* getEndtypeName(endtypeID aEndtypeId) = 0;
+      virtual ICwAPI3DString* getEndtypeName(endtypeID aEndtypeElementId) = 0;
 
       /// @brief Gets the endtype id by endtype name.
       /// @param[in] aName [const @ref character*] The endtype name.
@@ -57,8 +57,8 @@ namespace CwAPI3D
       virtual endtypeID getEndtypeID(const character* aName) = 0;
 
       /// @brief Gets the endtype id of the start face.
-      /// @param[in] aElementId [@ref elementID] The element id.
-      /// @return [@ref endtypeID] The wanted endtype id.
+      /// @param[in] aElementId [@ref elementID] The cadwork element id.
+      /// @return [@ref endtypeID] The wanted endtype element id.
       /// @par Example:
       /// @code{.cpp}
       /// // Get all identifiable elements
@@ -77,8 +77,8 @@ namespace CwAPI3D
       virtual endtypeID getEndtypeIdStart(elementID aElementId) = 0;
 
       /// @brief Gets the endtype id of the end face.
-      /// @param[in] aElementId [@ref elementID] The element id.
-      /// @return [@ref endtypeID] The wanted endtype id.
+      /// @param[in] aElementId [@ref elementID] The cadwork element id.
+      /// @return [@ref endtypeID] The wanted endtype element id.
       /// @par Example:
       /// @code{.cpp}
       /// // Get all identifiable elements
@@ -97,9 +97,9 @@ namespace CwAPI3D
       virtual endtypeID getEndtypeIdEnd(elementID aElementId) = 0;
 
       /// @brief Gets the endtype id of a face with the face number.
-      /// @param[in] aElementId [@ref elementID] The element id.
+      /// @param[in] aElementId [@ref elementID] The cadwork element id.
       /// @param[in] aFaceNumber [uint32_t] The face number. 0 <= aFaceNumber < element face count.
-      /// @return [@ref endtypeID] The wanted endtype id.
+      /// @return [@ref endtypeID] The wanted endtype element id.
       /// @note Endtypes can only be set on faces that are placed at start or end points. Endtypes cannot be placed on arbitrary faces.
       /// @par Example:
       /// @code{.cpp}
@@ -122,7 +122,7 @@ namespace CwAPI3D
       virtual endtypeID getEndtypeIdFac(elementID aElementId, uint32_t aFaceNumber) = 0;
 
       /// @brief Gets the endtype name of the start face.
-      /// @param[in] aElementId [@ref elementID] The element id.
+      /// @param[in] aElementId [@ref elementID] The cadwork element id.
       /// @return [@ref ICwAPI3DString*] The endtype name of the start face.
       /// @par Example:
       /// @code{.cpp}
@@ -136,7 +136,7 @@ namespace CwAPI3D
       virtual ICwAPI3DString* getEndtypeNameStart(elementID aElementId) = 0;
 
       /// @brief Gets the endtype name of the end face.
-      /// @param[in] aElementId [@ref elementID] The element id.
+      /// @param[in] aElementId [@ref elementID] The cadwork element id.
       /// @return [@ref ICwAPI3DString*] The endtype name of the end face.
       /// @par Example:
       /// @code{.cpp}
@@ -150,7 +150,7 @@ namespace CwAPI3D
       virtual ICwAPI3DString* getEndtypeNameEnd(elementID aElementId) = 0;
 
       /// @brief Gets the endtype name of the face with a number.
-      /// @param[in] aElementId [@ref elementID] The element id.
+      /// @param[in] aElementId [@ref elementID] The cadwork element id.
       /// @param[in] aFaceNumber [uint32_t] The face number. 0 <= aFaceNumber < element face count.
       /// @return [@ref ICwAPI3DString*] The endtype name of the face.
       /// @note Endtypes can only be set on faces that are placed at start or end points. Endtypes cannot be placed on arbitrary faces.
@@ -167,7 +167,7 @@ namespace CwAPI3D
       virtual ICwAPI3DString* getEndtypeNameFac(elementID aElementId, uint32_t aFaceNumber) = 0;
 
       /// @brief Sets the endtype to start face by endtype name.
-      /// @param[in] aElementId [@ref elementID] The element id.
+      /// @param[in] aElementId [@ref elementID] The cadwork element id.
       /// @param[in] aName [const @ref character*] The endtype name.
       /// @par Example:
       /// @code{.cpp}
@@ -181,7 +181,7 @@ namespace CwAPI3D
       virtual void setEndtypeNameStart(elementID aElementId, const character* aName) = 0;
 
       /// @brief Sets the endtype to end face by endtype name.
-      /// @param[in] aElementId [@ref elementID] The element id.
+      /// @param[in] aElementId [@ref elementID] The cadwork element id.
       /// @param[in] aName [const @ref character*] The endtype name.
       /// @par Example:
       /// @code{.cpp}
@@ -195,7 +195,7 @@ namespace CwAPI3D
       virtual void setEndtypeNameEnd(elementID aElementId, const character* aName) = 0;
 
       /// @brief Sets the endtype to a face by endtype name.
-      /// @param[in] aElementId [@ref elementID] The element id.
+      /// @param[in] aElementId [@ref elementID] The cadwork element id.
       /// @param[in] aName [const @ref character*] The endtype name.
       /// @param[in] aFaceNumber [uint32_t] The face number. 0 <= aFaceNumber < element face count.
       /// @note Endtypes can only be set on faces that are placed at start or end points. Endtypes cannot be placed on arbitrary faces.
@@ -212,8 +212,8 @@ namespace CwAPI3D
       virtual void setEndtypeNameFac(elementID aElementId, const character* aName, uint32_t aFaceNumber) = 0;
 
       /// @brief Sets the endtype to start face by endtype id.
-      /// @param[in] aElementId [@ref elementID] The element id.
-      /// @param[in] aEndtypeId [@ref endtypeID] The endtype id.
+      /// @param[in] aElementId [@ref elementID] The cadwork element id.
+      /// @param[in] aEndtypeId [@ref endtypeID] The endtype element id.
       /// @par Example:
       /// @code{.cpp}
       /// ICwAPI3DEndtypeIDList* selectedElements = aFactory.getElementController()->getAllIdentifiableElementIDs();
@@ -226,8 +226,8 @@ namespace CwAPI3D
       virtual void setEndtypeIdStart(elementID aElementId, endtypeID aEndtypeId) = 0;
 
       /// @brief Sets the endtype to end face by endtype id.
-      /// @param[in] aElementId [@ref elementID] The element id.
-      /// @param[in] aEndtypeId [@ref endtypeID] The endtype id.
+      /// @param[in] aElementId [@ref elementID] The cadwork element id.
+      /// @param[in] aEndtypeId [@ref endtypeID] The endtype element id.
       /// @par Example:
       /// @code{.cpp}
       /// ICwAPI3DElementIDList* selectedElements = aFactory.getElementController()->getAllIdentifiableElementIDs();
@@ -240,8 +240,8 @@ namespace CwAPI3D
       virtual void setEndtypeIdEnd(elementID aElementId, endtypeID aEndtypeId) = 0;
 
       /// @brief Sets the endtype to a face by endtype id.
-      /// @param[in] aElementId [@ref elementID] The element id.
-      /// @param[in] aEndtypeId [@ref endtypeID] The endtype id.
+      /// @param[in] aElementId [@ref elementID] The cadwork element id.
+      /// @param[in] aEndtypeElementId [@ref endtypeID] The endtype element id.
       /// @param[in] aFaceNumber [uint32_t] The face number. 0 <= aFaceNumber < element face count.
       /// @note Endtypes can only be set on faces that are placed at start or end points. Endtypes cannot be placed on arbitrary faces.
       /// @par Example:
@@ -254,30 +254,31 @@ namespace CwAPI3D
       /// const int faceNumber = 3;
       /// aFactory.getEndtypeController()->setEndtypeIdFacet(element, endtypeId, faceNumber);
       /// @endcode
-      virtual void setEndtypeIdFac(elementID aElementId, endtypeID aEndtypeId, uint32_t aFaceNumber) = 0;
+      virtual void setEndtypeIdFac(elementID aElementId, endtypeID aEndtypeElementId, uint32_t aFaceNumber) = 0;
 
       /// @brief Creates a new Endtype.
       /// @param[in] aEndtypeName [const @ref character*] The new endtype name.
-      /// @param[in] aEndtypeId [uint32_t] The new endtype id.
+      /// @param[in] aEndtypeTypeId [@ref endType] The id of the end type you want to create. See enum endType
       /// @param[in] aFolderName [const @ref character*] The new endtype folder.
+      /// @return [@ref endtypeID] The newly created endtype element id. Or 0 if error.
       /// @par Example:
       /// @code{.cpp}
-      /// // Create a new endtype with a custom name, ID, and folder
+      /// // Create a new endtype with a custom name, type, and folder
       /// const character* endtypeName = L"Custom_Joint_80x40";
-      /// const endtypeID endtypeIDValue = 99999;
+      /// const uint32_t lEndType = static_cast<uint32_t>(endType::Tenon);
       /// const character* folderName = L"Custom_Joints";
       ///
       /// // Register the new endtype
       /// const endtypeID newID = aFactory.getEndtypeController()->createNewEndtype(
       ///     endtypeName,
-      ///     endtypeIDValue,
+      ///     lEndType,
       ///     folderName
       /// );
       ///
       /// // Output the newly created ID
       /// printf("Created endtype with ID: %llu\n", newID);
       /// @endcode
-      virtual endtypeID createNewEndtype(const character* aEndtypeName, uint32_t aEndtypeId, const character* aFolderName) = 0;
+      virtual endtypeID createNewEndtype(const character* aEndtypeName, uint32_t aEndtypeTypeId, const character* aFolderName) = 0;
 
       /// @brief Clears all errors.
       virtual void clearErrors() = 0;
