@@ -307,6 +307,11 @@ namespace CwAPI3D
       /// @param[in] aIntersectionIndex [int32_t] The intersection index. (0 based index)
       /// @param[in] aItems [@ref ICwAPI3DConnectorAxisItemList*] The item list at intersection.
       virtual void setItemsAtIntersection(elementID aAxisId, int32_t aIntersectionIndex, ICwAPI3DConnectorAxisItemList* aItems) = 0;
+
+      /// @brief Gets the GUID of an connector axis by its name .
+      /// @param[in] aName [const @ref character*] The name of the connector axis.
+      /// @return [@ref ICwAPI3DString*] The GUID of the connector axis.
+      virtual ICwAPI3DString* getConnectorAxisGuidByName(const character* aName) = 0;
     };
   }
 }
