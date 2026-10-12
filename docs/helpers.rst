@@ -14,12 +14,14 @@
    helpers/element_filter
    helpers/element_id_list
    helpers/element_id_list_map
+   helpers/element_level_of_detail_options
    helpers/element_map_query
    helpers/element_module_properties
    helpers/element_type
    helpers/end_type_id_list
    helpers/extended_settings
    helpers/facet_list
+   helpers/file_export_options
    helpers/hit_result
    helpers/ifc_element_type
    helpers/ifc_options

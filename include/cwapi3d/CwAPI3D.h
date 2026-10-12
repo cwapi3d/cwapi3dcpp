@@ -178,6 +178,11 @@ namespace CwAPI3D
   using GridController = Interfaces::ICwAPI3DGridController;
   using RhinoOptions = Interfaces::ICwAPI3DRhinoOptions;
   using IfcOptions = Interfaces::ICwAPI3DIfcOptions;
+  using FileExportOptions = Interfaces::ICwAPI3DFileExportOptions;
+  using ElementLevelOfDetailOptions = Interfaces::ICwAPI3DElementLevelOfDetailOptions;
+  using SatExportOptions = Interfaces::ICwAPI3DSatExportOptions;
+  using StepExportOptions = Interfaces::ICwAPI3DStepExportOptions;
+  using IgesExportOptions = Interfaces::ICwAPI3DIgesExportOptions;
 }
 
 /**
