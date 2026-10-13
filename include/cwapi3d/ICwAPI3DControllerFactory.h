@@ -59,6 +59,9 @@
 #include "ICwAPI3DVisualizationController.h"
 #include "ICwAPI3DShoulderOptions.h"
 #include "ICwAPI3DHitResult.h"
+#include "ICwAPI3DIgesExportOptions.h"
+#include "ICwAPI3DSatExportOptions.h"
+#include "ICwAPI3DStepExportOptions.h"
 
 namespace CwAPI3D
 {
@@ -289,6 +292,18 @@ namespace CwAPI3D
       /// @brief Creates an empty panel prefab element settings
       /// @return panel prefab element settings
       virtual ICwAPI3DPanelPrefabElementSettings* createPanelPrefabElementSettings() = 0;
+
+      /// @brief Creates SAT export options.
+      /// @return [@ref ICwAPI3DSatExportOptions*] sat export options
+      virtual ICwAPI3DSatExportOptions* createSatExportOptions() = 0;
+
+      /// @brief Creates STEP export options.
+      /// @return [@ref ICwAPI3DStepExportOptions*] step export options
+      virtual ICwAPI3DStepExportOptions* createStepExportOptions() = 0;
+
+      /// @brief Creates IGES export options.
+      /// @return [@ref ICwAPI3DIgesExportOptions*] iges export options
+      virtual ICwAPI3DIgesExportOptions* createIgesExportOptions() = 0;
     };
   }
 }
