@@ -13,6 +13,7 @@
 #include "ICwAPI3DDisplayAttribute.h"
 #include "ICwAPI3DElementIDList.h"
 #include "ICwAPI3DImport3dcOptions.h"
+#include "ICwAPI3DFileExportOptions.h"
 #include "ICwAPI3DRhinoOptions.h"
 #include "ICwAPI3DString.h"
 
@@ -377,6 +378,53 @@ namespace CwAPI3D
       /// @param[in] aFilePath [const @ref character*] The output file path.
       /// @return [bool] True on successful export, false otherwise.
       virtual bool exportDstvFile(const CwAPI3D::character* aFilePath) = 0;
+
+      /// @brief Exports a STEP file with new algorithm.
+      /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The list of element id to export.
+      /// @param[in] aFilePath [const @ref character*] The output file path.
+      /// @param[in] aScaleFactor [double] The file scale factor.
+      /// @param[in] aSubstractDrillings [bool] Substract drillings.
+      /// @par Example:
+      /// @code{.cpp}
+      /// ICwAPI3DElementIDList* selectedElements = aFactory.getElementController()->getAllIdentifiableElementIDs();
+      /// const character* outputPath = L"C:/exports/model_with_drillings.step";
+      /// double scaleFactor = 1.0;
+      /// bool aSubstractDrillings = true;
+      ///
+      /// aFactory.getFileController()->exportStepFileEx(selectedElements, outputPath, scaleFactor, aSubstractDrillings);
+      /// @endcode
+      virtual void exportStepFileEx(ICwAPI3DElementIDList* aElementIdList, const character* aFilePath, double aScaleFactor, bool aSubstractDrillings) = 0;
+
+      /// @brief Exports a file using aggregated, format-specific export options decorated
+      ///        with element level-of-detail options. The concrete type of @p aOptions
+      ///        (as created by ICwAPI3DControllerFactory::createSatExportOptions() /
+      ///        createStepExportOptions() / createIgesExportOptions() / ...) determines the
+      ///        exported file format; @p aFilePath's extension should match that format.
+      /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The list of element id to export.
+      /// @param[in] aFilePath [const @ref character*] The output file path.
+      /// @param[in] aOptions [@ref ICwAPI3DFileExportOptions*] The format-specific export options.
+      /// @return [bool] True on successful export, false otherwise.
+      /// @par Example:
+      /// @code{.cpp}
+      /// // Export a step with all level of detail activated
+      /// ICwAPI3DStepExportOptions* stepOptions = aFactory.createStepExportOptions();
+      ///
+      /// ICwAPI3DElementLevelOfDetailOptions* lod = stepOptions->getLevelOfDetailOptions();
+      /// lod->setCutDrillings(true);
+      /// lod->setMaterializeEndTypes(true);
+      /// lod->setCutEndTypeCounterparts(true);
+      /// lod->setCutOpenings(true);
+      /// lod->setMaterializeMepElements(true);
+      /// lod->setCutMepElements(true);
+      ///
+      /// stepOptions->setScaleFactor(1.0);
+      /// stepOptions->setVersion(CwAPI3D::StepApVersion::eAP214);
+      /// stepOptions->setImperialUnits(false);
+      ///
+      /// ICwAPI3DElementIDList* selectedElements = aFactory.getElementController()->getAllIdentifiableElementIDs();
+      /// bool success = aFactory.getFileController()->exportFileWithOptions(selectedElements, L"C:/exports/model.stp", stepOptions);
+      /// @endcode
+      virtual bool exportFileWithOptions(ICwAPI3DElementIDList* aElementIdList, const character* aFilePath, ICwAPI3DFileExportOptions* aOptions) = 0;
     };
   }
 }
