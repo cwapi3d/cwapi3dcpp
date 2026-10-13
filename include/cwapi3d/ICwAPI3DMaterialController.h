@@ -380,12 +380,12 @@ namespace CwAPI3D
 
       /// @brief Gets the texture transparency for a given material ID.
       /// @param[in] aMaterialId [@ref materialID] The material id.
-      /// @return [int32_t] The transparency of the texture.
+      /// @return [int32_t] The transparency of the texture in percent, 0 means no transparency. [0-100]
       virtual int32_t getTextureTransparency(materialID aMaterialId) = 0;
 
       /// @brief Sets the texture transparency for a given material ID.
       /// @param[in] aMaterialId [@ref materialID] The material id.
-      /// @param[in] aTransparency [int32_t] The transparency to set for the texture.
+      /// @param[in] aTransparency [int32_t] The transparency to set for the texture in percent, 0 means no transparency. [0-100]
       virtual void setTextureTransparency(materialID aMaterialId, int32_t aTransparency) = 0;
 
       /// @brief Gets the texture rotation angle for a given material ID.
