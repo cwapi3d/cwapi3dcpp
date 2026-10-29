@@ -523,6 +523,9 @@ namespace CwAPI3D
       virtual void setLineToNormalLine(ICwAPI3DElementIDList* aElementIdList) = 0;
 
       /// @brief Creates an auto export solid from a standard element.
+      /// Standard element names are not unique, only GUIDs are: if several standard elements share this name, the
+      /// first match is used. Folders of the standard element library are not handled by the API and cannot be used
+      /// to select one.
       /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The list of elements to be used in the auto export solid.
       /// @param[in] aOutputName [const @ref character*] The name of the output.
       /// @param[in] aStandardElementName [const @ref character*] The name of the standard element.
@@ -773,6 +776,9 @@ namespace CwAPI3D
       virtual bool sliceElementWithPlane(elementID aElementId, vector3D aCutPlaneNormalVector, double aDistanceFromGlobalOrigin) = 0;
 
       /// @brief Creates an auto container from a standard element.
+      /// Standard element names are not unique, only GUIDs are: if several standard elements share this name, the
+      /// first match is used. Folders of the standard element library are not handled by the API and cannot be used
+      /// to select one.
       /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The list of elements to be used in the auto container.
       /// @param[in] aOutputName [const @ref character*] The name of the output.
       /// @param[in] aStandardElementName [const @ref character*] The name of the standard element.
@@ -780,6 +786,9 @@ namespace CwAPI3D
       virtual elementID createAutoContainerFromStandard(ICwAPI3DElementIDList* aElementIdList, const character* aOutputName, const character* aStandardElementName) = 0;
 
       /// @brief Creates an auto export solid from a standard element with a reference.
+      /// Standard element names are not unique, only GUIDs are: if several standard elements share this name, the
+      /// first match is used. Folders of the standard element library are not handled by the API and cannot be used
+      /// to select one.
       /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The list of elements to be used in the auto export solid.
       /// @param[in] aOutputName [const @ref character*] The name of the output.
       /// @param[in] aStandardElementName [const @ref character*] The name of the standard element.
@@ -788,6 +797,9 @@ namespace CwAPI3D
       virtual elementID createAutoExportSolidFromStandardWithReference(ICwAPI3DElementIDList* aElementIdList, const character* aOutputName, const character* aStandardElementName, elementID aReferenceID) = 0;
 
       /// @brief Creates an auto container from a standard element with a reference.
+      /// Standard element names are not unique, only GUIDs are: if several standard elements share this name, the
+      /// first match is used. Folders of the standard element library are not handled by the API and cannot be used
+      /// to select one.
       /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The list of elements to be used in the auto container.
       /// @param[in] aOutputName [const @ref character*] The name of the output.
       /// @param[in] aStandardElementName [const @ref character*] The name of the standard element.
@@ -1000,14 +1012,23 @@ namespace CwAPI3D
       virtual void resetElementCadworkGuid(elementID aElementId) = 0;
 
       /// @brief Retrieves a list of standard beam names.
+      /// Names are not unique, only GUIDs are, so the list can contain the same name several times. Folders of the
+      /// standard element library are not handled by the API and are not part of the names. Use
+      /// @ref getStandardBeamGuidList to identify standard beams unambiguously.
       /// @return [@ref ICwAPI3DStringList*] A list of names of standard beams.
       virtual ICwAPI3DStringList* getStandardBeamList() = 0;
 
       /// @brief Retrieves a list of standard panel names.
+      /// Names are not unique, only GUIDs are, so the list can contain the same name several times. Folders of the
+      /// standard element library are not handled by the API and are not part of the names. Use
+      /// @ref getStandardPanelGuidList to identify standard panels unambiguously.
       /// @return [@ref ICwAPI3DStringList*] A list of names of standard panels.
       virtual ICwAPI3DStringList* getStandardPanelList() = 0;
 
       /// @brief Creates a standard beam using points.
+      /// Standard element names are not unique, only GUIDs are: if several standard beams share this name, the first
+      /// match is used. Folders of the standard element library are not handled by the API and cannot be used to
+      /// select one; to create a specific standard element use @ref createStandardElementFromGuidPoints.
       /// @param[in] aStandardElementName [const @ref character*] The name of the standard beam.
       /// @param[in] aFirstPoint [@ref vector3D] The first point.
       /// @param[in] aSecondPoint [@ref vector3D] The second point.
@@ -1037,6 +1058,9 @@ namespace CwAPI3D
       virtual elementID createStandardBeamPoints(const character* aStandardElementName, vector3D aFirstPoint, vector3D aSecondPoint, vector3D aThirdPoint) = 0;
 
       /// @brief Creates a standard beam using vectors.
+      /// Standard element names are not unique, only GUIDs are: if several standard beams share this name, the first
+      /// match is used. Folders of the standard element library are not handled by the API and cannot be used to
+      /// select one; to create a specific standard element use @ref createStandardElementFromGuidVectors.
       /// @param[in] aStandardElementName [const @ref character*] The name of the standard beam.
       /// @param[in] aLength [double] The length of the beam.
       /// @param[in] aStartingPoint [@ref vector3D] The starting point.
@@ -1064,6 +1088,9 @@ namespace CwAPI3D
       virtual elementID createStandardBeamVectors(const character* aStandardElementName, double aLength, vector3D aStartingPoint, vector3D aXDirectionLocal, vector3D aZDirectionLocal) = 0;
 
       /// @brief Creates a standard panel using points.
+      /// Standard element names are not unique, only GUIDs are: if several standard panels share this name, the first
+      /// match is used. Folders of the standard element library are not handled by the API and cannot be used to
+      /// select one; to create a specific standard element use @ref createStandardElementFromGuidPoints.
       /// @param[in] aStandardElementName [const @ref character*] The name of the standard panel.
       /// @param[in] aFirstPoint [@ref vector3D] The first point.
       /// @param[in] aSecondPoint [@ref vector3D] The second point.
@@ -1091,6 +1118,9 @@ namespace CwAPI3D
       virtual elementID createStandardPanelPoints(const character* aStandardElementName, vector3D aFirstPoint, vector3D aSecondPoint, vector3D aThirdPoint) = 0;
 
       /// @brief Creates a standard panel using vectors.
+      /// Standard element names are not unique, only GUIDs are: if several standard panels share this name, the first
+      /// match is used. Folders of the standard element library are not handled by the API and cannot be used to
+      /// select one; to create a specific standard element use @ref createStandardElementFromGuidVectors.
       /// @param[in] aStandardElementName [const @ref character*] The name of the standard panel.
       /// @param[in] aLength [double] The length of the panel.
       /// @param[in] aStartingPoint [@ref vector3D] The starting point.
@@ -1118,6 +1148,9 @@ namespace CwAPI3D
       virtual elementID createStandardPanelVectors(const character* aStandardElementName, double aLength, vector3D aStartingPoint, vector3D aXDirectionLocalaXL, vector3D aZDirectionLocal) = 0;
 
       /// @brief Creates a standard steel element using points.
+      /// Standard element names are not unique, only GUIDs are: if several standard steel elements share this name,
+      /// the first match is used. Folders of the standard element library are not handled by the API and cannot be
+      /// used to select one.
       /// @param[in] aStandardElementName [const @ref character*] The name of the standard steel element.
       /// @param[in] aFirstPoint [@ref vector3D] The first point.
       /// @param[in] aSecondPoint [@ref vector3D] The second point.
@@ -1147,6 +1180,9 @@ namespace CwAPI3D
       virtual elementID createStandardSteelPoints(const character* aStandardElementName, vector3D aFirstPoint, vector3D aSecondPoint, vector3D aThirdPoint) = 0;
 
       /// @brief Creates a standard steel element using vectors.
+      /// Standard element names are not unique, only GUIDs are: if several standard steel elements share this name,
+      /// the first match is used. Folders of the standard element library are not handled by the API and cannot be
+      /// used to select one.
       /// @param[in] aStandardElementName [const @ref character*] The name of the standard steel element.
       /// @param[in] aLength [double] The length of the steel element.
       /// @param[in] aStartingPoint [@ref vector3D] The starting point.
@@ -1221,6 +1257,9 @@ namespace CwAPI3D
       virtual elementID createNormalAxisVectors(double aLength, vector3D aAxisStartingPoint, vector3D aAxisDirection) = 0;
 
       /// @brief Converts bolts to standard connectors.
+      /// Standard element names are not unique, only GUIDs are: if several standard elements share this name, the
+      /// first match is used. Folders of the standard element library are not handled by the API and cannot be used
+      /// to select one.
       /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The list of bolts to be converted.
       /// @param[in] aStandardElementName [const @ref character*] The name of the standard element.
       virtual void convertBoltToStandardConnector(ICwAPI3DElementIDList* aElementIdList, const character* aStandardElementName) = 0;
@@ -1392,6 +1431,8 @@ namespace CwAPI3D
       virtual elementID createTextObjectWithOptions(vector3D aPosition, vector3D aXDirectionLocal, vector3D aZDirectionLocal, ICwAPI3DTextObjectOptions* aTextOptions) = 0;
 
       /// @brief Creates a standard element from GUID points.
+      /// The GUID identifies the standard element unambiguously, unlike its name. Folders of the standard element
+      /// library are not handled by the API.
       /// @param[in] aGuid [const @ref character*] The GUID of the standard element.
       /// @param[in] aFirstPoint [@ref vector3D] The first point.
       /// @param[in] aSecondPoint [@ref vector3D] The second point.
@@ -1400,6 +1441,8 @@ namespace CwAPI3D
       virtual elementID createStandardElementFromGuidPoints(const character* aGuid, vector3D aFirstPoint, vector3D aSecondPoint, vector3D aThirdPoint) = 0;
 
       /// @brief Creates a standard element from GUID vectors.
+      /// The GUID identifies the standard element unambiguously, unlike its name. Folders of the standard element
+      /// library are not handled by the API.
       /// @param[in] aGuid [const @ref character*] The GUID of the standard element.
       /// @param[in] aLength [double] The length of the standard element.
       /// @param[in] aStartingPoint [@ref vector3D] The starting point.
@@ -1819,11 +1862,16 @@ namespace CwAPI3D
       virtual void importStandardPanelFromFile(const character* aFilePath) = 0;
 
       /// @brief Exports an existing element as a standard element.
-      /// In case of duplicated names will append a count suffix e.g. (2).
+      /// Make sure no standard element with this name already exists before calling this function
+      /// (see getStandardElementGuidFromName): otherwise the name is changed to avoid duplicates
+      /// by appending a count suffix, e.g. (2). Read the actual name back with
+      /// getStandardElementNameFromGuid on the returned GUID.
+      /// Folders of the standard element library are not handled by this API. To order standard elements,
+      /// use separators in the name, e.g. "Walls - Exterior - 160mm".
       /// Note that creating elements of standard element type Metal is not supported by this function.
-      /// @param[in] aElementId The element to create a standard element from.
-      /// @param[in] aName The name of the standard element.
-      /// @return The GUID of the new standard element on success, an empty string on error.
+      /// @param[in] aElementId [@ref elementID] The element to create a standard element from.
+      /// @param[in] aName [const @ref character*] The name of the standard element.
+      /// @return [@ref ICwAPI3DString*] The GUID of the new standard element on success, an empty string on error.
       virtual ICwAPI3DString* exportAsStandardElement(elementID aElementId, const character* aName) = 0;
 
       /// @brief Creates a rotation element from a surface element by rotating it around an axis.
