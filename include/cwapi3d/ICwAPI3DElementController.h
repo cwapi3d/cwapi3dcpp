@@ -1911,6 +1911,46 @@ namespace CwAPI3D
       /// );
       /// @endcode
       virtual elementID createRotationElement(elementID aSurfaceElementId, vector3D aAxisPoint, vector3D aAxisDirection, double aAngleRad, int32_t aSegmentation) = 0;
+
+      /// @brief Gets the GUID of a standard element from its name.
+      /// The name is matched in the current cadwork language.
+      /// When several standard elements share the name (for example in different
+      /// directories, or a steel profile available in several locales), the first match is returned: the same
+      /// standard element the corresponding createStandard* function creates for that name. Steel profile names
+      /// use cadwork notation, as for @ref createStandardSteelPoints.
+      /// @param[in] aName [const character*] The name of the standard element.
+      /// @param[in] aType [@ref standardElementType] The kind of standard element to search: beam, panel, vba,
+      ///            exportSolid, container or metal (steel).
+      /// @return [@ref ICwAPI3DString*] The GUID in braces, e.g. "{1B4E28BA-2FA1-11D2-883F-0016D3CCA427}", or an
+      ///         empty string if the name is empty or no standard element of that kind has this name.
+      /// @par Example:
+      /// @code{.cpp}
+      /// ICwAPI3DString* guid = aFactory.getElementController()->getStandardElementGuidFromName(L"KVH 60x120", standardElementType::beam);
+      /// if (guid->length() > 0)
+      /// {
+      ///   wprintf(L"GUID: %s\n", guid->data());
+      /// }
+      /// @endcode
+      virtual ICwAPI3DString* getStandardElementGuidFromName(const character* aName, standardElementType aType) = 0;
+
+      /// @brief Gets the name of a standard element from its GUID.
+      /// Works for every kind of standard element, steel profiles included. The name is returned in the current
+      /// cadwork language. Use it to show a GUID obtained from e.g. @ref getStandardBeamGuidList or
+      /// @ref getStandardElementGuidFromName to the user.
+      /// @param[in] aGuid [const character*] The GUID of the standard element, in braces, e.g.
+      ///            "{1B4E28BA-2FA1-11D2-883F-0016D3CCA427}".
+      /// @return [@ref ICwAPI3DString*] The name of the standard element, or an empty string if the GUID is
+      ///         malformed or no standard element has it.
+      /// @par Example:
+      /// @code{.cpp}
+      /// ICwAPI3DStringList* guids = aFactory.getElementController()->getStandardBeamGuidList();
+      /// for (uint32_t i = 0; i < guids->count(); ++i)
+      /// {
+      ///   ICwAPI3DString* name = aFactory.getElementController()->getStandardElementNameFromGuid(guids->at(i)->data());
+      ///   wprintf(L"%s: %s\n", guids->at(i)->data(), name->data());
+      /// }
+      /// @endcode
+      virtual ICwAPI3DString* getStandardElementNameFromGuid(const character* aGuid) = 0;
     };
   }
 }
