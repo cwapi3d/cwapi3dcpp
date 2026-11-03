@@ -279,6 +279,81 @@ namespace CwAPI3D
       /// @brief Set the graphic option to display bitmaps as textures in shaded 2.
       /// @param aValue [bool] True to display bitmaps as textures in shaded 2, false otherwise.
       virtual void displayBitmapsAsTextureRepresentationsInShaded2(bool aValue) = 0;
+
+      /// @brief Gets the background color a render view displays.
+      ///
+      /// Each render view keeps its own background, as set in the graphics options dialog. The
+      /// result is the color actually shown: black for a @ref backgroundType::black background,
+      /// white for @ref backgroundType::white, the stored color for @ref backgroundType::user, and
+      /// black for @ref backgroundType::image, which has no single color. Use
+      /// @ref getBackgroundType to tell a user color from a plain black or white background.
+      ///
+      /// @param aRenderView [@ref renderViewType] The render view to query. Need not be the
+      ///        render view currently displayed.
+      /// @return [@ref colorRGB] The displayed background color, components 0 to 255; black when
+      ///         aRenderView is not a defined render view.
+      /// @since 33.0
+      /// @par Example:
+      /// @code{.cpp}
+      /// colorRGB color = aFactory.getVisualizationController()->getBackgroundColor(renderViewType::shading1);
+      /// wprintf(L"Shading 1 background: %u %u %u\n", color.mR, color.mG, color.mB);
+      /// @endcode
+      virtual colorRGB getBackgroundColor(renderViewType aRenderView) = 0;
+
+      /// @brief Sets a user background color for a render view.
+      ///
+      /// Stores the color and switches the render view's background type to
+      /// @ref backgroundType::user, so the color is shown immediately. When aRenderView is the
+      /// render view currently displayed, the 3d view is repainted. The background is saved with
+      /// the drawing, so the active document is marked modified. Setting the color and type the
+      /// render view already has, or an undefined aRenderView, changes nothing.
+      ///
+      /// @param aRenderView [@ref renderViewType] The render view to change.
+      /// @param aColor [@ref colorRGB] The new color, components 0 to 255; larger values are
+      ///        clamped to 255.
+      /// @since 33.0
+      /// @par Example:
+      /// @code{.cpp}
+      /// aFactory.getVisualizationController()->setBackgroundColor(renderViewType::wireframe, colorRGB{40, 40, 60});
+      /// @endcode
+      virtual void setBackgroundColor(renderViewType aRenderView, colorRGB aColor) = 0;
+
+      /// @brief Gets how the background of a render view is filled.
+      ///
+      /// @param aRenderView [@ref renderViewType] The render view to query. Need not be the
+      ///        render view currently displayed.
+      /// @return [@ref backgroundType] The fill type; @ref backgroundType::black when aRenderView
+      ///         is not a defined render view.
+      /// @since 33.0
+      /// @par Example:
+      /// @code{.cpp}
+      /// if (aFactory.getVisualizationController()->getBackgroundType(renderViewType::hiddenLine) == backgroundType::image)
+      /// {
+      ///   wprintf(L"Hidden line view uses a background image\n");
+      /// }
+      /// @endcode
+      virtual backgroundType getBackgroundType(renderViewType aRenderView) = 0;
+
+      /// @brief Sets how the background of a render view is filled.
+      ///
+      /// Switching to @ref backgroundType::user shows the color last stored for that render view
+      /// (see @ref setBackgroundColor); switching away from it keeps that color for later. When
+      /// aRenderView is the render view currently displayed, the 3d view is repainted, and the
+      /// active document is marked modified. Setting the type the render view already has
+      /// changes nothing.
+      ///
+      /// **@ref backgroundType::image cannot be set through the API**: an image background needs
+      /// an image chosen in the graphics options dialog. Passing it, or an undefined aRenderView,
+      /// changes nothing.
+      ///
+      /// @param aRenderView [@ref renderViewType] The render view to change.
+      /// @param aType [@ref backgroundType] The new fill type: black, white or user.
+      /// @since 33.0
+      /// @par Example:
+      /// @code{.cpp}
+      /// aFactory.getVisualizationController()->setBackgroundType(renderViewType::shading2, backgroundType::white);
+      /// @endcode
+      virtual void setBackgroundType(renderViewType aRenderView, backgroundType aType) = 0;
     };
   }
 }
