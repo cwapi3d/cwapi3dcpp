@@ -470,4 +470,27 @@ namespace CwAPI3D
     FrontSlot = 6,          ///< Front Slot
     JapaneseTenon = 7       ///< Japanese Tenon
   };
+
+  /// @enum renderViewType
+  /// @brief The render view of the 3d window. Each render view keeps its own background setting,
+  /// as shown per render mode in the graphics options dialog.
+  enum class renderViewType : int32_t
+  {
+    wireframe = 0,        ///< Wireframe view.
+    shading1 = 1,         ///< Shaded view 1.
+    shading2 = 2,         ///< Shaded view 2.
+    hiddenLine = 3,       ///< Hidden line view.
+    hiddenLineDashed = 4, ///< Hidden line view with dashed hidden edges.
+    drawing2d = 5         ///< 2d drawing view.
+  };
+
+  /// @enum backgroundType
+  /// @brief How the background of a render view is filled.
+  enum class backgroundType : int32_t
+  {
+    black = 0, ///< Plain black.
+    white = 1, ///< Plain white.
+    user = 2,  ///< Plain user-defined color.
+    image = 3  ///< Background image chosen in the graphics options dialog.
+  };
 }
