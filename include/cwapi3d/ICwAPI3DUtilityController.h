@@ -607,6 +607,25 @@ namespace CwAPI3D
       /// @brief Gets the 3D language as a typed enum.
       /// @return [@ref language] The active language.
       virtual language getLanguageEnum() = 0;
+
+      /// @brief Asks the user to pick an edge in the 3D view, either by clicking an existing edge or by clicking 2 points.
+      /// The call blocks until the user has picked an edge or aborted with Esc.
+      /// For a curved edge (e.g. an arc) only its start and end points are returned.
+      /// The direction is not guaranteed: picking the same edge twice can return start and end swapped.
+      /// Do not rely on the point order; compare or sort the points yourself if direction matters.
+      /// @return [@ref ICwAPI3DVertexList*] Two points, the two ends of the edge, in global coordinates.
+      ///         The list is empty if the user aborted.
+      /// @par Example:
+      /// @code{.cpp}
+      /// ICwAPI3DVertexList* edge = aFactory.getUtilityController()->getUserEdge();
+      /// if (edge->count() == 2)
+      /// {
+      ///   // The two ends of the edge, in no guaranteed order.
+      ///   vector3D firstPoint = edge->at(0);
+      ///   vector3D secondPoint = edge->at(1);
+      /// }
+      /// @endcode
+      virtual ICwAPI3DVertexList* getUserEdge() = 0;
     };
   }
 }
