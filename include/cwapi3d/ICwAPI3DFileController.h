@@ -380,7 +380,7 @@ namespace CwAPI3D
       virtual bool exportDstvFile(const CwAPI3D::character* aFilePath) = 0;
 
       /// @brief Exports a STEP file with new algorithm.
-      /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The list of element id to export.
+      /// @param[in] aElementList [@ref ICwAPI3DElementIDList*] The list of element id to export.
       /// @param[in] aFilePath [const @ref character*] The output file path.
       /// @param[in] aScaleFactor [double] The file scale factor.
       /// @param[in] aSubstractDrillings [bool] Substract drillings.
@@ -408,7 +408,7 @@ namespace CwAPI3D
       /// @code{.cpp}
       /// // Export a step with all level of detail activated
       /// ICwAPI3DStepExportOptions* stepOptions = aFactory.createStepExportOptions();
-      ///
+      /// 
       /// ICwAPI3DElementLevelOfDetailOptions* lod = stepOptions->getLevelOfDetailOptions();
       /// lod->setCutDrillings(true);
       /// lod->setMaterializeEndTypes(true);
@@ -416,15 +416,16 @@ namespace CwAPI3D
       /// lod->setCutOpenings(true);
       /// lod->setMaterializeMepElements(true);
       /// lod->setCutMepElements(true);
-      ///
+      /// 
       /// stepOptions->setScaleFactor(1.0);
       /// stepOptions->setVersion(CwAPI3D::StepApVersion::eAP214);
       /// stepOptions->setImperialUnits(false);
-      ///
+      /// 
       /// ICwAPI3DElementIDList* selectedElements = aFactory.getElementController()->getAllIdentifiableElementIDs();
       /// bool success = aFactory.getFileController()->exportFileWithOptions(selectedElements, L"C:/exports/model.stp", stepOptions);
       /// @endcode
       virtual bool exportFileWithOptions(ICwAPI3DElementIDList* aElementIdList, const character* aFilePath, ICwAPI3DFileExportOptions* aOptions) = 0;
+
     };
   }
 }

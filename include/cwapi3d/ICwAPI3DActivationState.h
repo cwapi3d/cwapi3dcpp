@@ -1,13 +1,12 @@
-/** @file
-* Copyright (C) 2017 cadwork informatik AG
-*
-* This file is part of the CwAPI3D module for cadwork 3d.
-*
-* @ingroup       CwAPI3D
-* @since         24.0
-* @author        Paquet
-* @date          2017-06-22
-*/
+/// @file
+/// Copyright (C) 2017 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         24.0
+/// @author        Paquet
+/// @date          2017-06-22
 
 #pragma once
 
@@ -16,16 +15,12 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /**
-    * @interface ICwAPI3DActivationState
-    * \brief
-    */
+   /// @interface ICwAPI3DActivationState
     class ICwAPI3DActivationState
     {
     public:
-      /**
-       * \brief Destroys itself
-       */
+      /// @brief Destroys itself
+      /// @deprecated Do not use this method anymore
       virtual void destroy() = 0;
     };
   }

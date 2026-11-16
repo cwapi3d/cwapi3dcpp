@@ -130,7 +130,7 @@ namespace CwAPI3D
       virtual void calculateHundeggerMachineData(ICwAPI3DElementIDList* aElementIdList, uint32_t aHunderggertype) = 0;
 
       /// @brief Loads the Hundegger calculation set.
-      /// @param[in] aHundeggertype [@ref hundeggerMachineType] The Hundegger machine type. See also API types enum hundeggerMachineType
+      /// @param[in] aHundeggertype [@ref hundeggerMachineType] The Hundegger machine type.
       /// @param[in] aFilePath [const @ref character*] The file path of the calculation set.
       virtual void loadHundeggerCalculationSet(uint32_t aHundeggertype, const character* aFilePath) = 0;
 

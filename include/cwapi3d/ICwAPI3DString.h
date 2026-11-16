@@ -1,13 +1,12 @@
-/** @file
-* Copyright (C) 2017 cadwork informatik AG
-*
-* This file is part of the CwAPI3D module for cadwork 3d.
-*
-* @ingroup       CwAPI3D
-* @since         24.0
-* @author        Paquet
-* @date          2017-06-22
-*/
+/// @file
+/// Copyright (C) 2017 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         24.0
+/// @author        Paquet
+/// @date          2017-06-22
 
 #pragma once
 
@@ -17,43 +16,34 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /**
-    * @interface ICwAPI3DString
-    * \brief
-    */
+    /// @interface ICwAPI3DString
     class ICwAPI3DString
     {
     public:
-      /**
-       * \brief Destroys itself
-       */
+      /// @brief Destroys itself
+      /// @deprecated Do not use this method anymore
       virtual void destroy() = 0;
-      /**
-       * \brief Returns the length of the string
-       * \return length of string
-       */
+
+      /// @brief Returns the length of the string
+      /// @return length of string
       virtual uint32_t length() = 0;
-      /**
-       * \brief Returns the data of the string
-       * \return data of string
-       */
+
+      /// @brief Returns the data of the string
+      /// @return data of string
       virtual const character* data() = 0;
-      /**
-       * \brief Returns the narrow data of the string
-       * \return narrow data of string
-       */
+
+      /// @brief Returns the narrow data of the string
+      /// @return narrow data of string
       virtual const narrowCharacter* narrowData() = 0;
-      /**
-       * \brief Copies the data to a buffer
-       * \param aBuffer buffer
-       * \param aSize size of buffer
-       */
+
+      /// @brief Copies the data to a buffer
+      /// @param[in] aBuffer buffer
+      /// @param[in] aSize size of buffer
       virtual void copyToBuffer(character* aBuffer, uint32_t aSize) = 0;
-      /**
-       * \brief Copies the data to a narrow buffer
-       * \param aBuffer narrow buffer
-       * \param aSize size of narrow buffer
-       */
+
+      /// @brief Copies the data to a narrow buffer
+      /// @param[in] aBuffer narrow buffer
+      /// @param[in] aSize size of narrow buffer
       virtual void copyToNarrowBuffer(narrowCharacter* aBuffer, uint32_t aSize) = 0;
     };
   }

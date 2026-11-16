@@ -626,6 +626,68 @@ namespace CwAPI3D
       ///     printf("Created new multi-layer solid wall with ID: %d\n", multiLayerSetId);
       /// @endcode
       virtual multiLayerSetID createMultiLayerSolidWall(const character* aSetName) = 0;
+
+      /// @brief Removes one layer from a multi layer set.
+      /// @details The layers behind the removed one move up by one index. The cover thickness of the set is
+      /// recalculated as the sum of the remaining layer thicknesses (mm); if the last layer is removed it keeps
+      /// its previous value. The set is saved and all covers using it are recreated, but their geometric
+      /// thickness is not adapted. Does nothing if the set does not exist or the index is out of range.
+      /// @param[in] aSetId [@ref multiLayerSetID] The multi layer set id.
+      /// @param[in] aLayerIndex [uint64_t] Zero-based index of the layer to remove, must be smaller than getLayerCount().
+      /// @since 33.0
+      /// @par Example:
+      /// @code{.cpp}
+      ///     multiLayerSetID multiLayerSetId = aFactory->getMultiLayerCoverController()->createMultiLayerWall("MultiLayerWall");
+      ///     aFactory->getMultiLayerCoverController()->addLayer(multiLayerSetId, multiLayerType::structure, "Layer1", materialId, 200.);
+      ///     aFactory->getMultiLayerCoverController()->addLayer(multiLayerSetId, multiLayerType::panel, "Layer2", materialId, 15.);
+      ///
+      ///     // removes "Layer1", "Layer2" is now at index 0
+      ///     aFactory->getMultiLayerCoverController()->removeLayer(multiLayerSetId, 0);
+      /// @endcode
+      virtual void removeLayer(multiLayerSetID aSetId, uint64_t aLayerIndex) = 0;
+
+      /// @brief Removes all layers from a multi layer set.
+      /// @details The set itself stays and keeps its previous cover thickness. The set is saved and all covers
+      /// using it are recreated. Does nothing if the set does not exist or has no layers.
+      /// @param[in] aSetId [@ref multiLayerSetID] The multi layer set id.
+      /// @since 33.0
+      /// @par Example:
+      /// @code{.cpp}
+      ///     aFactory->getMultiLayerCoverController()->removeAllLayers(multiLayerSetId);
+      ///     // getLayerCount(multiLayerSetId) is now 0, new layers can be added with addLayer()
+      /// @endcode
+      virtual void removeAllLayers(multiLayerSetID aSetId) = 0;
+
+      /// @brief Inserts a layer into a multi layer set at the given position.
+      /// @details The layer that was at that position and all following ones move back by one index. The cover
+      /// thickness of the set is recalculated as the sum of all layer thicknesses (mm). The set is saved and all
+      /// covers using it are recreated, but their geometric thickness is not adapted. Does nothing if the set
+      /// does not exist or aThickness is not greater than zero.
+      /// @param[in] aSetId [@ref multiLayerSetID] The multi layer set id.
+      /// @param[in] aPosition [uint64_t] Zero-based position the new layer receives; values >= getLayerCount() append the layer.
+      /// @param[in] aType [@ref multiLayerType] The type of the layer.
+      /// @param[in] aName [const @ref character*] The name of the layer.
+      /// @param[in] aMaterialId [@ref materialID] The material of the layer.
+      /// @param[in] aThickness [double] The thickness of the layer in mm, must be greater than zero.
+      /// @since 33.0
+      /// @par Example:
+      /// @code{.cpp}
+      ///     // put an installation layer between "Layer1" (index 0) and "Layer2"
+      ///     aFactory->getMultiLayerCoverController()->insertLayer(multiLayerSetId, 1, multiLayerType::structure, "Installation", materialId, 40.);
+      /// @endcode
+      virtual void insertLayer(multiLayerSetID aSetId, uint64_t aPosition, multiLayerType aType, const character* aName, materialID aMaterialId, double aThickness) = 0;
+
+      /// @brief Removes the multi layer set from an element, which then is a plain element again.
+      /// @details The multi layer set itself is not deleted and stays assigned to other elements. The element
+      /// is recreated. Does nothing if the element does not exist or has no multi layer set.
+      /// @param[in] aElementId [@ref elementID] The element id of the cover.
+      /// @since 33.0
+      /// @par Example:
+      /// @code{.cpp}
+      ///     aFactory->getMultiLayerCoverController()->unsetElementMultiLayerSet(coverId);
+      ///     // getElementMultiLayerSet(coverId) now returns 0
+      /// @endcode
+      virtual void unsetElementMultiLayerSet(elementID aElementId) = 0;
     };
   }
 }

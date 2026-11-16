@@ -83,22 +83,26 @@ namespace CwAPI3D
       /// @brief Prompts the user for an integer.
       /// @param[in] aMessage [const @ref character*] The message to display.
       /// @return [int32_t] The user input integer.
+      /// @note In a /PLUGIN= or /RUNPROGRAM= run nobody can answer: returns 0 without asking.
       virtual int32_t getUserInt(const character* aMessage) = 0;
 
       /// @brief Prompts the user for a double.
       /// @param[in] aMessage [const @ref character*] The message to display.
       /// @return [double] The user input double.
+      /// @note In a /PLUGIN= or /RUNPROGRAM= run nobody can answer: returns 0 without asking.
       virtual double getUserDouble(const character* aMessage) = 0;
 
       /// @brief Prompts the user for a boolean.
       /// @param[in] aMessage [const @ref character*] The message to display.
       /// @param[in] aDefaultYes [bool] The default value, True by default.
       /// @return [bool] The user input boolean.
+      /// @note In a /PLUGIN= or /RUNPROGRAM= run nobody can answer: returns false without asking.
       virtual bool getUserBool(const character* aMessage, bool aDefaultYes = true) = 0;
 
       /// @brief Prompts the user for a string.
       /// @param[in] aMessage [const @ref character*] The message to display.
       /// @return [@ref ICwAPI3DString*] The user input string.
+      /// @note In a /PLUGIN= or /RUNPROGRAM= run nobody can answer: returns an empty string without asking.
       virtual ICwAPI3DString* getUserString(const character* aMessage) = 0;
 
       /// @brief Gets the project name.
@@ -240,6 +244,7 @@ namespace CwAPI3D
 
       /// @brief Gets a point from the user.
       /// @return [@ref vector3D] The user point.
+      /// @note In a /PLUGIN= or /RUNPROGRAM= run nobody can answer: returns (0, 0, 0) without asking.
       virtual vector3D getUserPoint() = 0;
 
       /// @brief Disables automatic display refresh.
@@ -350,6 +355,7 @@ namespace CwAPI3D
       /// @brief Gets a color choosen by the user.
       /// @param[in] aInitialColor [uint32_t] The initial color.
       /// @return [uint32_t] The color number.
+      /// @note In a /PLUGIN= or /RUNPROGRAM= run nobody can answer: returns aInitialColor without asking.
       virtual uint32_t getUserColor(uint32_t aInitialColor) = 0;
 
       /// @brief Gets the current linear units.
@@ -504,11 +510,13 @@ namespace CwAPI3D
 
       /// @brief Gets user points.
       /// @return [@ref ICwAPI3DVertexList*] A list of user points.
+      /// @note In a /PLUGIN= or /RUNPROGRAM= run nobody can answer: returns an empty list without asking.
       virtual ICwAPI3DVertexList* getUserPoints() = 0;
 
       /// @brief Gets user points with a specified count.
       /// @param[in] aCount [uint64_t] The number of user points to get.
       /// @return [@ref ICwAPI3DVertexList*] A list of user points.
+      /// @note In a /PLUGIN= or /RUNPROGRAM= run nobody can answer: returns an empty list without asking.
       virtual ICwAPI3DVertexList* getUserPointsWithCount(uint64_t aCount) = 0;
 
       /// @brief Gets the user catalog path.
@@ -517,11 +525,13 @@ namespace CwAPI3D
 
       /// @brief Gets the user path from a dialog.
       /// @return [@ref ICwAPI3DString*] A string containing the user path.
+      /// @note In a /PLUGIN= or /RUNPROGRAM= run nobody can answer: returns an empty string without opening the dialog.
       virtual ICwAPI3DString* getUserPathFromDialog() = 0;
 
       /// @brief Gets the user path from a dialog in a specified path.
       /// @param[in] aPath [const @ref character*] The path in which to get the user path.
       /// @return [@ref ICwAPI3DString*] A string containing the user path.
+      /// @note In a /PLUGIN= or /RUNPROGRAM= run nobody can answer: returns an empty string without opening the dialog.
       virtual ICwAPI3DString* getUserPathFromDialogInPath(const character* aPath) = 0;
 
       /// @brief Executes a shortcut.
@@ -530,9 +540,11 @@ namespace CwAPI3D
       virtual void executeShortcut(shortcutKeyModifier aShortcutKeyModifier, shortcutKey aShortcutKey) = 0;
 
       /// @brief close cadwork saved.
+      /// @note In a /PLUGIN= or /RUNPROGRAM= run nobody can answer: only saves; cadwork closes by itself once the script returns.
       virtual void closeCadworkDocumentSaved() = 0;
 
       /// @brief close cadwork unsaved.
+      /// @note In a /PLUGIN= or /RUNPROGRAM= run nobody can answer: does nothing; cadwork closes by itself once the script returns.
       virtual void closeCadworkDocumentUnsaved() = 0;
 
       /// @brief Gets the use of global coordinates.
@@ -578,18 +590,21 @@ namespace CwAPI3D
       /// @param[in] aMessage [const @ref character*] The message to display.
       /// @param[in] aDefaultValue [int32_t] The default value.
       /// @return [int32_t] The user integer.
+      /// @note In a /PLUGIN= or /RUNPROGRAM= run nobody can answer: returns aDefaultValue without asking.
       virtual int32_t getUserIntWithDefaultValue(const character* aMessage, int32_t aDefaultValue) = 0;
 
       /// @brief Prompts the user for a double with a default value.
       /// @param[in] aMessage [const @ref character*] The message to display.
       /// @param[in] aDefaultValue [double] The default value.
       /// @return [double] The user double.
+      /// @note In a /PLUGIN= or /RUNPROGRAM= run nobody can answer: returns aDefaultValue without asking.
       virtual double getUserDoubleWithDefaultValue(const character* aMessage, double aDefaultValue) = 0;
 
       /// @brief Prompts the user for a string with a default value.
       /// @param[in] aMessage [const @ref character*] The message to display.
       /// @param[in] aDefaultValue [const @ref character*] The default value.
       /// @return [@ref ICwAPI3DString*] The user string.
+      /// @note In a /PLUGIN= or /RUNPROGRAM= run nobody can answer: returns aDefaultValue without asking.
       virtual ICwAPI3DString* getUserStringWithDefaultValue(const character* aMessage, const character* aDefaultValue) = 0;
 
       /// @brief Gets the 3D version name.
@@ -608,6 +623,31 @@ namespace CwAPI3D
       /// @return [@ref language] The active language.
       virtual language getLanguageEnum() = 0;
 
+      /// @brief Enables or disables the navigation widget in the specified position.
+      /// @param[in] aPosition [@ref navWidgetSubwindowPosition] Which Navigation Widget to modify.
+      /// @param[in] aEnabled [bool]
+      virtual void setNavigationWidgetEnabled(CwAPI3D::navigationWidgetSubwindowPosition aPosition, bool aEnabled) = 0;
+
+      /// @brief Sets the size of the navigation widget in the specified position.
+      /// @param[in] aPosition [@ref navWidgetSubwindowPosition] Which Navigation Widget to modify.
+      /// @param[in] aSize [int] The size value. The value range configurable via the UI goes from 80 to 200 inclusive.
+      virtual void setNavigationWidgetSize(CwAPI3D::navigationWidgetSubwindowPosition aPosition, int aSize) = 0;
+
+      /// @brief Enables or disables the north arrow of the navigation widget in the specified position.
+      /// @param[in] aPosition [@ref navWidgetSubwindowPosition] Which Navigation Widget to modify.
+      /// @param[in] aEnabled [bool]
+      virtual void setNavigationWidgetNorthArrow(CwAPI3D::navigationWidgetSubwindowPosition aPosition, bool aEnabled) = 0;
+
+      /// @brief Enables or disables the axis triad of the navigation widget in the specified position.
+      /// @param[in] aPosition [@ref navWidgetSubwindowPosition] Which Navigation Widget to modify.
+      /// @param[in] aEnabled [bool]
+      virtual void setNavigationWidgetAxis(CwAPI3D::navigationWidgetSubwindowPosition aPosition, bool aEnabled) = 0;
+
+      /// @brief Enables or disables the view cube of the navigation widget in the specified position.
+      /// @param[in] aPosition [@ref navWidgetSubwindowPosition] Which Navigation Widget to modify.
+      /// @param[in] aEnabled [bool]
+      virtual void setNavigationWidgetCube(CwAPI3D::navigationWidgetSubwindowPosition aPosition, bool aEnabled) = 0;
+
       /// @brief Asks the user to pick an edge in the 3D view, either by clicking an existing edge or by clicking 2 points.
       /// The call blocks until the user has picked an edge or aborted with Esc.
       /// For a curved edge (e.g. an arc) only its start and end points are returned.
@@ -625,7 +665,57 @@ namespace CwAPI3D
       ///   vector3D secondPoint = edge->at(1);
       /// }
       /// @endcode
+      /// @note In a /PLUGIN= or /RUNPROGRAM= run nobody can answer: returns an empty list without asking.
       virtual ICwAPI3DVertexList* getUserEdge() = 0;
+
+      /// @brief Saves the axes of the rotated origin, the coordinate system of the "Ref" button in the left menu.
+      /// The rotated origin is a rotation only: its origin stays at the global origin.
+      /// The axes are normalised and the Y axis is made perpendicular to the X axis.
+      /// This call does not switch the rotated origin on; if it is already on, the view follows the new axes at once.
+      /// @param[in] aXAxis [@ref vector3D] Direction of the new X axis.
+      /// @param[in] aYAxis [@ref vector3D] Direction in the new XY plane; only its part perpendicular to aXAxis is used.
+      /// @return [bool] True if the axes were saved. False if an axis is a null vector, the axes are parallel,
+      ///         or a 2D view is active; nothing is changed then. Also false if the rotated origin was on and
+      ///         could not be switched back on with the new axes; the axes are saved in that case.
+      /// @par Example:
+      /// @code{.cpp}
+      /// // Align the rotated origin to the local axes of an element and switch it on
+      /// auto* utility = aFactory.getUtilityController();
+      /// auto* geometry = aFactory.getGeometryController();
+      /// if (utility->setRotatedOriginAxes(geometry->getXL(elementId), geometry->getYL(elementId)))
+      /// {
+      ///   utility->enableRotatedOrigin();
+      /// }
+      /// @endcode
+      virtual bool setRotatedOriginAxes(vector3D aXAxis, vector3D aYAxis) = 0;
+
+      /// @brief Switches the rotated origin ("Ref" button) on with its saved axes.
+      /// @return [bool] True if the rotated origin is on afterwards, also when it already was.
+      ///         False if no axes are saved yet or a 2D view is active. It never asks the user to define the axes.
+      virtual bool enableRotatedOrigin() = 0;
+
+      /// @brief Switches the rotated origin ("Ref" button) off. The saved axes are kept.
+      virtual void disableRotatedOrigin() = 0;
+
+      /// @brief Checks whether the rotated origin ("Ref" button) is switched on.
+      /// @return [bool] True if it is on.
+      virtual bool isRotatedOriginEnabled() = 0;
+
+      /// @brief Checks whether axes for the rotated origin are saved, by the user or by @ref setRotatedOriginAxes.
+      /// @return [bool] True if axes are saved, so @ref enableRotatedOrigin can switch it on.
+      virtual bool hasRotatedOriginAxes() = 0;
+
+      /// @brief Gets the saved X axis of the rotated origin.
+      /// @return [@ref vector3D] Unit vector; the global X axis if no axes are saved.
+      virtual vector3D getRotatedOriginXAxis() = 0;
+
+      /// @brief Gets the saved Y axis of the rotated origin.
+      /// @return [@ref vector3D] Unit vector; the global Y axis if no axes are saved.
+      virtual vector3D getRotatedOriginYAxis() = 0;
+
+      /// @brief Gets the saved Z axis of the rotated origin.
+      /// @return [@ref vector3D] Unit vector; the global Z axis if no axes are saved.
+      virtual vector3D getRotatedOriginZAxis() = 0;
     };
   }
 }

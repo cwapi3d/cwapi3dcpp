@@ -1,13 +1,12 @@
-/** @file 
-* Copyright (C) 2024 cadwork informatik AG
-* 
-* This file is part of the CwAPI3D module for cadwork 3d.
-* 
-* @ingroup       CwAPI3D
-* @since         30.0
-* @author        Brunner
-* @date          2024-02-05
-*/
+/// @file
+/// Copyright (C) 2024 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         30.0
+/// @author        Brunner
+/// @date          2024-02-05
 
 
 #pragma once
@@ -21,6 +20,9 @@ namespace CwAPI3D
     {
     public:
       virtual ~ICwAPI3DImport3dcOptions() = default;
+      
+      /// @brief Destroys itself
+      /// @deprecated Do not use this method anymore
       virtual void destroy() = 0;
 
       virtual void setImportSaved2dPlanes(bool aValue) = 0;

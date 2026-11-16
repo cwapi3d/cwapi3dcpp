@@ -21,7 +21,7 @@ namespace CwAPI3D
     {
     public:
       virtual ~ICwAPI3DIgesExportOptions() noexcept = default;
-      
+
       /// @brief The file scale factor.
       virtual double getScaleFactor() const = 0;
       virtual void setScaleFactor(double aValue) = 0;

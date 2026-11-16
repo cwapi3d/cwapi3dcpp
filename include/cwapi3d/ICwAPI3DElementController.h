@@ -19,6 +19,7 @@
 #include "ICwAPI3DElementModuleProperties.h"
 #include "ICwAPI3DFacetList.h"
 #include "ICwAPI3DHitResult.h"
+#include "ICwAPI3DList.h"
 #include "ICwAPI3DString.h"
 #include "ICwAPI3DStringList.h"
 #include "ICwAPI3DTextObjectOptions.h"
@@ -370,23 +371,46 @@ namespace CwAPI3D
       /// @param[in] aMoveVector [@ref vector3D] The vector by which to move the elements.
       virtual void moveElement(ICwAPI3DElementIDList* aElementIdList, vector3D aMoveVector) = 0;
 
-      /// @brief Creates a polygon beam.
-      /// @param[in] aPolygonVertices [@ref ICwAPI3DVertexList*] The vertices of the polygon.
-      /// @param[in] aThickness [double] The thickness of the beam.
-      /// @param[in] aXDirectionLocal [@ref vector3D] The X-axis direction of the beam.
-      /// @param[in] aZDirectionLocal [@ref vector3D] The Z-axis direction of the beam.
-      /// @return [@ref elementID] The ID of the created polygon beam.
+      /// @brief Creates a polygon beam by extruding a 3D polygon along the polygon's own face normal.
+      ///
+      /// Beware of three behaviours this signature does not express:
+      ///
+      /// - **The extrusion direction is the polygon's face normal, derived from the order of
+      ///   @p aPolygonVertices via the right-hand rule — not @p aXDirectionLocal.** Reverse the point
+      ///   order and the physical beam flips 180° while its axis labels stay put.
+      /// - **The polygon plane ends up at mid-length.** The swept body is moved back by half the
+      ///   extrusion, so the polygon you supply sits in the *middle* of the finished beam, not on its
+      ///   start face.
+      /// - **@p aXDirectionLocal and @p aZDirectionLocal only label the created element's local
+      ///   axes.** They do not steer the extrusion at all, so they can disagree with the actual
+      ///   geometry without any error being reported.
+      ///
+      /// The vertices must be coplanar and enclose a non-zero area. Failures return 0 without pushing
+      /// anything onto the error stack.
+      ///
+      /// @note Recommended path: @ref createPolygonBeamVectors, which takes the cross-section in 2D
+      ///       section coordinates and extrudes along the X-axis you supply, so point order has no
+      ///       effect, the origin lies on the start face, and failures are reported through
+      ///       @ref getLastError. This method keeps its behaviour unchanged for existing plugins.
+      ///
+      /// @param[in] aPolygonVertices [@ref ICwAPI3DVertexList*] The vertices of the polygon, in world
+      ///            coordinates. Their order determines the extrusion direction.
+      /// @param[in] aThickness [double] The extrusion distance along the polygon's face normal.
+      /// @param[in] aXDirectionLocal [@ref vector3D] Labels the X-axis of the created element.
+      /// @param[in] aZDirectionLocal [@ref vector3D] Labels the Z-axis of the created element.
+      /// @return [@ref elementID] The ID of the created polygon beam, or 0 on failure.
       /// @par Example :
       /// @code{.cpp}
-      /// // Create a triangular beam
-      /// ICwAPI3DVertexList* vertices = aFactory.createVertexList();
+      /// // Create a triangular beam. The polygon lies in the world X/Y plane, so it extrudes along
+      /// // +Z (its face normal for this point order) and the triangle ends up at mid-length.
+      /// ICwAPI3DVertexList* vertices = aFactory.createEmptyVertexList();
       /// vertices->append(vector3D{0.0, 0.0, 0.0});
       /// vertices->append(vector3D{200.0, 0.0, 0.0});
       /// vertices->append(vector3D{100.0, 173.2, 0.0});  // Equilateral triangle
-      /// double beamThickness = 1000.0;  // Length of the beam
-      /// vector3D extrusionVector{0.0, 0.0, 1.0};  // Direction of extrusion
-      /// vector3D zVector{1.0, 0.0, 0.0};  // Orientation vector
-      /// elementID polygonBeamID = aFactory.getElementController()->createPolygonBeam(vertices, beamThickness, extrusionVector, zVector);
+      /// double beamThickness = 1000.0;  // Length of the beam, along the face normal
+      /// vector3D xVector{0.0, 0.0, 1.0};  // Labels the element X axis only
+      /// vector3D zVector{1.0, 0.0, 0.0};  // Labels the element Z axis only
+      /// elementID polygonBeamID = aFactory.getElementController()->createPolygonBeam(vertices, beamThickness, xVector, zVector);
       /// @endcode
       virtual elementID createPolygonBeam(ICwAPI3DVertexList* aPolygonVertices, double aThickness, vector3D aXDirectionLocal, vector3D aZDirectionLocal) = 0;
 
@@ -969,16 +993,40 @@ namespace CwAPI3D
       /// @return [@ref ICwAPI3DEdgeList*] The list of edges selected.
       virtual ICwAPI3DEdgeList* getEdgeSelection(ICwAPI3DElementIDList* aElementIdList) = 0;
 
-      /// @brief Creates a polygon panel.
-      /// @param[in] aPolygonVertices The vertices of the polygon.
-      /// @param[in] aThickness [double] The thickness of the panel.
-      /// @param[in] aXDirectionLocal [@ref vector3D] The X-axis direction of the panel.
-      /// @param[in] aZDirectionLocal [@ref vector3D] The Z-axis direction of the panel.
-      /// @return [@ref elementID] The ID of the created polygon panel.
+      /// @brief Creates a polygon panel by extruding a 3D polygon along the polygon's own face normal.
+      ///
+      /// Beware of three behaviours this signature does not express:
+      ///
+      /// - **The extrusion direction is the polygon's face normal, derived from the order of
+      ///   @p aPolygonVertices via the right-hand rule — not @p aZDirectionLocal.** Reverse the point
+      ///   order and the physical panel flips 180° while its axis labels stay put.
+      /// - **The polygon plane ends up at mid-thickness.** The swept body is moved back by half the
+      ///   extrusion, so the polygon you supply sits in the *middle* of the finished panel, not on its
+      ///   start face.
+      /// - **@p aXDirectionLocal and @p aZDirectionLocal only label the created element's local
+      ///   axes.** They do not steer the extrusion at all, so they can disagree with the actual
+      ///   geometry without any error being reported.
+      ///
+      /// The vertices must be coplanar and enclose a non-zero area; note that this method drops the
+      /// last supplied vertex and closes the loop itself. Failures return 0 without pushing anything
+      /// onto the error stack.
+      ///
+      /// @note Recommended path: @ref createPolygonPanelVectors, which takes the outline in 2D section
+      ///       coordinates and extrudes along the Z-axis you supply, so point order has no effect, the
+      ///       origin lies on the start face, and failures are reported through @ref getLastError.
+      ///       This method keeps its behaviour unchanged for existing plugins.
+      ///
+      /// @param[in] aPolygonVertices [@ref ICwAPI3DVertexList*] The vertices of the polygon, in world
+      ///            coordinates. Their order determines the extrusion direction.
+      /// @param[in] aThickness [double] The extrusion distance along the polygon's face normal.
+      /// @param[in] aXDirectionLocal [@ref vector3D] Labels the X-axis of the created element.
+      /// @param[in] aZDirectionLocal [@ref vector3D] Labels the Z-axis of the created element.
+      /// @return [@ref elementID] The ID of the created polygon panel, or 0 on failure.
       /// @par Example :
       /// @code{.cpp}
-      /// // Create a hexagonal panel
-      /// ICwAPI3DVertexList* vertices = aFactory.createVertexList();
+      /// // Create a hexagonal panel. The polygon lies in the world X/Y plane, so it extrudes along
+      /// // +Z (its face normal for this point order) and the hexagon ends up at mid-thickness.
+      /// ICwAPI3DVertexList* vertices = aFactory.createEmptyVertexList();
       /// double radius = 500.0;
       /// int sides = 6;
       /// for (int i = 0; i < sides; ++i)
@@ -988,9 +1036,9 @@ namespace CwAPI3D
       /// }
       /// vertices->append(vertices->at(0));  // Close the polygon
       /// double panelThickness = 20.0;
-      /// vector3D extrusionVector{0.0, 0.0, 1.0};  // Normal direction
-      /// vector3D zVector{1.0, 0.0, 0.0};  // Orientation vector
-      /// elementID polygonPanelID = aFactory.getElementController()->createPolygonPanel(vertices, panelThickness, extrusionVector, zVector);
+      /// vector3D xVector{1.0, 0.0, 0.0};  // Labels the element X axis only
+      /// vector3D zVector{0.0, 0.0, 1.0};  // Labels the element Z axis only
+      /// elementID polygonPanelID = aFactory.getElementController()->createPolygonPanel(vertices, panelThickness, xVector, zVector);
       /// @endcode
       virtual elementID createPolygonPanel(ICwAPI3DVertexList* aPolygonVertices, double aThickness, vector3D aXDirectionLocal, vector3D aZDirectionLocal) = 0;
 
@@ -1304,14 +1352,21 @@ namespace CwAPI3D
       virtual void convertContainerToContainerBlock(ICwAPI3DElementIDList* aElementIdList) = 0;
 
       /// @brief Creates a local bounding box for a list of elements relative to a reference element.
+      /// The generated element is a panel that takes its orientation and its colour from the reference
+      /// element, so the reference element must carry geometry - a dimension is not supported here.
+      /// Elements without a body cannot contribute and are skipped.
       /// @param[in] aReferenceElementId [@ref elementID] The ID of the reference element.
       /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The list of elements for which to create the bounding box.
-      /// @return [@ref elementID] The ID of the created bounding box.
+      /// @return [@ref elementID] The ID of the created bounding box, or 0 if none could be created.
+      /// The reason for a 0 is written to the CwAPI3D log; the error stack is not touched.
       virtual elementID createBoundingBoxLocal(elementID aReferenceElementId, ICwAPI3DElementIDList* aElementIdList) = 0;
 
       /// @brief Creates a global bounding box for a list of elements.
+      /// The generated element is a panel aligned with the world axes. Elements without a body cannot
+      /// contribute and are skipped.
       /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The list of elements for which to create the bounding box.
-      /// @return [@ref elementID] The ID of the created bounding box.
+      /// @return [@ref elementID] The ID of the created bounding box, or 0 if none could be created.
+      /// The reason for a 0 is written to the CwAPI3D log; the error stack is not touched.
       virtual elementID createBoundingBoxGlobal(ICwAPI3DElementIDList* aElementIdList) = 0;
 
       /// @brief Cuts a log corner joint.
@@ -1361,14 +1416,26 @@ namespace CwAPI3D
       virtual void addElementToDetail(ICwAPI3DElementIDList* aElementIdList, int32_t aDetail) = 0;
 
       /// @brief Retrieves the local bounding box vertices for a list of elements relative to a reference element.
+      /// The box is aligned with the reference element's local system. Elements without a body take part
+      /// as well: a dimension element contributes its segment geometry AND its text labels (the distance,
+      /// sum and total labels that are switched on for it), a text document its rectangle. Label extents
+      /// are computed analytically, so they are a deliberate conservative over-estimate of what the
+      /// renderer measures on screen. A dimension may also be the reference element, in which case its
+      /// dimensioning plane orients the box.
       /// @param[in] aReferenceElementId [@ref elementID] The ID of the reference element.
       /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The list of elements for which to retrieve the bounding box vertices.
-      /// @return [@ref ICwAPI3DVertexList*] A list of vertices representing the local bounding box of the elements.
+      /// @return [@ref ICwAPI3DVertexList*] A list of vertices representing the local bounding box of the
+      /// elements: 8 box corners, or 4 corners for a text document reference element. Empty if no box could
+      /// be measured; the reason is written to the CwAPI3D log and the error stack is not touched.
       virtual ICwAPI3DVertexList* getBoundingBoxVerticesLocal(elementID aReferenceElementId, ICwAPI3DElementIDList* aElementIdList) = 0;
 
       /// @brief Retrieves the global bounding box vertices for a list of elements.
+      /// The box is aligned with the world axes. Elements without a body take part as described for
+      /// @ref getBoundingBoxVerticesLocal.
       /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The list of elements for which to retrieve the bounding box vertices.
-      /// @return [@ref ICwAPI3DVertexList*] A list of vertices representing the global bounding box of the elements.
+      /// @return [@ref ICwAPI3DVertexList*] A list of 8 vertices representing the global bounding box of the
+      /// elements. Empty if no box could be measured; the reason is written to the CwAPI3D log and the error
+      /// stack is not touched.
       virtual ICwAPI3DVertexList* getBoundingBoxVerticesGlobal(ICwAPI3DElementIDList* aElementIdList) = 0;
 
       /// @brief Retrieves a list of all raw parts in a nesting operation.
@@ -1705,7 +1772,7 @@ namespace CwAPI3D
       /**
        * @code{.cpp}
        * // Create a spline through multiple points
-       * ICwAPI3DVertexList* points = aFactory.createVertexList();
+       * ICwAPI3DVertexList* points = aFactory.createEmptyVertexList();
        * points->append(vector3D{0.0, 0.0, 0.0});
        * points->append(vector3D{500.0, 200.0, 0.0});
        * points->append(vector3D{1000.0, 0.0, 200.0});
@@ -1863,9 +1930,9 @@ namespace CwAPI3D
 
       /// @brief Exports an existing element as a standard element.
       /// Make sure no standard element with this name already exists before calling this function
-      /// (see getStandardElementGuidFromName): otherwise the name is changed to avoid duplicates
+      /// (see @ref getStandardElementGuidFromName): otherwise the name is changed to avoid duplicates
       /// by appending a count suffix, e.g. (2). Read the actual name back with
-      /// getStandardElementNameFromGuid on the returned GUID.
+      /// @ref getStandardElementNameFromGuid on the returned GUID.
       /// Folders of the standard element library are not handled by this API. To order standard elements,
       /// use separators in the name, e.g. "Walls - Exterior - 160mm".
       /// Note that creating elements of standard element type Metal is not supported by this function.
@@ -1888,7 +1955,7 @@ namespace CwAPI3D
       /// double height = 1000.0;
       ///
       /// // Define a rectangular surface profile in the XZ plane
-      /// ICwAPI3DVertexList* vertices = aFactory.createVertexList();
+      /// ICwAPI3DVertexList* vertices = aFactory.createEmptyVertexList();
       /// vertices->append(vector3D{0.0, 0.0, 0.0});
       /// vertices->append(vector3D{0.0, 0.0, height});
       /// vertices->append(vector3D{radius, 0.0, height});
@@ -1912,12 +1979,224 @@ namespace CwAPI3D
       /// @endcode
       virtual elementID createRotationElement(elementID aSurfaceElementId, vector3D aAxisPoint, vector3D aAxisDirection, double aAngleRad, int32_t aSegmentation) = 0;
 
+      /// @brief Creates a polygon beam from a 2D cross-section, extruded along the supplied X-axis.
+      ///
+      /// The cross-section is given in 2D section coordinates (u, v) in the local plane normal to
+      /// @p aXDirectionLocal, and the body extrudes along +xl for @p aLength. Unlike
+      /// @ref createPolygonBeam, the extrusion direction is a consequence of the axes you supply and
+      /// never of the order of your points: the two windings of the same profile produce identical
+      /// geometry.
+      ///
+      /// The local frame is derived internally and is orthonormal and right-handed by construction:
+      /// `xl = normalize(aXDirectionLocal)`, `yl = normalize(aZDirectionLocal x xl)`, `zl = xl x yl`.
+      /// @p aZDirectionLocal is therefore only an orientation **hint** — it need not be exactly
+      /// perpendicular to @p aXDirectionLocal and is Gram-Schmidt-orthogonalised against it.
+      ///
+      /// Section point (u, v) maps to `aProfileOrigin + u * yl + v * zl`. The mapping is literal: the
+      /// profile is never re-centred, so (0, 0) lands exactly on @p aProfileOrigin and an
+      /// intentionally off-axis section stays off-axis.
+      ///
+      /// The supplied origin lies on the **start face**: the body occupies
+      /// `aProfileOrigin -> aProfileOrigin + aLength * xl` and nothing extends behind the origin.
+      /// There is no half-length shift.
+      ///
+      /// @note P1 caveat: the created element's `getP1()` is the start of the element's **centred
+      ///       axis**, which is generally **not** @p aProfileOrigin. P1 in cadwork denotes the start
+      ///       of the axis centred in the element's boundaries, while @p aProfileOrigin is the
+      ///       section's own (0, 0) anchor. Do not read `getP1()` as an echo of your input.
+      /// @note On failure this returns 0 and pushes a message naming the offending argument onto the
+      ///       error stack; read it with @ref getLastError. The failure is also written to the cadwork
+      ///       log.
+      ///
+      /// @param[in] aProfilePoints [@ref ICwAPI3DVertexList2D*] The profile in section coordinates
+      ///            (u, v) in the local Y/Z plane, as an open loop (do not repeat the first point).
+      ///            At least 3 points, enclosing a non-zero area.
+      /// @param[in] aLength [double] The extrusion length along +xl. Must be > 0.
+      /// @param[in] aProfileOrigin [@ref vector3D] The 3D position of profile coordinate (0, 0).
+      /// @param[in] aXDirectionLocal [@ref vector3D] The X-axis direction of the beam; the extrusion
+      ///            follows it.
+      /// @param[in] aZDirectionLocal [@ref vector3D] Orientation hint for the Z-axis of the beam.
+      /// @return [@ref elementID] The ID of the created polygon beam, or 0 on failure.
+      /// @par Example :
+      /// @code{.cpp}
+      /// // An L-section, 1000 long, extruded along the world X axis
+      /// ICwAPI3DVertexList2D* profile = aFactory.createEmptyVertexList2D();
+      /// profile->append(vector2D{0.0, 0.0});
+      /// profile->append(vector2D{200.0, 0.0});
+      /// profile->append(vector2D{200.0, 60.0});
+      /// profile->append(vector2D{60.0, 60.0});
+      /// profile->append(vector2D{60.0, 200.0});
+      /// profile->append(vector2D{0.0, 200.0});
+      /// double beamLength = 1000.0;
+      /// vector3D profileOrigin{0.0, 0.0, 0.0};
+      /// vector3D xDirection{1.0, 0.0, 0.0};  // the beam extrudes this way
+      /// vector3D zDirection{0.0, 0.0, 1.0};  // orientation hint, need not be exact
+      /// elementID polygonBeamID = aFactory.getElementController()->createPolygonBeamVectors(profile, beamLength, profileOrigin, xDirection, zDirection);
+      /// @endcode
+      virtual elementID createPolygonBeamVectors(ICwAPI3DVertexList2D* aProfilePoints, double aLength, vector3D aProfileOrigin, vector3D aXDirectionLocal, vector3D aZDirectionLocal) = 0;
+
+      /// @brief Creates a polygon panel from a 2D outline, extruded along the supplied Z-axis.
+      ///
+      /// The outline is given in 2D section coordinates (u, v) in the local plane normal to the
+      /// resulting zl, and the body extrudes along +zl for @p aThickness. Unlike
+      /// @ref createPolygonPanel, the extrusion direction is a consequence of the axes you supply and
+      /// never of the order of your points: the two windings of the same outline produce identical
+      /// geometry.
+      ///
+      /// The local frame is derived internally and is orthonormal and right-handed by construction:
+      /// `xl = normalize(aXDirectionLocal)`, `yl = normalize(aZDirectionLocal x xl)`, `zl = xl x yl`.
+      /// @p aZDirectionLocal is therefore only an orientation **hint** — it need not be exactly
+      /// perpendicular to @p aXDirectionLocal and is Gram-Schmidt-orthogonalised against it.
+      ///
+      /// Outline point (u, v) maps to `aOutlineOrigin + u * xl + v * yl`. The mapping is literal: the
+      /// outline is never re-centred, so (0, 0) lands exactly on @p aOutlineOrigin and an
+      /// intentionally off-axis outline stays off-axis.
+      ///
+      /// The supplied origin lies on the **start face**: the body occupies
+      /// `aOutlineOrigin -> aOutlineOrigin + aThickness * zl` and nothing extends behind the origin.
+      /// There is no half-thickness shift.
+      ///
+      /// @note P1 caveat: the created element's `getP1()` is the start of the element's **centred
+      ///       axis**, which is generally **not** @p aOutlineOrigin. P1 in cadwork denotes the start
+      ///       of the axis centred in the element's boundaries, while @p aOutlineOrigin is the
+      ///       outline's own (0, 0) anchor. Do not read `getP1()` as an echo of your input.
+      /// @note On failure this returns 0 and pushes a message naming the offending argument onto the
+      ///       error stack; read it with @ref getLastError. The failure is also written to the cadwork
+      ///       log.
+      ///
+      /// @param[in] aOutlinePoints [@ref ICwAPI3DVertexList2D*] The outline in section coordinates
+      ///            (u, v) in the local X/Y plane, as an open loop (do not repeat the first point).
+      ///            At least 3 points, enclosing a non-zero area.
+      /// @param[in] aThickness [double] The extrusion thickness along +zl. Must be > 0.
+      /// @param[in] aOutlineOrigin [@ref vector3D] The 3D position of outline coordinate (0, 0).
+      /// @param[in] aXDirectionLocal [@ref vector3D] The X-axis direction of the panel.
+      /// @param[in] aZDirectionLocal [@ref vector3D] Orientation hint for the Z-axis of the panel;
+      ///            the extrusion follows the orthogonalised result.
+      /// @return [@ref elementID] The ID of the created polygon panel, or 0 on failure.
+      /// @par Example :
+      /// @code{.cpp}
+      /// // A trapezoidal panel, 20 thick, extruded along the world Z axis
+      /// ICwAPI3DVertexList2D* outline = aFactory.createEmptyVertexList2D();
+      /// outline->append(vector2D{0.0, 0.0});
+      /// outline->append(vector2D{1000.0, 0.0});
+      /// outline->append(vector2D{800.0, 500.0});
+      /// outline->append(vector2D{0.0, 500.0});
+      /// double panelThickness = 20.0;
+      /// vector3D outlineOrigin{0.0, 0.0, 0.0};
+      /// vector3D xDirection{1.0, 0.0, 0.0};
+      /// vector3D zDirection{0.0, 0.0, 1.0};  // the panel extrudes this way
+      /// elementID polygonPanelID = aFactory.getElementController()->createPolygonPanelVectors(outline, panelThickness, outlineOrigin, xDirection, zDirection);
+      /// @endcode
+      virtual elementID createPolygonPanelVectors(ICwAPI3DVertexList2D* aOutlinePoints, double aThickness, vector3D aOutlineOrigin, vector3D aXDirectionLocal, vector3D aZDirectionLocal) = 0;
+
+      /// @brief Creates a Line element from a mixed path of straight, arc and natural-cubic-spline segments.
+      ///
+      /// The first entry in @p aSegments carries no segment of its own - it only seeds the line's
+      /// start point, and its `mType` must be `elementSegmentType::Straight` (creation fails
+      /// otherwise). Every following entry describes how to get from the running point to
+      /// `mPosition`:
+      /// - `elementSegmentType::Straight`: a straight line to `mPosition`.
+      /// - `elementSegmentType::Arc`: a circular arc through `mSupportPosition` to `mPosition`.
+      /// - `elementSegmentType::Spline`: a point on a natural-cubic-spline run. Consecutive
+      ///   `Spline` entries (together with the running point that precedes them) are fit through
+      ///   ONE spline curve; any non-`Spline` entry, or the end of the list, ends that run.
+      ///
+      /// @param[in] aSegments [@ref ICwAPI3DElementSegmentList*] the path, first entry seeds the start point.
+      /// @return [@ref elementID] The ID of the created line, or 0 if @p aSegments has fewer than
+      ///         two entries or its first entry is not `elementSegmentType::Straight`.
+      /// @par Example:
+      /// @code{.cpp}
+      /// // A straight segment into an arc and back to straight
+      /// ICwAPI3DElementSegmentList* segments = aFactory.createEmptyElementSegmentList();
+      /// segments->append(elementSegment{elementSegmentType::Straight, vector3D{0.0, 0.0, 0.0}, {}});
+      /// segments->append(elementSegment{elementSegmentType::Arc, vector3D{1000.0, 0.0, 0.0}, vector3D{500.0, 200.0, 0.0}});
+      /// segments->append(elementSegment{elementSegmentType::Straight, vector3D{2000.0, 0.0, 0.0}, {}});
+      ///
+      /// elementID lineID = aFactory.getElementController()->createLineFromSegments(segments);
+      /// @endcode
+      virtual elementID createLineFromSegments(ICwAPI3DElementSegmentList* aSegments) = 0;
+
+      /// @brief Gets the defining segments of a Line element, straight, arc, or spline alike.
+      ///
+      /// Works uniformly on lines created by createLinePoints, createLineVectors,
+      /// createSplineLine, or createLineFromSegments. The first returned entry is always a
+      /// synthetic `elementSegmentType::Straight` segment holding the line's overall start point.
+      ///
+      /// @warning For a spline run, only the run's two endpoints are exactly recoverable from the
+      ///          element's geometry. Interior `elementSegmentType::Spline` entries are the
+      ///          *current* ACIS-fitted NURBS control points of the underlying curve - they are
+      ///          NOT necessarily the points originally passed to createSplineLine or
+      ///          createLineFromSegments, since no creation-time record of those points is kept.
+      ///
+      /// @param[in] aElementId [@ref elementID] The ID of the Line element to query.
+      /// @return [@ref ICwAPI3DElementSegmentList*] The line's segments, or an empty list if
+      ///         @p aElementId does not identify a Line element, or if the line contains an edge
+      ///         that is none of straight, circular arc or spline (e.g. an elliptical arc) - such
+      ///         a line fails the whole call rather than returning a partial, silently-wrong result.
+      virtual ICwAPI3DElementSegmentList* getLineSegments(elementID aElementId) = 0;
+
+      /// @brief Creates a spline volume by skinning a series of surface elements, like the "Spline" command of the GUI.
+      ///
+      /// The surfaces are the cross-sections of the volume. They are re-ordered according to
+      /// @p aOrder before skinning, so the order of @p aSurfaceIds does not matter. The source
+      /// surfaces are left untouched. The new volume is added to the active document.
+      ///
+      /// @param[in] aSurfaceIds [@ref ICwAPI3DElementIDList*] The section surfaces. At least two; every ID must identify a surface element.
+      /// @param[in] aOrder [@ref splineSurfaceOrder] Whether the sections are arranged along a run (Linear) or around a centre (Circular).
+      /// @param[in] aNoTwist [bool] true to keep the skin from twisting between consecutive sections.
+      /// @return [@ref elementID] The ID of the created volume, or 0 if fewer than two IDs are given, an ID is not a
+      ///         surface, or the geometry kernel cannot skin the sections.
+      /// @par Example:
+      /// @code{.cpp}
+      /// // Skin three parallel square sections into one volume
+      /// ICwAPI3DElementIDList* sections = aFactory.createEmptyElementIDList();
+      /// for (double z : {0.0, 1000.0, 2000.0})
+      /// {
+      ///   ICwAPI3DVertexList* vertices = aFactory.createEmptyVertexList();
+      ///   vertices->append(vector3D{0.0, 0.0, z});
+      ///   vertices->append(vector3D{200.0, 0.0, z});
+      ///   vertices->append(vector3D{200.0, 200.0, z});
+      ///   vertices->append(vector3D{0.0, 200.0, z});
+      ///   sections->append(aFactory.getElementController()->createSurface(vertices));
+      /// }
+      ///
+      /// elementID splineID = aFactory.getElementController()->createSplineFromSurfaces(sections, splineSurfaceOrder::Linear, true);
+      /// @endcode
+      virtual elementID createSplineFromSurfaces(ICwAPI3DElementIDList* aSurfaceIds, splineSurfaceOrder aOrder, bool aNoTwist) = 0;
+
+      /// @brief Creates a spline volume by sweeping a surface element along a line element.
+      ///
+      /// The surface is the cross-section and the line is the path: the section follows the
+      /// line's shape, straight, arc or spline alike. For a predictable result the line should
+      /// start on the surface. The source surface and line are left untouched. The new volume
+      /// is added to the active document.
+      ///
+      /// @param[in] aSurfaceId [@ref elementID] The ID of the section surface. Must identify a surface element.
+      /// @param[in] aLineId [@ref elementID] The ID of the path. Must identify a line element.
+      /// @return [@ref elementID] The ID of the created volume, or 0 if @p aSurfaceId is not a surface, @p aLineId is
+      ///         not a line, or the geometry kernel cannot sweep the section along the path.
+      /// @par Example:
+      /// @code{.cpp}
+      /// // Sweep a square section along a straight line starting at its corner
+      /// ICwAPI3DVertexList* vertices = aFactory.createEmptyVertexList();
+      /// vertices->append(vector3D{0.0, 0.0, 0.0});
+      /// vertices->append(vector3D{200.0, 0.0, 0.0});
+      /// vertices->append(vector3D{200.0, 200.0, 0.0});
+      /// vertices->append(vector3D{0.0, 200.0, 0.0});
+      /// elementID surfaceID = aFactory.getElementController()->createSurface(vertices);
+      /// elementID lineID = aFactory.getElementController()->createLinePoints(vector3D{0.0, 0.0, 0.0}, vector3D{0.0, 0.0, 2000.0});
+      ///
+      /// elementID splineID = aFactory.getElementController()->createSplineFromSurfaceAndLine(surfaceID, lineID);
+      /// @endcode
+      virtual elementID createSplineFromSurfaceAndLine(elementID aSurfaceId, elementID aLineId) = 0;
+
       /// @brief Gets the GUID of a standard element from its name.
       /// The name is matched in the current cadwork language.
-      /// When several standard elements share the name (for example in different
-      /// directories, or a steel profile available in several locales), the first match is returned: the same
-      /// standard element the corresponding createStandard* function creates for that name. Steel profile names
-      /// use cadwork notation, as for @ref createStandardSteelPoints.
+      /// Standard element names are not unique, only GUIDs are: when several standard elements share the name (for
+      /// example in different folders, or a steel profile available in several locales), only the first match is
+      /// returned: the same standard element the corresponding createStandard* function creates for that name.
+      /// Folders of the standard element library are not handled by the API and cannot be used to select another
+      /// match. Steel profile names use cadwork notation, as for @ref createStandardSteelPoints.
       /// @param[in] aName [const character*] The name of the standard element.
       /// @param[in] aType [@ref standardElementType] The kind of standard element to search: beam, panel, vba,
       ///            exportSolid, container or metal (steel).

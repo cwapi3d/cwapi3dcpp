@@ -16,6 +16,7 @@
 #include "ICwAPI3DElementType.h"
 #include "ICwAPI3DExtendedSettings.h"
 #include "ICwAPI3DLayerSettings.h"
+#include "ICwAPI3DList.h"
 #include "ICwAPI3DProcessType.h"
 #include "ICwAPI3DString.h"
 #include "ICwAPI3DStringList.h"
@@ -347,9 +348,41 @@ namespace CwAPI3D
       /// @return [bool] True if the element is an envelope, false otherwise.
       virtual bool isEnvelope(elementID aElementId) = 0;
 
-      /// @brief Sets the layer settings for a list of elements.
+      /// @brief Applies one prefab layer output setting to a list of elements.
+      /// @details The settings object names a single layer plus one output mode, so the call changes exactly
+      /// that one layer on the addressed elements and leaves every other layer as it is — it never replaces
+      /// an element's whole layer configuration. Elements that carry no prefab layer geometry are skipped.
+      /// @par Sign convention:
+      /// A positive layer number (+1..+14) means the reference side ("Bund Schicht",
+      /// prefabLayerSide::referenceSide); a negative one (-1..-14) means the opposite side ("Gegen Schicht",
+      /// prefabLayerSide::oppositeSide); 0 means the element's own layer ("Riegelwerk",
+      /// prefabLayerSide::referenceElement). This is the same convention getPrefabLayerInfoAllAssigned()
+      /// reports, so a layer written here reads back on the side it was written to. A layer number outside
+      /// -14..+14 is a no-op.
+      /// @par Mode precedence:
+      /// A settings object should carry one output mode. If more than one is set, the highest wins:
+      /// withoutOutput > withDimensions > withoutDimensions. A settings object on which no mode was chosen
+      /// at all is a no-op — nothing is written and no element changes, so the object can safely be built
+      /// conditionally.
       /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] The list of element IDs.
-      /// @param[in] aLayerSettings [@ref ICwAPI3DLayerSettings*] The layer settings to set.
+      /// @param[in] aLayerSettings [@ref ICwAPI3DLayerSettings*] The layer settings to apply. Obtain one from
+      /// ICwAPI3DControllerFactory::createEmptyLayerSettings(); a freshly created object names layer 0, has no
+      /// mode chosen and has its show-attributes flag off.
+      /// @note Writes to the document this controller was obtained from, and fires one
+      /// element-properties-changed notification per element.
+      /// @warning This call is not undoable: it pushes no undo step, so the change cannot be taken back with
+      /// the undo command. And mind the sign convention above — before cadwork 33.0 the writer applied the
+      /// opposite sign to every reader, so a plugin that compensated for that by negating its layer number
+      /// must drop the negation.
+      /// @par Example:
+      /// @code{.cpp}
+      /// ICwAPI3DElementIDList* activeElements = aFactory->getElementController()->getActiveIdentifiableElementIDs();
+      ///
+      /// ICwAPI3DLayerSettings* settings = aFactory->createEmptyLayerSettings();
+      /// settings->setLayer(1); // layer 1 on the reference side
+      /// settings->setWithDimensionsOutput();
+      /// aFactory->getAttributeController()->setLayerSettings(activeElements, settings);
+      /// @endcode
       virtual void setLayerSettings(ICwAPI3DElementIDList* aElementIdList, ICwAPI3DLayerSettings* aLayerSettings) = 0;
 
       /// @brief Sets if the element should be ignored in VBA Calculation.
@@ -694,19 +727,22 @@ namespace CwAPI3D
       virtual void setAdditionalGuid(ICwAPI3DElementIDList* aElementIdList, const character* aDataID, const character* aGuid) = 0;
 
       /// @brief Retrieves all assigned prefab layer numbers for the given element.
+      /// @deprecated Use getPrefabLayerInfoAllAssigned() instead.
       /// @param[in] aElementId [@ref elementID] The element id.
       /// @return [std::vector<int32_t>] A vector of all assigned prefab layer numbers.
-      virtual std::vector<int32_t> getPrefabLayerAllAssigned(elementID aElementId) = 0;
+      [[deprecated("Use getPrefabLayerInfoAllAssigned() instead.")]] virtual std::vector<int32_t> getPrefabLayerAllAssigned(elementID aElementId) = 0;
 
       /// @brief Retrieves prefab layer numbers with dimensions for the given element.
+      /// @deprecated Use getPrefabLayerInfoWithDimensions() instead.
       /// @param[in] aElementId [@ref elementID] The element id.
       /// @return [std::vector<int32_t>] A vector of prefab layer numbers with dimensions.
-      virtual std::vector<int32_t> getPrefabLayerWithDimensions(elementID aElementId) = 0;
+      [[deprecated("Use getPrefabLayerInfoWithDimensions() instead.")]] virtual std::vector<int32_t> getPrefabLayerWithDimensions(elementID aElementId) = 0;
 
       /// @brief Retrieves prefab layer numbers without dimensions for the given element.
+      /// @deprecated Use getPrefabLayerInfoWithoutDimensions() instead.
       /// @param[in] aElementId [@ref elementID] The element id.
       /// @return [std::vector<int32_t>] A vector of prefab layer numbers without dimensions.
-      virtual std::vector<int32_t> getPrefabLayerWithoutDimensions(elementID aElementId) = 0;
+      [[deprecated("Use getPrefabLayerInfoWithoutDimensions() instead.")]] virtual std::vector<int32_t> getPrefabLayerWithoutDimensions(elementID aElementId) = 0;
 
       /// @brief Checks if the given element is a nesting parent.
       /// @param[in] aElementId [@ref elementID] The element id.
@@ -879,10 +915,10 @@ namespace CwAPI3D
       /// @param[in] aVisibility [bool] The visibility state to set.
       virtual void setAttributeVisibilityInModifyWindow(uint32_t aNumber, bool aVisibility) = 0;
 
-      /// @brief Sets the cutting set on the elements. The cutting set is applied with `cutElementsWithOvermeasure`.
+      /// @brief Sets the cutting set on the elements. The set is looked up by name in the document, the user profile (`CutSets.xml`) and, for steel and round-beam elements only, the standard profile sets. The cutting set is applied with `cutElementsWithOvermeasure`.
       /// @param[in] aElementIdList [@ref ICwAPI3DElementIDList*] List of element IDs.
       /// @param[in] aCuttingSetName [const @ref character*] Name of the cutting set to apply.
-      /// @return [bool] True if the cutting set was successfully applied, false otherwise.
+      /// @return [bool] True if the cutting set was assigned to at least one element; false if no element was found or the name matches no cutting set applicable to the elements.
       virtual bool setCuttingSet(ICwAPI3DElementIDList* aElementIdList, const character* aCuttingSetName) = 0;
 
       /// @brief Gets the material id of a given element.
@@ -909,6 +945,78 @@ namespace CwAPI3D
       /// @param[in] aItem [const @ref character*] The item to delete from the Name list.
       /// @return [bool] True if the item was successfully deleted, false otherwise.
       virtual bool deleteItemFromNameList(const character* aItem) = 0;
+
+      /// @brief Retrieves every prefab layer assigned to the given element, with or without dimension output.
+      /// @details Replaces getPrefabLayerAllAssigned(). Where that method returned bare signed integers whose
+      /// sign implicitly encoded the side, each entry here states both explicitly: @ref prefabLayerInfo::mLayerNumber
+      /// is the non-negative distance from the reference element, and @ref prefabLayerInfo::mSide names the side —
+      /// prefabLayerSide::referenceElement for the element's own layer (number 0, "Riegelwerk"),
+      /// prefabLayerSide::referenceSide for a layer on the reference face ("Bund Schicht"), and
+      /// prefabLayerSide::oppositeSide for one on the far side ("Gegen Schicht"), matching the Layer Detection dialog.
+      /// The with-dimensions layers are listed first, each group in ascending layer order.
+      /// @param[in] aElementId [@ref elementID] The element id. An invalid id yields an empty list, never nullptr.
+      /// @return [@ref ICwAPI3DPrefabLayerInfoList*] The assigned layers. Owned by the API — do not delete it; it
+      /// stays valid until the controller is released.
+      /// @par Example:
+      /// @code{.cpp}
+      /// ICwAPI3DElementIDList* activeElements = aFactory->getElementController()->getActiveIdentifiableElementIDs();
+      /// elementID element = activeElements->at(0);
+      ///
+      /// ICwAPI3DPrefabLayerInfoList* layers = aFactory->getAttributeController()->getPrefabLayerInfoAllAssigned(element);
+      /// for (uint32_t i = 0; i < layers->count(); ++i)
+      /// {
+      ///   prefabLayerInfo layer = layers->at(i);
+      ///   wprintf(L"layer %d on side %d\n", layer.mLayerNumber, static_cast<int32_t>(layer.mSide));
+      /// }
+      /// @endcode
+      virtual ICwAPI3DPrefabLayerInfoList* getPrefabLayerInfoAllAssigned(elementID aElementId) = 0;
+
+      /// @brief Retrieves the prefab layers of the given element that are output with dimensions.
+      /// @details Replaces getPrefabLayerWithDimensions(). Selects the same layers as that method — those with
+      /// dimension output enabled — but returns them as explicit (layer number, side) pairs; see
+      /// getPrefabLayerInfoAllAssigned() for what the side values mean. Entries come in ascending layer order.
+      /// @param[in] aElementId [@ref elementID] The element id. An invalid id yields an empty list, never nullptr.
+      /// @return [@ref ICwAPI3DPrefabLayerInfoList*] The layers output with dimensions. Owned by the API — do not
+      /// delete it; it stays valid until the controller is released.
+      /// @par Example:
+      /// @code{.cpp}
+      /// ICwAPI3DPrefabLayerInfoList* layers = aFactory->getAttributeController()->getPrefabLayerInfoWithDimensions(element);
+      /// wprintf(L"%u layers are dimensioned\n", layers->count());
+      /// @endcode
+      virtual ICwAPI3DPrefabLayerInfoList* getPrefabLayerInfoWithDimensions(elementID aElementId) = 0;
+
+      /// @brief Retrieves the prefab layers of the given element that are output without dimensions.
+      /// @details Replaces getPrefabLayerWithoutDimensions(). Selects the same layers as that method — those output
+      /// without dimensions ("verdeckt") — but returns them as explicit (layer number, side) pairs; see
+      /// getPrefabLayerInfoAllAssigned() for what the side values mean. Entries come in ascending layer order.
+      /// @param[in] aElementId [@ref elementID] The element id. An invalid id yields an empty list, never nullptr.
+      /// @return [@ref ICwAPI3DPrefabLayerInfoList*] The layers output without dimensions. Owned by the API — do not
+      /// delete it; it stays valid until the controller is released.
+      /// @par Example:
+      /// @code{.cpp}
+      /// ICwAPI3DPrefabLayerInfoList* layers = aFactory->getAttributeController()->getPrefabLayerInfoWithoutDimensions(element);
+      /// wprintf(L"%u layers are undimensioned\n", layers->count());
+      /// @endcode
+      virtual ICwAPI3DPrefabLayerInfoList* getPrefabLayerInfoWithoutDimensions(elementID aElementId) = 0;
+
+      /// @brief Gets the additional data keys set on an element through this API.
+      /// @param[in] aElementId [@ref elementID] The element id.
+      /// @note Keys cadwork 3d writes internally on the same element are excluded, so the result
+      /// only contains data put there via setAdditionalData.
+      /// @return [@ref ICwAPI3DStringList*] The additional data keys, empty if the element is
+      /// unknown or carries no such key.
+      /// @par Example :
+      /// @code{.cpp}
+      /// ICwAPI3DElementIDList* activeElements = aFactory->getElementController()->getActiveIdentifiableElementIDs();
+      /// elementID element = activeElements->at(0);
+      ///
+      /// ICwAPI3DStringList* keys = aFactory->getAttributeController()->getAdditionalDataKeys(element);
+      /// for (uint32_t i = 0; i < keys->count(); ++i)
+      /// {
+      ///   ICwAPI3DString* value = aFactory->getAttributeController()->getAdditionalData(element, keys->at(i));
+      /// }
+      /// @endcode
+      virtual ICwAPI3DStringList* getAdditionalDataKeys(elementID aElementId) = 0;
     };
   }
 }

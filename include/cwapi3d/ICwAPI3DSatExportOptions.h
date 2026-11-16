@@ -20,7 +20,7 @@ namespace CwAPI3D
     constexpr int32_t eV33_0 = 3300;
     constexpr int32_t eV34_0 = 3400;
   }
-  
+
   namespace Interfaces
   {
     /// @interface ICwAPI3DSatExportOptions
@@ -31,15 +31,15 @@ namespace CwAPI3D
     {
     public:
       virtual ~ICwAPI3DSatExportOptions() noexcept = default;
-      
+
       /// @brief The file scale factor.
       virtual double getScaleFactor() const = 0;
       virtual void setScaleFactor(double aValue) = 0;
-      
+
       /// @brief Whether to write the SAT file in binary or a human-readable format.
       virtual bool getBinary() const = 0;
       virtual void setBinary(bool aValue) = 0;
-      
+
       /// @brief The ACIS version to use. See CwAPI3D::SatAcisVersion for named
       ///        constants (e.g. SatAcisVersion::eV33_0 = 3300).
       virtual int32_t getVersion() const = 0;

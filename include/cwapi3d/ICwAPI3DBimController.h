@@ -328,6 +328,27 @@ namespace CwAPI3D
       /// @param[in] aStorey [const @ref character*] The name of the storey.
       /// @return [@ref ICwAPI3DElementIDList*] The list of element ids assigned to the storey.
       virtual ICwAPI3DElementIDList* getElementsForStorey(const character* aBuilding, const character* aStorey) = 0;
+
+      /// @brief Loads an IFC export settings file into the active document, exactly as pressing "Load settings" and then "OK" in the IFC export dialog does.
+      /// @details The document's IFC export settings are modified and persisted with the document. Every export that follows
+      /// (@ref exportIfc4Silently, @ref exportIfc2x3Silently and the interactive IFC exports) uses them.
+      /// The user property sets defined in the file replace the document's user property sets.
+      /// Settings the file does not carry (e.g. true north, relative placement and the import settings) keep the document's values.
+      /// The settings-file name shown in the IFC export dialog is set to the file's base name.
+      /// Pointers previously returned by @ref getIfcOptions do not reflect the loaded values; call @ref getIfcOptions again after loading.
+      /// @param[in] aFilePath [const @ref character*] Absolute path to an XML file saved with "Save settings" in the IFC export dialog
+      /// (root element IfcExportSettings). The path is not resolved against the user profile. Passing nullptr returns false without setting an error.
+      /// @return [bool] True if the settings were applied. False if the file does not exist, cannot be opened, is not valid XML,
+      /// or its root element is not IfcExportSettings; the document's settings are then left untouched and @ref getLastError describes the reason.
+      /// Only these checks are made: the content of a well-formed IfcExportSettings file is applied as the IFC export dialog applies it,
+      /// so an option the dialog saves but the file omits is read as unchecked, exactly as in the dialog.
+      /// @par Example:
+      /// @code{.cpp}
+      /// ICwAPI3DBimController* bimController = aFactory.getBimController();
+      /// const bool loaded = bimController->loadIfcExportSettings(L"C:\\ifc\\team-settings.xml");
+      /// ICwAPI3DString* error = loaded ? nullptr : bimController->getLastError(nullptr);
+      /// @endcode
+      virtual bool loadIfcExportSettings(const character* aFilePath) = 0;
     };
   }
 }

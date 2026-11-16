@@ -1,13 +1,12 @@
-/** @file 
-* Copyright (C) 2024 cadwork informatik AG
-* 
-* This file is part of the CwAPI3D module for cadwork 3d.
-* 
-* @ingroup       CwAPI3D
-* @since         30.0
-* @author        Brunner
-* @date          2024-02-19
-*/
+/// @file
+/// Copyright (C) 2024 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         30.0
+/// @author        Brunner
+/// @date          2024-02-19
 
 
 #pragma once
@@ -23,30 +22,26 @@ namespace CwAPI3D
     {
     public:
       virtual ~ICwAPI3DEndtypeIDList() = default;
-      /**
-     * \brief Destroys itself
-     */
+
+      /// @brief Destroys itself
+      /// @deprecated Do not use this method anymore
       virtual void destroy() = 0;
-      /**
-     * \brief Returns the number of elements in the list
-     * \return number of elements in the list
-     */
+
+      /// @brief Returns the number of elements in the list
+      /// @return number of elements in the list
       virtual uint32_t count() = 0;
-      /**
-     * \brief Returns the element at index  
-     * \param aIndex index of element
-     * \return element at index
-     */
+
+      /// @brief Returns the element at index
+      /// @param[in] aIndex index of element
+      /// @return element at index
       virtual endtypeID at(uint32_t aIndex) = 0;
-      /**
-     * \brief Appends an endtypeID to the list
-     * \param aEndtypeID 
-     */
+
+      /// @brief Appends an endtypeID to the list
+      /// @param[in] aEndtypeID
       virtual void append(endtypeID aEndtypeID) = 0;
-      /**
-     * \brief Appends a list to the list
-     * \param aEndtypeIDs 
-     */
+
+      /// @brief Appends a list to the list
+      /// @param[in] aEndtypeIDs
       virtual void appendList(ICwAPI3DEndtypeIDList* aEndtypeIDs) = 0;
     };
   }
