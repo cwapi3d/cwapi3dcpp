@@ -33,6 +33,7 @@ namespace CwAPI3D
 
       /// @brief Gets the selected menu item.
       /// @return [@ref menuIndex] The menu index of selected item.
+      /// @note In a /PLUGIN= or /RUNPROGRAM= run nobody can answer: returns -2 (escape) without waiting.
       virtual menuIndex getSelectedMenuItem() = 0;
 
       /// @brief Cleans all menus.
@@ -40,6 +41,7 @@ namespace CwAPI3D
 
       /// @brief Displays a menu
       /// @param aMenu [@ref ICwAPI3DMenu*] The menu.
+      /// @note In a /PLUGIN= or /RUNPROGRAM= run nobody can answer: the menu is not shown.
       virtual void displayMenu(ICwAPI3DMenu* aMenu) = 0;
 
       /// @brief Clears all errors.
@@ -48,6 +50,7 @@ namespace CwAPI3D
       /// @brief Displays a simple menu.
       /// @param aMenuItems [@ref ICwAPI3DStringList*] The menu items.
       /// @return [@ref ICwAPI3DString*] The selected menu item.
+      /// @note In a /PLUGIN= or /RUNPROGRAM= run nobody can answer: the menu is not shown and an empty string is returned.
       virtual ICwAPI3DString* displaySimpleMenu(ICwAPI3DStringList* aMenuItems) = 0;
     };
   }

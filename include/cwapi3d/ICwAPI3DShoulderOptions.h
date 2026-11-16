@@ -1,13 +1,12 @@
-/** @file 
-* Copyright (C) 2025 cadwork informatik AG
-* 
-* This file is part of the CwAPI3D module for cadwork 3d.
-* 
-* @ingroup       CwAPI3D
-* @since         30.0
-* @author        Paquet
-* @date          2025-01-15
-*/
+/// @file
+/// Copyright (C) 2025 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         30.0
+/// @author        Paquet
+/// @date          2025-01-15
 
 #pragma once
 
@@ -23,6 +22,8 @@ namespace CwAPI3D
     public:
       virtual ~ICwAPI3DShoulderOptions() noexcept = default;
 
+      /// @brief Destroys itself
+      /// @deprecated Do not use this method anymore
       virtual void destroy() = 0;
 
       virtual bool getAddDrillingAxis() const = 0;

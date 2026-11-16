@@ -39,6 +39,7 @@
 #include "ICwAPI3DIfcPredefinedType.h"
 #include "ICwAPI3DImport3dcOptions.h"
 #include "ICwAPI3DLayerSettings.h"
+#include "ICwAPI3DList.h"
 #include "ICwAPI3DListController.h"
 #include "ICwAPI3DMachineController.h"
 #include "ICwAPI3DMaterialController.h"
@@ -292,6 +293,20 @@ namespace CwAPI3D
       /// @brief Creates an empty panel prefab element settings
       /// @return panel prefab element settings
       virtual ICwAPI3DPanelPrefabElementSettings* createPanelPrefabElementSettings() = 0;
+
+      /// @brief Creates an empty 2D vertex list, for section coordinates (u, v).
+      /// @note This is the 2D sibling of createEmptyVertexList(). It is declared here, at the end of
+      ///       the interface, rather than next to createEmptyVertexList(): inserting a virtual
+      ///       mid-class would shift the v-table and break every plugin compiled against an older
+      ///       header.
+      /// @note Use it to feed ICwAPI3DElementController::createPolygonBeamVectors and
+      ///       ICwAPI3DElementController::createPolygonPanelVectors.
+      /// @return 2D vertex list
+      virtual ICwAPI3DVertexList2D* createEmptyVertexList2D() = 0;
+
+      /// @brief Creates an empty element segment list, for ICwAPI3DElementController::createLineFromSegments.
+      /// @return element segment list
+      virtual ICwAPI3DElementSegmentList* createEmptyElementSegmentList() = 0;
 
       /// @brief Creates SAT export options.
       /// @return [@ref ICwAPI3DSatExportOptions*] sat export options

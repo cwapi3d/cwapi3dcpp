@@ -531,6 +531,38 @@ namespace CwAPI3D
       /// @param[in] aElementId [@ref elementID] The element id.
       /// @return [double] The element length including end-types.
       virtual double getLengthIncludingEndTypes(elementID aElementId) = 0;
+
+      /// @brief Moves one facet of an element along its own plane normal, growing or shrinking the body at that face.
+      /// @param[in] aElementId [@ref elementID] The element to modify.
+      /// @param[in] aFacetIndex [uint32_t] Index into the element's facet list in the same order @ref getElementFacets
+      ///            An element with no facets fails. The index is only valid against a facet table read from the element in its
+      ///            CURRENT state: a successful stretch renumbers the list, because the geometry kernel rebuilds the
+      ///            body's face order after every local operation. To move several facets of one element, re-read
+      ///            @ref getElementFacets after each call and re-locate the next facet by its normal - carrying indices
+      ///            0..count-1 across a loop will address the same facet twice and miss others.
+      /// @param[in] aDistance [double] Signed travel in model units (mm) along the normal @ref getElementFacets reports
+      ///            for this facet index: positive grows the body at that face, negative shrinks it, zero is a
+      ///            successful no-op that leaves the geometry untouched.
+      /// @return [bool] Whether the facet was moved.
+      ///         @li  true: the facet moved (or the distance was zero) and the element is marked modified
+      ///         @li false: nothing was modified — a distinct code and message are on the error stack, readable via
+      ///                    @ref getLastError, and logged to the cadwork API log
+      virtual bool stretchFacet(elementID aElementId, uint32_t aFacetIndex, double aDistance) = 0;
+
+      /// @brief Classifies how two elements' geometry relates (touching, contained, interlocking, ...). No side effects:
+      ///        read-only, does not modify the document, activate, or highlight anything.
+      /// @param[in] aFirstElementId [@ref elementID] The first element id.
+      /// @param[in] aSecondElementId [@ref elementID] The second element id.
+      /// @return [@ref elementCollisionType] How the two elements' geometry relates.
+      ///         @li unknown: either element id is invalid, or one of the elements is a type not supported in v1 (Axis, Line)
+      ///         @li none: the bodies do not collide
+      ///         @li unclassified: the geometry kernel could not classify the relationship
+      ///         @li contained: one body is fully contained within the other, without touching its boundary
+      ///         @li containedAndTouching: one body is contained within the other and touches its boundary
+      ///         @li touching: the bodies touch (share boundary) without interpenetrating volume
+      ///         @li coincident: the bodies coincide
+      ///         @li interlocking: the bodies genuinely interpenetrate
+      virtual elementCollisionType getElementCollisionType(elementID aFirstElementId, elementID aSecondElementId) = 0;
     };
   }
 }

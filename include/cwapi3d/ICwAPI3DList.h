@@ -1,13 +1,12 @@
-/** @file 
-* Copyright (C) 2025 cadwork informatik AG
-* 
-* This file is part of the CwAPI3D module for cadwork 3d.
-* 
-* @ingroup       CwAPI3D
-* @since         32.0
-* @author        Brunner
-* @date          2025-11-26
-*/
+/// @file
+/// Copyright (C) 2025 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         32.0
+/// @author        Brunner
+/// @date          2025-11-26
 
 
 #pragma once
@@ -18,61 +17,44 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /**
-    * @interface ICwAPI3DList
-    * @brief Generic template interface for lists
-    * @tparam T The ID type (e.g., elementID, multiLayerSetID, materialID)
-    */
+    /// @interface ICwAPI3DList
+    /// @brief Generic template interface for lists
+    /// @tparam T The ID type (e.g., elementID, multiLayerSetID, materialID)
     template<typename T>
     class ICwAPI3DList
     {
     public:
-      /**
-       * @brief Destroys itself
-       */
+      /// @brief Destroys itself
+      /// @deprecated Do not use this method anymore
       virtual void destroy() = 0;
 
-      /**
-       * @brief Returns the number of elements in the list
-       * @return number of elements in list
-       */
+      /// @brief Returns the number of elements in the list
+      /// @return number of elements in list
       virtual uint32_t count() = 0;
 
-      /**
-       * @brief Returns the element at index
-       * @param aIndex element index
-       * @return element at index
-       */
+      /// @brief Returns the element at index
+      /// @param[in] aIndex element index
+      /// @return element at index
       virtual T at(uint32_t aIndex) = 0;
 
-      /**
-       * @brief Appends an element to the list
-       * @param aID ID to append
-       */
+      /// @brief Appends an element to the list
+      /// @param[in] aID ID to append
       virtual void append(T aID) = 0;
 
-      /**
-       * @brief Appends a list to the list
-       * @param aIDs list to append
-       */
+      /// @brief Appends a list to the list
+      /// @param[in] aIDs list to append
       virtual void appendList(ICwAPI3DList<T>* aIDs) = 0;
 
-      /**
-       * @brief Queries whether the container is empty
-       * @return true if there are no elements in the container, false otherwise
-       */
+      /// @brief Queries whether the container is empty
+      /// @return true if there are no elements in the container, false otherwise
       virtual bool empty() = 0;
 
-      /**
-       * @brief Gets a pointer to the first element. Note that the pointer is invalid if the container is destroyed.
-       * @return pointer to first element, returns nullptr if the container is empty.
-       */
+      /// @brief Gets a pointer to the first element. Note that the pointer is invalid if the container is destroyed.
+      /// @return pointer to first element, returns nullptr if the container is empty.
       virtual T* front() = 0;
 
-      /**
-       * @brief Gets a pointer to the last element. Note that the pointer is invalid if the container is destroyed.
-       * @return pointer to the last element, returns nullptr if the container is empty.
-       */
+      /// @brief Gets a pointer to the last element. Note that the pointer is invalid if the container is destroyed.
+      /// @return pointer to the last element, returns nullptr if the container is empty.
       virtual T* back() = 0;
 
     protected:
@@ -83,5 +65,10 @@ namespace CwAPI3D
     // Type aliases for common ID lists //
     /////////////////////////////////////
     using ICwAPI3DMultiLayerSetIDList = ICwAPI3DList<multiLayerSetID>;
+    using ICwAPI3DVertexList2D = ICwAPI3DList<vector2D>;
+    using ICwAPI3DElementSegmentList = ICwAPI3DList<elementSegment>;
+    using ICwAPI3DPrefabLayerInfoList = ICwAPI3DList<prefabLayerInfo>;
+    using ICwAPI3DWallSectionList = ICwAPI3DList<wallSection>;
+    using ICwAPI3DExportSolidCutList = ICwAPI3DList<exportSolidCut>;
   }
 }

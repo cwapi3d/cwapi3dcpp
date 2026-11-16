@@ -1,13 +1,12 @@
-/** @file
-* Copyright (C) 2020 cadwork informatik AG
-*
-* This file is part of the CwAPI3D module for cadwork 3d.
-*
-* @ingroup       CwAPI3D
-* @since         27.0
-* @author        Paquet
-* @date          2020-08-19
-*/
+/// @file
+/// Copyright (C) 2020 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         27.0
+/// @author        Paquet
+/// @date          2020-08-19
 #pragma once
 
 #include "CwAPI3DTypes.h"
@@ -16,16 +15,13 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /**
-    * @interface ICwAPI3DAttributeDisplaySettings
-    * \brief
-    */
+   /// @interface ICwAPI3DAttributeDisplaySettings
+   /// @brief
     class ICwAPI3DAttributeDisplaySettings
     {
     public:
-      /**
-       * \brief Destroys itself
-       */
+      /// @brief Destroys itself
+      /// @deprecated Do not use this method anymore
       virtual void destroy() = 0;
       virtual uint32_t getTextPositionPercentage() = 0;
       virtual void setTextPositionPercentage(uint32_t aPercentage) = 0;

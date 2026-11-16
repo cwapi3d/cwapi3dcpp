@@ -1,13 +1,12 @@
-/** @file 
-* Copyright (C) 2026 cadwork informatik AG
-* 
-* This file is part of the CwAPI3D module for cadwork 3d.
-* 
-* @ingroup       CwAPI3D
-* @since         33.0
-* @author        Paquet
-* @date          2026-05-01
-*/
+/// @file
+/// Copyright (C) 2026 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         33.0
+/// @author        Paquet
+/// @date          2026-05-01
 
 #pragma once
 
@@ -24,7 +23,8 @@ namespace CwAPI3D
     class ICwAPI3DConnectorAxisItem
     {
     public:
-      /// @brief Destroys itself
+     /// @brief Destroys itself
+     /// @deprecated Do not use this method anymore
       virtual void destroy() = 0;
 
       /// @brief Sets the item guid

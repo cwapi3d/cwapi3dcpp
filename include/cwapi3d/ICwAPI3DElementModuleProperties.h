@@ -6,13 +6,12 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /**
-    * @interface ICwAPI3DElementModuleProperties
-    * \brief
-    */
+    /// @interface ICwAPI3DElementModuleProperties
     class ICwAPI3DElementModuleProperties
     {
     public:
+      /// @brief Destroys itself
+      /// @deprecated Do not use this method anymore
       virtual void destroy() = 0;
       virtual bool isStretchWithTopOfWall() = 0;
       virtual bool isMoveWithTopOfWall() = 0;

@@ -1,13 +1,12 @@
-/** @file 
-* Copyright (C) 2023 cadwork informatik AG
-* 
-* This file is part of the CwAPI3D module for cadwork 3d.
-* 
-* @ingroup       CwAPI3D
-* @since         30.0
-* @author        Brunner
-* @date          2023-12-20
-*/
+/// @file
+/// Copyright (C) 2023 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         30.0
+/// @author        Brunner
+/// @date          2023-12-20
 
 
 #pragma once
@@ -17,7 +16,7 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /// @interface ICwAPI3DCameraData
+   /// @interface ICwAPI3DCameraData
     class ICwAPI3DCameraData
     {
     public:
@@ -28,7 +27,9 @@ namespace CwAPI3D
       };
 
       virtual ~ICwAPI3DCameraData() noexcept = default;
-
+      
+      /// @brief Destroys itself
+      /// @deprecated Do not use this method anymore
       virtual void destroy() = 0;
 
       virtual void setPosition(CwAPI3D::vector3D const& aPosition) = 0;

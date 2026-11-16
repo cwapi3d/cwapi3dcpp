@@ -1,13 +1,12 @@
-/** @file
-* Copyright (C) 2019 cadwork informatik AG
-*
-* This file is part of the CwAPI3D module for cadwork 3d.
-*
-* @ingroup       CwAPI3D
-* @since         26.0
-* @author        Paquet
-* @date          2019-10-10
-*/
+/// @file
+/// Copyright (C) 2019 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         26.0
+/// @author        Paquet
+/// @date          2019-10-10
 
 #pragma once
 
@@ -15,13 +14,12 @@ namespace CwAPI3D
 {
   namespace Interfaces
   {
-    /**
-    * @interface ICwAPI3DIfc2x3ElementType
-    * \brief
-    */
+    /// @interface ICwAPI3DIfc2x3ElementType
     class ICwAPI3DIfc2x3ElementType
     {
     public:
+      /// @brief Destroys itself
+      /// @deprecated Do not use this method anymore
       virtual void destroy() = 0;
 
       virtual bool isNone() = 0;

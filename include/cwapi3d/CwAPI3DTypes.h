@@ -28,6 +28,17 @@ namespace CwAPI3D
     double mZ;
   };
 
+  /// @struct vector2D
+  /// @brief 2D vector in section (local plane) coordinates
+  struct vector2D
+  {
+    /// @brief U Coordinate (first in-plane axis)
+    double mU;
+
+    /// @brief V Coordinate (second in-plane axis)
+    double mV;
+  };
+
   /// @struct colorRGB
   /// @brief RGB Color
   struct colorRGB
@@ -89,6 +100,20 @@ namespace CwAPI3D
     positive = 1,
     negative = -1,
     none = 0
+  };
+
+  /// @enum elementCollisionType
+  /// @brief How two elements' geometry relates, as classified by @ref ICwAPI3DGeometryController::getElementCollisionType.
+  enum class elementCollisionType
+  {
+    unknown,
+    none,
+    unclassified,
+    contained,
+    containedAndTouching,
+    touching,
+    coincident,
+    interlocking
   };
 
   /// @enum nodeSymbol
@@ -457,6 +482,18 @@ namespace CwAPI3D
     swedish,     ///< sv
   };
 
+  /// @enum workingPlaneExitView
+  /// @brief The 3d view restored when leaving the 2d working plane.
+  enum class workingPlaneExitView : uint32_t
+  {
+    previous_view = 0,   ///< Restores the view and controller active before entering.
+    standard_axonometry, ///< Standard axonometry.
+    view_positive_x,     ///< Same view as showViewPositiveX(). GUI label "X".
+    view_positive_y,     ///< Same view as showViewPositiveY(). GUI label "-Y".
+    view_positive_z,     ///< Same view as showViewPositiveZ(). GUI label "Z".
+    keep_current_camera, ///< Keeps the current camera, in 3d. GUI label "Axo same view".
+  };
+
   /// @enum endType
   /// @brief End type of an element.
   enum class endType : int32_t
@@ -469,6 +506,112 @@ namespace CwAPI3D
     DovetailMortise = 5,    ///< Dovetail Mortise
     FrontSlot = 6,          ///< Front Slot
     JapaneseTenon = 7       ///< Japanese Tenon
+  };
+
+  /// @enum elementSegmentType
+  /// @brief The kind of geometry one elementSegment describes, relative to the running point.
+  enum class elementSegmentType : int32_t
+  {
+    Straight = 1, ///< straight line from the running point to mPosition
+    Arc = 2,      ///< circular arc from the running point through mSupportPosition to mPosition
+    Spline = 3,   ///< a point on a natural-cubic-spline run; consecutive Spline entries are fit through ONE curve
+  };
+
+  /// @struct elementSegment
+  /// @brief One segment of a mixed straight/arc/spline line path.
+  struct elementSegment
+  {
+    /// @brief The kind of segment this entry describes.
+    elementSegmentType mType;
+
+    /// @brief End point of this segment. The first entry in a segment list carries the line's start point.
+    vector3D mPosition;
+
+    /// @brief Via point of a circular arc. Meaningful only when mType == elementSegmentType::Arc.
+    vector3D mSupportPosition;
+  };
+
+  /// @enum splineSurfaceOrder
+  /// @brief How the section surfaces of a spline volume are ordered before they are skinned.
+  enum class splineSurfaceOrder : int32_t
+  {
+    Linear = 1,   ///< sections follow each other along a roughly straight run, sorted by their centres of gravity
+    Circular = 2, ///< sections are arranged around a common centre, sorted by angle around it
+  };
+
+  /// @enum prefabLayerSide
+  /// @brief Which side of the reference element a prefab layer sits on, as shown in the Layer Detection dialog.
+  enum class prefabLayerSide : int32_t
+  {
+    referenceElement = 0, ///< The reference element's own layer ("Riegelwerk") — the centre column of the dialog.
+    referenceSide = 1,    ///< A layer on the reference face of the element ("Bund Schicht").
+    oppositeSide = 2      ///< A layer on the side facing away from the reference face ("Gegen Schicht").
+  };
+
+  /// @struct prefabLayerInfo
+  /// @brief One prefab layer assignment of an element: how far it sits from the reference element, and on which side.
+  /// @details Replaces the signed-integer encoding of the deprecated getPrefabLayer* methods, where the sign
+  /// carried the side implicitly. The (mLayerNumber, mSide) pair states both explicitly.
+  struct prefabLayerInfo
+  {
+    /// @brief Distance from the reference element, counted in layers. Always non-negative, and 0 exactly
+    /// when mSide is prefabLayerSide::referenceElement. The first layer next to the element is 1.
+    int32_t mLayerNumber{0};
+
+    /// @brief The side of the element this layer sits on.
+    prefabLayerSide mSide{prefabLayerSide::referenceElement};
+  };
+
+  /// @enum wallSectionType
+  /// @brief Which local axis of a wall, floor or roof a wall section is perpendicular to.
+  enum class wallSectionType : int32_t
+  {
+    horizontal = 1, ///< perpendicular to the element's yl axis (across its width)
+    vertical = 2    ///< perpendicular to the element's xl axis (along its length)
+  };
+
+  /// @struct wallSection
+  /// @brief One wall section plane of a wall, floor or roof, in global coordinates.
+  struct wallSection
+  {
+    /// @brief Whether the section is horizontal or vertical.
+    wallSectionType mType{wallSectionType::horizontal};
+
+    /// @brief A point on the section plane, in global coordinates (mm). It is the point the section is stored at.
+    vector3D mPoint{};
+
+    /// @brief The unit normal of the section plane, in global coordinates: the element's yl axis for a horizontal
+    /// section, its xl axis for a vertical one.
+    vector3D mNormal{};
+  };
+
+  /// @struct exportSolidCut
+  /// @brief One cut plane of an export solid or container, in global coordinates.
+  struct exportSolidCut
+  {
+    /// @brief The cut's name, as shown in the export solid's cut list.
+    string mName;
+
+    /// @brief The point of the cut plane nearest the global origin, in global coordinates (mm).
+    /// @details A cut stores only its plane, so this is generally not the point the cut was created through.
+    vector3D mPoint{};
+
+    /// @brief The unit normal of the cut plane, in global coordinates. The cut view looks along -mNormal.
+    vector3D mNormal{};
+
+    /// @brief The unit up direction of the cut view, in global coordinates.
+    vector3D mUpVector{};
+  };
+
+  /// @enum navigationWidgetSubwindowPosition
+  /// @brief The navigation widget's corner
+  enum class navigationWidgetSubwindowPosition
+  {
+    None = 0,
+    TopRight = 1,
+    TopLeft = 2,
+    BottomLeft = 3,
+    BottomRight = 4,
   };
 
   /// @enum renderViewType

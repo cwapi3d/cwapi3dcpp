@@ -280,6 +280,82 @@ namespace CwAPI3D
       /// @param aValue [bool] True to display bitmaps as textures in shaded 2, false otherwise.
       virtual void displayBitmapsAsTextureRepresentationsInShaded2(bool aValue) = 0;
 
+      /// @brief Leaves the 2d working plane and restores a 3d view.
+      ///        Does nothing when the 2d working plane is not currently active.
+      /// @param aExitView [@ref workingPlaneExitView] The 3d view to restore on leaving.
+      ///
+      /// @note When the working plane was entered from inside a container block, only
+      ///       workingPlaneExitView::previous_view returns into that container block; every
+      ///       other value leaves it and switches to the plain 3d model view.
+      ///
+      /// @since 33.0
+      virtual void leaveWorkingPlane(workingPlaneExitView aExitView) = 0;
+
+      /// @brief Tests whether an element is permanently hidden.
+      ///
+      /// This is a truthful query of the element's own state, so it also returns true for the
+      /// geometry cadwork itself keeps permanently hidden (container-block content being edited,
+      /// nesting raw parts, rafter and purlin heads, converted exchange objects). It answers
+      /// *is this element permanently hidden*, not *did this API hide it* — the set your plugin
+      /// may act on is what @ref getPermanentlyHiddenElements returns.
+      ///
+      /// @param aElementId [@ref elementID] The element id.
+      /// @return [bool] True if the element is permanently hidden, false otherwise, and false when
+      ///         the id does not resolve to an element.
+      /// @since 33.0
+      virtual bool isPermanentlyHidden(elementID aElementId) = 0;
+
+      /// @brief Takes elements out of the model's working set and keeps them there.
+      ///
+      /// Permanently hidden elements are gone from the view, from element enumeration
+      /// (@ref ICwAPI3DElementController::getAllIdentifiableElementIDs no longer returns them),
+      /// from lists and from exports, and @ref showAllElements — as well as the end user's own
+      /// *show all* — does **not** bring them back. The state is stored with the drawing, so it
+      /// survives save, close and reopen; only @ref showPermanentlyHidden undoes it.
+      ///
+      /// The elements this call hides are recorded as belonging to this API, which is what lets
+      /// @ref getPermanentlyHiddenElements hand them back later even though no enumeration
+      /// reaches them any more. Ids that do not resolve to an element, elements of a type this
+      /// controller cannot hide (anything other than construction elements, auxiliary objects,
+      /// export solids and containers), and elements that are already permanently hidden — whether
+      /// by this API or by cadwork itself — are silently skipped, so this call never claims an
+      /// element it did not hide. An element that is currently active is deactivated first.
+      ///
+      /// @param aElementIdList [@ref ICwAPI3DElementIDList*] The elements to hide permanently.
+      /// @since 33.0
+      virtual void hidePermanently(ICwAPI3DElementIDList* aElementIdList) = 0;
+
+      /// @brief Brings elements this API hid permanently back into the working set.
+      ///
+      /// The elements return with their colour, material, attributes and position intact, their
+      /// geometry is recreated where the drawing was reopened without it, and they are part of
+      /// element enumeration, lists and exports again.
+      ///
+      /// **Only elements that @ref hidePermanently hid can be shown.** An id that this API did not
+      /// hide is a silent no-op — passing the id of a container-block content element, a nesting
+      /// raw part or a rafter head changes nothing, so cadwork's own permanently hidden geometry
+      /// cannot be revealed through this call. Ids that do not resolve to an element are skipped
+      /// the same way. There is no error and no return value: use
+      /// @ref getPermanentlyHiddenElements to learn which elements are actually yours to show.
+      ///
+      /// @param aElementIdList [@ref ICwAPI3DElementIDList*] The elements to show again.
+      /// @since 33.0
+      virtual void showPermanentlyHidden(ICwAPI3DElementIDList* aElementIdList) = 0;
+
+      /// @brief Gets the elements this API hid permanently and has not shown again.
+      ///
+      /// This is the only way back to those elements: they are outside the model's working set, so
+      /// no element enumeration returns them. The result is exactly the set
+      /// @ref hidePermanently hid — never the geometry cadwork keeps permanently hidden for its own
+      /// purposes — and it is therefore always safe to pass straight to
+      /// @ref showPermanentlyHidden. Because the ownership record lives in the drawing, the set is
+      /// still complete after a save, close and reopen.
+      ///
+      /// @return [@ref ICwAPI3DElementIDList*] The permanently hidden elements owned by this API,
+      ///         empty when there are none.
+      /// @since 33.0
+      virtual ICwAPI3DElementIDList* getPermanentlyHiddenElements() = 0;
+
       /// @brief Gets the background color a render view displays.
       ///
       /// Each render view keeps its own background, as set in the graphics options dialog. The

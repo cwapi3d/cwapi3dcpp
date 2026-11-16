@@ -1,13 +1,12 @@
-/** @file 
-* Copyright (C) 2023 cadwork informatik AG
-* 
-* This file is part of the CwAPI3D module for cadwork 3d.
-* 
-* @ingroup       CwAPI3D
-* @since         30.0
-* @author        Paquet
-* @date          2023-09-26
-*/
+/// @file
+/// Copyright (C) 2023 cadwork informatik AG
+///
+/// This file is part of the CwAPI3D module for cadwork 3d.
+///
+/// @ingroup       CwAPI3D
+/// @since         30.0
+/// @author        Paquet
+/// @date          2023-09-26
 
 #pragma once
 
@@ -20,6 +19,8 @@ namespace CwAPI3D
     class ICwAPI3DRhinoOptions
     {
     public:
+      /// @brief Destroys itself
+      /// @deprecated Do not use this method anymore
       virtual void destroy() = 0;
 
       virtual void setMaterializeEndTypes(bool aFlag) = 0;
